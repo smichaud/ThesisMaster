@@ -13,6 +13,12 @@ Le jury d’un mémoire de maîtrise est composé d'au moins 3 membres:
 - le prélecteur désigné (le cas échéant)
 Lorsqu'il y a codirection ou prélecture, il est recommandé,  mais pas obligatoire, d'avoir recours à un 4e membre.
 
+### GABARIT LATEX
+1. [Télécharger le zip](http://www.ctan.org/pkg/ulthese)
+2. Unzip
+3. latex ulthese.ins
+4. Les gabarits sont produits
+
 ### GABARITS DE PAGE DE TITRE
 Les gabarits de rédaction présentent une page de titre normalisée selon les règles de présentation de la Faculté des études supérieures et postdoctorales (FESP) et conforme aux exigences du programme de l'étudiant.  
 Mémoire ou thèse rédigé dans une autre langue que le français  
