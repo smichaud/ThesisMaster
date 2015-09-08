@@ -1,0 +1,75 @@
+\documentclass[MSc, francais, english]{ulthese}
+\selectlanguage{english}
+
+\ifxetex\else \usepackage[utf8]{inputenc} \fi
+
+\usepackage{amsmath}          % recommandé pour les mathématiques
+%\usepackage{icomma}           % gestion de la virgule dans les nombres
+
+\usepackage{mathpazo}         % texte et mathématiques en Palatino
+\usepackage{mathptmx}         % texte et mathématiques en Times
+
+\usepackage{hyperref}
+\hypersetup{colorlinks,allcolors=ULlinkcolor}
+%% Options de mise en forme du mode français de babel. Consulter la
+%% documentation du paquetage babel pour les options disponibles.
+%% Désactiver (effacer ou mettre en commentaire) si l'option
+%% 'nobabel' est spécifiée au chargement de la classe.
+%\frenchbsetup{%
+    %CompactItemize=false,         % ne pas compacter les listes
+    %ThinSpaceInFrenchNumbers=true % espace fine dans les nombres
+%}
+
+%\bibliographystyle{natbib}
+
+\titre{Robot Perception Using LiDAR in Complex Environments}
+% \titre{Ceci est un exemple de long titre \\
+%   avec saut de ligne manuel}
+% \soustitre{Sous-titre le cas échéant}
+% \soustitre{Ceci est un exemple de long sous-titre \\
+%   avec saut de ligne manuel}
+\auteur{Sébastien Michaud}
+\programme{Maîtrise en informatique}
+\annee{2015}
+
+\begin{document}
+
+\frontmatter
+
+\pagetitre
+
+%\include{./tex/resume}
+%\include{/tex/abstract}
+%\cleardoublepage
+
+\tableofcontents
+\cleardoublepage
+
+\listoftables
+\cleardoublepage
+
+\listoffigures
+\cleardoublepage
+
+%\dedicace{Dédicace si désiré}
+%\cleardoublepage
+
+%\epigraphe{Texte de l'épigraphe}{Source ou auteur}
+%\cleardoublepage
+
+\include{./tex/thanks}
+
+\mainmatter
+
+\include{./tex/intro}
+\include{./tex/chap1}
+\include{./tex/chap2}
+\include{./tex/conclu}
+
+\appendix
+
+\include{./tex/appendixA}
+
+%\bibliography{}
+
+\end{document}
