@@ -20,9 +20,9 @@
     %ThinSpaceInFrenchNumbers=true % espace fine dans les nombres
 %}
 
-%\bibliographystyle{natbib}
+\input{./tex/util.tex}
 
-\titre{Robot Perception Using LiDAR in Complex Environments}
+\titre{Robot Perception Using LiDAR for Navigation in Complex Environments}
 % \titre{Ceci est un exemple de long titre \\
 %   avec saut de ligne manuel}
 % \soustitre{Sous-titre le cas échéant}
@@ -62,14 +62,18 @@
 \mainmatter
 
 \include{./tex/intro}
+\include{./tex/literature_review}
 \include{./tex/chap1}
 \include{./tex/chap2}
+\include{./tex/chap3}
 \include{./tex/conclu}
 
 \appendix
 
 \include{./tex/appendixA}
 
-%\bibliography{}
+\nocite{*}
+\bibliographystyle{plainnat}
+\bibliography{bibliography}
 
 \end{document}
