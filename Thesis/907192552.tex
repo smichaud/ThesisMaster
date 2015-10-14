@@ -9,6 +9,13 @@
 \usepackage{mathpazo}         % texte et mathématiques en Palatino
 \usepackage{mathptmx}         % texte et mathématiques en Times
 
+\usepackage{tabularx,ragged2e}
+\renewcommand\tabularxcolumn[1]{>{\Centering}p{#1}}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{cite} % sort citation numbers automatically
+\usepackage{siunitx}
+
 \usepackage{hyperref}
 \hypersetup{colorlinks,allcolors=ULlinkcolor}
 %% Options de mise en forme du mode français de babel. Consulter la
@@ -38,8 +45,8 @@
 
 \pagetitre
 
-\include{./tex/resume}
-\include{./tex/abstract}
+\include{./tex/pre/resume}
+\include{./tex/pre/abstract}
 %\cleardoublepage
 
 \tableofcontents
@@ -57,20 +64,20 @@
 %\epigraphe{Texte de l'épigraphe}{Source ou auteur}
 %\cleardoublepage
 
-\include{./tex/acknowledgements}
+\include{./tex/pre/acknowledgements}
 
 \mainmatter
 
-\include{./tex/intro}
+\include{./tex/pre/intro}
 \include{./tex/literature_review}
-\include{./tex/chap1}
-\include{./tex/chap2}
-\include{./tex/chap3}
-\include{./tex/conclu}
+\include{./tex/chap_lidar/chap_lidar}
+\include{./tex/chap_traversability/chap_traversability}
+\include{./tex/chap_slam/chap_slam}
+\include{./tex/post/conclu}
 
 \appendix
 
-\include{./tex/appendixA}
+\include{./tex/post/appendix_a}
 
 \nocite{*}
 \bibliographystyle{plainnat}
