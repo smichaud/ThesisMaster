@@ -11,10 +11,12 @@
 
 \usepackage{tabularx,ragged2e}
 \renewcommand\tabularxcolumn[1]{>{\Centering}p{#1}}
+\usepackage{makecell} % Cell auto line break for table \makecell{bla \\ bla}
 \usepackage{graphicx}
 \usepackage{color}
-\usepackage{cite} % sort citation numbers automatically
 \usepackage{siunitx}
+%\usepackage{cite} % sort citation numbers automatically
+%\usepackage[numbers]{natbib}
 
 \usepackage{hyperref}
 \hypersetup{colorlinks,allcolors=ULlinkcolor}
@@ -68,6 +70,7 @@
 
 \mainmatter
 
+\include{./tex/notes}
 \include{./tex/pre/intro}
 \include{./tex/literature_review}
 \include{./tex/chap_lidar/chap_lidar}
@@ -80,7 +83,7 @@
 \include{./tex/post/appendix_a}
 
 \nocite{*}
-\bibliographystyle{plainnat}
-\bibliography{bibliography}
+\bibliographystyle{unsrtnat}
+\bibliography{bibliography}{}
 
 \end{document}

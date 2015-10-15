@@ -1,4 +1,3 @@
-%!TEX root = ../root.tex
 %\section{Data analysis}
 %\label{sec:data-analysis}
 
@@ -9,7 +8,7 @@
 % ========================= Timing  ===================
 
 \section{Temporal analysis}
-\label{sec:temporal}
+\label{sec:chap_lidar_temporal}
 
 In this section, we analyze the temporal behavior of the four sensors for the duration of six complete snowstorms. In particular, we are interested in seeing how the fraction of echoes in snowflakes evolves over time, for all four sensors. First, we will discuss the highly dynamical nature of snowstorms. This will be exemplified by how consecutive scans can have significant quantitative and spatial differences in the distributions of the snowflakes echoes, which justify the use of averaging windows for our analysis. We will then present the actual temporal evolution of these statistics in the form of graphs for all four sensors, and finally briefly discuss the results for each sensor.
 
@@ -23,8 +22,8 @@ To smooth out these fluctuations, statistics are extracted from a number of cons
 
  \begin{figure}[th]
     \centering
-    \includegraphics[trim={0.2cm 0 0 0},clip,width=0.9\linewidth]{./img/LMS200_4Scans_Feb19.pdf}
-    \includegraphics[trim={0.2cm 0 0 0},clip,width=0.9\linewidth]{./img/Hokuyo_4Scans_Feb19.pdf}
+    \includegraphics[trim={0.2cm 0 0 0},clip,width=0.9\linewidth]{./img/chap_lidar/LMS200_4Scans_Feb19.pdf}
+    \includegraphics[trim={0.2cm 0 0 0},clip,width=0.9\linewidth]{./img/chap_lidar/Hokuyo_4Scans_Feb19.pdf}
     \caption{Four overlaid consecutive scans for the LMS200 sensor (top), and the first echo scans for the Hokuyo sensor (bottom), taken from the 02-19 dataset. Each symbol corresponds to a particular scan. The curved line at the top corresponds to the snow surface on the ground. One can see the rapid variation of the snowflake echoes between scans, and how they are mostly limited to a range $x<\SI{5}{\meter}$. The percentages (in brackets) are the proportion of those echoes in the snowflakes.}
     \label{fig:LMS200_4Scans_Feb19}
 \end{figure}
@@ -38,7 +37,7 @@ Our first conclusion based on fig.~\ref{fig:TimingSnow} is that the most sensiti
 
 \begin{figure*}[th]
     \centering
-    \includegraphics[trim={3.2cm 0 0 0},clip,width=0.97\linewidth]{./img/Timings.pdf}
+    \includegraphics[trim={3.2cm 0 0 0},clip,width=0.97\linewidth]{./img/chap_lidar/Timings.png}
     \caption{Temporal evolution of the percentage of echoes coming from the falling snow (range $x<$\SI{5}{\meter}) during the 6 most intense episodes, for all 4 sensors. The data is smoothed by taking statistics for small time windows. Except for the LMS200 and Hokuyo first echo, all other sensors statistics have been scaled up (factor in bracket of legend b) for ease of visual comparison. Time is in hour, starting from the beginning of the data capture sequence.}
     \label{fig:TimingSnow}
 \end{figure*}
@@ -64,7 +63,7 @@ For all purposes, the behavior of the Velodyne was similar to the last echo of t
 
 % ========================= Histograms ===================
 \section{Distribution of snowflake echoes as a function of range}
-\label{sec:Histo}
+\label{sec:chap_lidar_histo}
 
 In the previous section, we showed how the expected fraction of snowflake echoes varied temporally during snowstorms. In some sense, it provided for a \emph{temporal} modeling of the interaction between a snowstorm and a given LiDAR. In this section, we evacuate the temporal aspect and instead focus on how the range $x$ affects the probability for a snowflake to trigger a measurement. To this end, we will use histograms to estimate a probability density function of those events, and show that for the weather condition and the sensors we tested, there seems to be an upper bound on the range $x$ beyond which falling snowflakes no longer trigger a measurement: In other words, snowflakes become invisible to the sensor past a certain range.
 
@@ -81,7 +80,7 @@ The general shape of these histograms is close to a log-normal distribution, wit
 
 \begin{figure}[th]
     \centering
-    \includegraphics[trim={0.6cm 0 0 0},clip,width=0.97\linewidth]{./img/ShieldingModel.pdf}
+    \includegraphics[trim={0.6cm 0 0 0},clip,width=0.97\linewidth]{./img/chap_lidar/ShieldingModel.pdf}
     \caption{Cartoon representation of the interaction between the probability of detecting a snowflake (in red) and the diminution of snowflakes due to the shielding effect of the building (in blue). The black line is the product of the two, and bear a close resemblance to the actual histograms extracted from our dataset.}
     \label{fig:CartoonModel}
 \end{figure}
@@ -99,7 +98,7 @@ For all sensors, we can also conclude that beyond the range $x>\SI{10}{\meter}$,
 
 \begin{figure}[th]
     \centering
-    \includegraphics[trim={1.1cm 0 0 0},clip,width=0.90\linewidth]{./img/Histogram.pdf}
+    \includegraphics[trim={1.1cm 0 0 0},clip,width=0.80\linewidth]{./img/chap_lidar/Histogram.pdf}
     \caption{Histograms of echoes in falling snow during important snowfall days, as a function of distance $x$ reported by the sensor. Each histogram has been normalized by its area, for ease of comparison. The numbers in brackets are the fraction of data points in the complete dataset that correspond to snowflake echoes. Note that for the 03-21 dataset, the LMS151 was not working properly: thus no data is included for that day.}
     \label{fig:Histograms}
 \end{figure}
@@ -118,6 +117,4 @@ For all sensors, we can also conclude that beyond the range $x>\SI{10}{\meter}$,
 % ========================================
 %\section{Discussion}
 %It seems that the majority of the impact of falling snow is for the first 5-6 meters. For near distance, this would impact the collision/obstacle avoidance. However, the problem at long range does not seem to happen, at least based on extrapolating from our data set.
-
-
 
