@@ -1,36 +1,16 @@
 \chapter*{Introduction}
 \phantomsection\addcontentsline{toc}{chapter}{Introduction}
 
-The industrial Revolution was the cradle of modern robotics. At this time, applications were mainly limited to the industrial sector, where they achieved simple tasks in controlled environments. Thanks to the many improvements in the field of electrical, mechanical and software engineering, robots are now emerging in a vast variety of applications. Recent years brought us the Roomba vacuum cleaner, the Google self-driving car and the experimental Amazon delivery drones just to name a few.
+Modern robotics has experienced tremendous growth since its inception during the industrial revolution. Whether it is to assist humans in their works, to automate some tasks or to perform dangerous jobs, robots are emerging in a wide variety of applications. Recent technology such as the self-driving car project from Google or the BigDog quadruped robot from Boston Dynamics are feat of engineering that show the evolution of robotics from the not too distant past, when robots could only achieved simple tasks in controlled environments. One of the key elements that allowed for such progress and that is always a hot topic in research, is the ability of the robot to adapt to changing environments. This capability highly depends on algorithms that convert the raw inputs of available sensors into a convenient representation of the environment; concept known as robot perception.
 
-Wheter they assist us in our task, improve productivity or execute new tasks, robots needs to adapt to their environment.
+A wide range of sensors are available on the market and the choice of these depends primarily on the specific problem to be solved and the available budget. Arguably, one of the most widely used sensor is the camera. In addition to its price generally very low, cameras provides a rich data set on the scene in which the robot operates. They can be use to solve problems such as object recognition, localisation, mapping, 3D reconstruction and many more. Despite these obvious advantages, processing camera data generally rely on very complex algorithms that often make strong assumptions. The processing power and time required by those algorithms is not always available. 
 
-Robot consists of sensors and actuators controlled by a computer. Actuators allow the system to move
-A computer act as the brain of the robot, using input from the sensors and
-The control unit of the robot, (the computer) rely on two components to deal with  complex environments: sensors and actuators.
-To deal with more complex environments, robots rely on two major components; actuators and sensors. While actuators can be engineer for certain tasks,
 
 
 \begin{itemize}
-    \item Yo ! robotics is cool nowadays ! There is many nice robot like the Amazon delivery drone and the Google car.
-    \item It's crazy too see what they can do and I can't wait to see what's next !
-    \item Back in the days (industrial Revolution), robots were some kind of shitty fixed arm building car.
-    \item What happen between the crap and the awesomeness ?
-    \item Of course there was so many improvements in the mechanical, electrical and software engineering.
-    \item Peops now have camera and good computer at home, it is no wonder that real company can do nice stuff.
-    \item Of course it is still not easy (just have a look at the DARPA challenge failure, it's funny), but it is possible and worth it ;)
-    \item So, let's see what you need to be cool... Actuators, sensors and a freaking computer.
-    \item From there you have to write or use existing algorithm to understand where the fuck you are and what the hell is going on around you.
     \item Ok, easier said then done... As a human you can easily identify a cat in a picture, but researcher struggled for X years to get decent results in this field.
-    \item I am also gonna talk about perception, but fuck camera... been there done that.
-    \item
-\end{itemize}
-
-\begin{itemize}
-        \item In an highly predefined environment, fuck perception, just do stuff over and over again... But if something change you are fuck... then you which you had this nice shit called perception. If you don't want your nice robot to be stuck in a freaking lab of garage, then spend time developing perception algorithm. 
-    \item Peception is really important for the robot. Even for non robot it is useful !
-    \item There was a lot of work on camera, they are so main stream for human.
-    \item But lets face it, robot can use whatever sensor they want and if I could have a freaking GPS inside me It would be awesome.
+    \item Require a lot of processing power and time
+    \item Depends on light and texture/edges (even 3D interpolation depends on it... to white wall will yield pure crap)
 \end{itemize}
 
 \begin{itemize}
@@ -39,9 +19,9 @@ To deal with more complex environments, robots rely on two major components; act
     \item Instead of giving appearance information, they give geometrical info.
     \item They are also more recent and less work have been done these.
 \end{itemize}
-
 \begin{itemize}
     \item Definition of challenging
     \item Navigation (good solution for indoor/structured env.)
-    \item Sensors used (Camera, Stereo, GPS, IMU)
 \end{itemize}
+
+The global positioning system (GPS) is among the most popular and provides a good solution for localisation. Despite its ease of use, GPS does not work in all situations
