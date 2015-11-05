@@ -22,8 +22,8 @@ To smooth out these fluctuations, statistics are extracted from a number of cons
 
  \begin{figure}[th]
     \centering
-    \includegraphics[trim={0.2cm 0 0 0},clip,width=0.9\linewidth]{./img/chap_lidar/LMS200_4Scans_Feb19.pdf}
-    \includegraphics[trim={0.2cm 0 0 0},clip,width=0.9\linewidth]{./img/chap_lidar/Hokuyo_4Scans_Feb19.pdf}
+    \includegraphics[trim={0.2cm 0 0 0},clip,width=0.7\linewidth]{./img/chap_lidar/LMS200_4Scans_Feb19.pdf}
+    \includegraphics[trim={0.2cm 0 0 0},clip,width=0.7\linewidth]{./img/chap_lidar/Hokuyo_4Scans_Feb19.pdf}
     \caption{Four overlaid consecutive scans for the LMS200 sensor (top), and the first echo scans for the Hokuyo sensor (bottom), taken from the 02-19 dataset. Each symbol corresponds to a particular scan. The curved line at the top corresponds to the snow surface on the ground. One can see the rapid variation of the snowflake echoes between scans, and how they are mostly limited to a range $x<\SI{5}{\meter}$. The percentages (in brackets) are the proportion of those echoes in the snowflakes.}
     \label{fig:LMS200_4Scans_Feb19}
 \end{figure}
@@ -37,8 +37,13 @@ Our first conclusion based on fig.~\ref{fig:TimingSnow} is that the most sensiti
 
 \begin{figure*}[th]
     \centering
-    \includegraphics[trim={3.2cm 0 0 0},clip,width=0.97\linewidth]{./img/chap_lidar/Timings.png}
-    \caption{Temporal evolution of the percentage of echoes coming from the falling snow (range $x<$\SI{5}{\meter}) during the 6 most intense episodes, for all 4 sensors. The data is smoothed by taking statistics for small time windows. Except for the LMS200 and Hokuyo first echo, all other sensors statistics have been scaled up (factor in bracket of legend b) for ease of visual comparison. Time is in hour, starting from the beginning of the data capture sequence.}
+    \includegraphics[width=0.45\linewidth]{./img/chap_lidar/timings_cropped_a.png}
+    \includegraphics[width=0.45\linewidth]{./img/chap_lidar/timings_cropped_b.png}
+    \includegraphics[width=0.45\linewidth]{./img/chap_lidar/timings_cropped_c.png}
+    \includegraphics[width=0.45\linewidth]{./img/chap_lidar/timings_cropped_d.png}
+    \includegraphics[width=0.45\linewidth]{./img/chap_lidar/timings_cropped_e.png}
+    \includegraphics[width=0.45\linewidth]{./img/chap_lidar/timings_cropped_f.png}
+    \caption{\todo{Try to make these figure look the same size\dots :(}Temporal evolution of the percentage of echoes coming from the falling snow (range $x<$\SI{5}{\meter}) during the 6 most intense episodes, for all 4 sensors. The data is smoothed by taking statistics for small time windows. Except for the LMS200 and Hokuyo first echo, all other sensors statistics have been scaled up (factor in bracket of legend b) for ease of visual comparison. Time is in hour, starting from the beginning of the data capture sequence.}
     \label{fig:TimingSnow}
 \end{figure*}
 
@@ -80,7 +85,7 @@ The general shape of these histograms is close to a log-normal distribution, wit
 
 \begin{figure}[th]
     \centering
-    \includegraphics[trim={0.6cm 0 0 0},clip,width=0.97\linewidth]{./img/chap_lidar/ShieldingModel.pdf}
+    \includegraphics[trim={0.6cm 0 0 0},clip,width=0.7\linewidth]{./img/chap_lidar/ShieldingModel.pdf}
     \caption{Cartoon representation of the interaction between the probability of detecting a snowflake (in red) and the diminution of snowflakes due to the shielding effect of the building (in blue). The black line is the product of the two, and bear a close resemblance to the actual histograms extracted from our dataset.}
     \label{fig:CartoonModel}
 \end{figure}
