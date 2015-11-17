@@ -15,7 +15,7 @@
    inkscape:version="0.48.3.1 r9886"
    width="2448"
    height="3264"
-   sodipodi:docname="husky_merged.jpg">
+   sodipodi:docname="husky_labelled.svg">
   <metadata
      id="metadata3042">
     <rdf:RDF>
@@ -24,7 +24,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -43,10 +43,10 @@
      inkscape:window-height="856"
      id="namedview3038"
      showgrid="false"
-     inkscape:zoom="0.4129902"
-     inkscape:cx="1298.8181"
-     inkscape:cy="2592.2167"
-     inkscape:window-x="0"
+     inkscape:zoom="0.2064951"
+     inkscape:cx="-97.898237"
+     inkscape:cy="1584.8215"
+     inkscape:window-x="1680"
      inkscape:window-y="20"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg3036" />
@@ -58,28 +58,203 @@
      x="0"
      y="0" />
   <rect
-     style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:10;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#ffffff;fill-opacity:1;stroke:#00d7d7;stroke-width:15;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
      id="rect3062"
-     width="600.49854"
-     height="370.46884"
-     x="145.28191"
-     y="152.54599"
-     rx="30"
-     ry="30" />
+     width="965.54895"
+     height="307.12314"
+     x="55.805923"
+     y="66.302811"
+     rx="25"
+     ry="25" />
   <text
      xml:space="preserve"
-     style="font-size:72px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-     x="181.60237"
-     y="263.92877"
+     style="font-size:78px;font-style:normal;font-weight:bold;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+     x="507.04749"
+     y="205.11024"
      id="text3854"
+     sodipodi:linespacing="125%"
+     transform="scale(1.0581358,0.94505828)"><tspan
+       sodipodi:role="line"
+       x="520.60608"
+       y="205.11024"
+       id="tspan3992">Global Positioning </tspan><tspan
+       sodipodi:role="line"
+       x="507.04749"
+       y="302.61023"
+       id="tspan4110">System (GPS)</tspan></text>
+  <rect
+     style="fill:#ffffff;fill-opacity:1;stroke:#00d7d7;stroke-width:15;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="rect3062-7"
+     width="1067.5233"
+     height="307.12314"
+     x="1341.6012"
+     y="66.302811"
+     rx="25"
+     ry="25" />
+  <text
+     xml:space="preserve"
+     style="font-size:78px;font-style:normal;font-weight:bold;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+     x="1871.7828"
+     y="195.60364"
+     id="text3854-2"
      sodipodi:linespacing="125%"><tspan
        sodipodi:role="line"
-       id="tspan3856"
-       x="181.60237"
-       y="263.92877">GPS (LOool)</tspan></text>
+       id="tspan3856-5"
+       x="1885.3414"
+       y="195.60364">Inertial Measurement </tspan><tspan
+       sodipodi:role="line"
+       x="1871.7828"
+       y="293.10364"
+       id="tspan4100">Unit (IMU)</tspan></text>
+  <rect
+     style="fill:#ffffff;fill-opacity:1;stroke:#00d7d7;stroke-width:15;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="rect3062-2"
+     width="454.92615"
+     height="207.371"
+     x="1942.9366"
+     y="1244.7062"
+     rx="25"
+     ry="25" />
+  <rect
+     style="fill:#ffffff;fill-opacity:1;stroke:#00d7d7;stroke-width:15;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="rect3062-3"
+     width="928.62628"
+     height="307.12314"
+     x="67.69117"
+     y="2860.1001"
+     rx="25"
+     ry="25" />
+  <text
+     xml:space="preserve"
+     style="font-size:78px;font-style:normal;font-weight:bold;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+     x="528.42426"
+     y="2986.1255"
+     id="text3854-4"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan3856-7"
+       x="541.98285"
+       y="2986.1255">Pan-Tilt Unit (PTU) </tspan><tspan
+       sodipodi:role="line"
+       x="528.42426"
+       y="3083.6255"
+       id="tspan4098">(hidden by fabric)</tspan></text>
+  <rect
+     style="fill:#ffffff;fill-opacity:1;stroke:#00d7d7;stroke-width:15;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="rect3062-6"
+     width="556.02667"
+     height="307.12314"
+     x="67.186867"
+     y="1194.8301"
+     rx="25"
+     ry="25" />
+  <text
+     xml:space="preserve"
+     style="font-size:78px;font-style:normal;font-weight:bold;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+     x="343.41025"
+     y="1321.1602"
+     id="text3854-4-5"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan3856-7-9"
+       x="343.41025"
+       y="1321.1602">On-Board</tspan><tspan
+       sodipodi:role="line"
+       x="343.41025"
+       y="1418.6602"
+       id="tspan4015">Computer</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:78px;font-style:normal;font-weight:bold;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+     x="2168.9893"
+     y="1376.7847"
+     id="text3854-4-6"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan3856-7-2"
+       x="2168.9893"
+       y="1376.7847">Camera</tspan></text>
+  <rect
+     style="fill:#ffffff;fill-opacity:1;stroke:#00d7d7;stroke-width:15;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="rect3062-3-0"
+     width="480.71771"
+     height="307.12314"
+     x="1124.1023"
+     y="2386.9846"
+     rx="25"
+     ry="25" />
+  <text
+     xml:space="preserve"
+     style="font-size:78px;font-style:normal;font-weight:bold;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+     x="1363.7375"
+     y="2515.0857"
+     id="text3854-4-6-5-1"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan3856-7-2-1-3"
+       x="1377.2961"
+       y="2515.0857">LiDAR </tspan><tspan
+       sodipodi:role="line"
+       x="1363.7375"
+       y="2612.5857"
+       id="tspan4102">(SICK)</tspan></text>
+  <rect
+     style="fill:#ffffff;fill-opacity:1;stroke:#00d7d7;stroke-width:15;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="rect3062-3-7"
+     width="618.03888"
+     height="307.12314"
+     x="68.387184"
+     y="2386.9846"
+     rx="25"
+     ry="25" />
+  <text
+     xml:space="preserve"
+     style="font-size:78px;font-style:normal;font-weight:bold;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+     x="377.40646"
+     y="2511.8103"
+     id="text3854-4-6-5"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan3856-7-2-1"
+       x="390.96506"
+       y="2511.8103">LiDAR </tspan><tspan
+       sodipodi:role="line"
+       x="377.40646"
+       y="2609.3103"
+       id="tspan4104">(Velodyne)</tspan></text>
   <path
-     style="fill:none;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-     d="M 566.59941,525.4362 872.90208,831.73887"
-     id="path3858"
+     style="fill:none;stroke:#00d6d6;stroke-width:15;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     d="m 1333.4362,2697.4006 421.3175,203.3947"
+     id="path3839"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:none;stroke:#00d6d6;stroke-width:15;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+     d="M 1956.4629,1443.1335 1331.7507,1757.911"
+     id="path3843"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:none;stroke:#00d6d6;stroke-width:15;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+     d="M 513.32937,2852.368 900.74777,2629.6024 1191.3116,1627.1573"
+     id="path3847"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:none;stroke:#00d6d6;stroke-width:15;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+     d="m 1859.6083,377.73297 4.8427,285.72106 -280.8783,242.1365"
+     id="path3855"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:none;stroke:#00d6d6;stroke-width:15;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+     d="M 489.11572,368.04751 886.21958,799.05047"
+     id="path3857"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:none;stroke:#00d6d6;stroke-width:15;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+     d="m 615.0267,1341.4362 426.1602,-179.181 77.4837,67.7982"
+     id="path3861"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:none;stroke:#00d5d5;stroke-width:15;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+     d="M 372.8902,2387.4659 1302.6943,1370.4926"
+     id="path3863"
      inkscape:connector-curvature="0" />
 </svg>

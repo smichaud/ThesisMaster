@@ -1,12 +1,3 @@
-%\section{Data analysis}
-%\label{sec:data-analysis}
-
-%\todo{I suggest a reorganization of the sections. 1) put ``pre-selection of laser data'' at the end of the previous section. ``temporal analysis'' and ``range analysis'' become their own sections.}
-
-%\todo{If not, then we need an intro laying down the plan: first discuss dataset selection, then temporal analysis, followed by range analysis to help the reader figure out what's going on. }
-
-% ========================= Timing  ===================
-
 \section{Temporal analysis}
 \label{sec:chap_lidar_temporal}
 
@@ -107,19 +98,3 @@ For all sensors, we can also conclude that beyond the range $x>\SI{10}{\meter}$,
     \caption{Histograms of echoes in falling snow during important snowfall days, as a function of distance $x$ reported by the sensor. Each histogram has been normalized by its area, for ease of comparison. The numbers in brackets are the fraction of data points in the complete dataset that correspond to snowflake echoes. Note that for the 03-21 dataset, the LMS151 was not working properly: thus no data is included for that day.}
     \label{fig:Histograms}
 \end{figure}
-
-
-% ====== leftovers ======
-%Finally, this sensor can also do optics cover contaminant measurements, albeit this feature was not relevant in our case since the sensor's cover was not exposed to the elements
-
-
-% ======================= Sunlight =====================
-%\subsection{Impact of sunlight on Hokuyo}
-%During our testing, we noticed that the Hokuyo sensor seems sentitive to sunlight. We collected a dataset during a sunny day (02-16), to better illustrate this condition. 
-
-% Note that however there was instance (daytime with sun) where the sensor didn't return echoes at all. We suspect that this is sue to the fact that the power level used. More on this in a following subsection.
-
-% ========================================
-%\section{Discussion}
-%It seems that the majority of the impact of falling snow is for the first 5-6 meters. For near distance, this would impact the collision/obstacle avoidance. However, the problem at long range does not seem to happen, at least based on extrapolating from our data set.
-
