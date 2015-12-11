@@ -7,12 +7,12 @@ In the following section, we first describe the robotic platform and sensors use
 \subsection{Robotic Platform}
 \label{ssec:chap_slam_platform}
 
-The Husky A200 is a medium size (990 x 670 x 390 \SI{28}{\milli\meter}) \gls*{ugv} developed by \cite{ClearpathWeb}. It is a rugged robot designed for all terrain conditions, therefore well suited for our experiments in the forest. It uses a differential-drive skid steer allowing easy control and in place turns for our data acquisition. It has a maximum speed of \SI{1}{\meter\per\second}, but we generally acquire data at lower speed, which minimizes odometry and range data errors. This platform, with a maximum payload capability of \SI{75}{\kilo\gram}, can easily carry all sensors used for our experiments. The platform is shown in Figure~\ref{fig:chap_slam_husky} and more details about the available devices are presented in Table~\ref{tab:husky_devices}.
+The Husky A200 is a medium size (\SI{990 x 670 x 390}{\milli\meter}) \gls*{ugv} developed by \cite{ClearpathWeb}. It is a rugged robot designed for all terrain conditions, therefore well suited for our experiments in the forest. It uses a differential-drive skid steer allowing easy control and in place turns for our data acquisition. It has a maximum speed of \SI{1}{\meter\per\second}, but we generally acquire data at a lower speed to minimize odometry and range data errors. This platform, with a maximum payload capability of \SI{75}{\kilo\gram}, can easily carry all sensors used for our experiments. Our platform is shown in Figure~\ref{fig:chap_slam_husky}. More details about the available devices are presented in Table~\ref{tab:husky_devices}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.98\linewidth]{img/chap_slam/husky_labelled.png}
-    \caption{The robotic platform (Husky A200) and the devices used for data acquisition. The SICK \gls*{lidar} is not mounted, but is shown on the bottom right corner of the figure. Note that the \gls*{ptu} is hidden by fabric and the on-board computer is mostly occluded by the Velodyne \gls*{lidar}.}
+    \caption{The robotic platform (Husky A200) and the devices used for data acquisition. The SICK \gls*{lidar} is not mounted, but is shown on the bottom right corner of the figure. Note that the \gls*{ptu} is hidden by a cover and the on-board computer is mostly occluded by the Velodyne \gls*{lidar}.}
     \label{fig:chap_slam_husky}
 \end{figure}
 
@@ -32,11 +32,11 @@ The Husky A200 is a medium size (990 x 670 x 390 \SI{28}{\milli\meter}) \gls*{ug
         \gls*{gps}      & NovAtel                     & SMART6          & Not used                              \\
         \bottomrule
     \end{tabular}
-    \caption{List of devices available on the Husky A200 and their use in our experiments. Note that both \gls*{lidar}s are not mounted at the same time.}
+    \caption{List of devices available on the Husky A200 and their use in our experiments. Note that both \gls*{lidar}s were never mounted at the same time.}
     \label{tab:husky_devices}
 \end{table}
 
-The on-board computer is an essential element of our experiments, as it connects all devices, acts as a control interface for the robot and stores the acquired data. The computer does not provide a \gls*{gui}, but it is connected to the gateway that broadcasts a WiFi network, allowing \gls*{ssh} communication. The platform is also equipped with a wireless gamepad, which allows manual control of the movements of the robot. Point clouds acquisition is possible using either the SICK LMS151 or the Velodyne HDL-32E. The selected sensor is mounted on the \gls*{ptu}, which remains fixed for the Velodyne, but is rotated with the SICK to merge multiple \gls*{2d} scans into a single \gls*{3d} point cloud. Section~\ref{ssec:chap_slam_platform} give more details about the resulting point clouds for each sensor.
+The on-board computer (2.4 GHz Intel i5-520M) is an essential element of our experiments, as it connects all devices, acts as a control interface for the robot and stores the acquired data. The computer does not provide a \gls*{gui}, but it is connected to the gateway that broadcasts a WiFi network, allowing \gls*{ssh} communication. The platform is also equipped with a wireless gamepad, which enables manual control of the movements of the robot. Point clouds acquisition is possible using either the SICK LMS151 or the Velodyne HDL-32E. The selected sensor is mounted on the \gls*{ptu}, which remains fixed for the Velodyne, but is rotated with the SICK to merge multiple \gls*{2d} scans into a single \gls*{3d} point cloud. Section~\ref{ssec:chap_slam_platform} gives more details about the resulting point clouds for each sensor.
 
 The sensors described above are essential for our place recognition research, but we also use the wheel encoder along with the \gls*{imu} for odometry estimation and the camera for visual reference of the dataset. Note that we do not use the \gls*{gps}, as we do not want to depend on it for the task of place recognition.
 
@@ -44,13 +44,13 @@ The sensors described above are essential for our place recognition research, bu
 \subsection{Dataset Description}
 \label{ssec:chap_slam_platform}
 
-Data acquisition was performed using \gls*{ros}, a set of software libraries and tools created to simplify the development of robotics applications. It provides all drivers for the Husky and our sensors out of the box and its data publishing system provides timestamps that allows easy synchronization between sensors. The recording tool (rosbag) was used to create our datasets and data processing was performed a posteriori.
+Data acquisition was performed using \gls*{ros}, a set of software libraries and tools created to simplify the development of robotics applications. It provides all drivers for the Husky and our sensors out of the box. Its data publishing system provides timestamps that allows easy synchronization between sensors. The recording tool (rosbag) was used to create our datasets, with data processing performed \textit{a posteriori}.
 
-We produced datasets on two different areas of the Laval University campus. An aerial overview of the path followed by the robot at these two locations is presented in Figure~\ref{fig:chap_slam_path}.
+We produced datasets in two different areas of the Laval University campus. An aerial overview of the path followed by the robot at these two locations is presented in Figure~\ref{fig:chap_slam_path}.
 
-The first site was chosen for its more structured nature and is located between the Alexandre-Vachon and the Adrien-Pouliot buildings. This environment is mostly open, the terrain is smooth and flat and the site contains man-made objects such as buildings, stairs or tables. Examples of pictures acquired by the robot on this site are presented in Figure~\ref{fig:slam_view_building1} and~\ref{fig:slam_view_building2}. This dataset closely resembles the kind of data on which place recognition algorithms are typically tested on~\cite{FreiburgDataset}~\cite{Datasets}. We will use this data to validate our method.
+The first site was chosen for its more structured nature and is located between the Alexandre-Vachon and the Adrien-Pouliot buildings. This environment is mostly open, the terrain is smooth and flat and the site contains man-made objects such as buildings, stairs or tables. Examples of pictures acquired by the robot on this site are presented in Figure~\ref{fig:slam_view_building1} and~\ref{fig:slam_view_building2}. This dataset closely resembles the kind of data on which several place recognition algorithms are typically tested on (e.g Freiburg Campus 360 degree 3D scans~\citep{FreiburgDataset}, Robotic 3D Scan Repository~\citep{Datasets}). We will use this data to validate our method.
 
-The second site, chosen for its unstructured nature, is located in a wooded area, also on the Laval University campus. The dataset path starts on a pedestrian walkway, but after its second turn (of approximately \SI{330}{\degree}), it drives for around \SI{100}{\meter} in rougher terrain. This forested environment presents multiple small structures and a lot of occlusions. Figure~\ref{fig:slam_view_forest1} and Figure~\ref{fig:slam_view_forest2} show pictures from the robot camera at this location. This dataset will allow us to better understand the influence of a less structured environment on the place recognition algorithm.
+The second site, chosen for its unstructured nature, is located in a wooded area, also on the Laval University campus. The dataset path starts on a pedestrian walkway, but after its second turn (of approximately \SI{330}{\degree}), it continues for around \SI{100}{\meter} in rougher terrain. This forested environment presents multiple small structures and a lot of occlusions. Figure~\ref{fig:slam_view_forest1} and Figure~\ref{fig:slam_view_forest2} show pictures from the robot camera at this location. This dataset will allow us to better understand the influence of a less structured environment on the place recognition algorithm. In particular, the absence of large flat surfaces and corners typical of buildings, as well as the closeness of the space, will be challenging for place recognition algorithms.
 
 \begin{figure}[H]
     \centering
@@ -73,9 +73,9 @@ The second site, chosen for its unstructured nature, is located in a wooded area
 
 Besides the influence of the type of environment, we are also interested in the impact of the sensor used and data associated with it. For this analysis, we used two sensors, namely the SICK and the Velodyne, for which you can find details in Table~\ref{tab:slam_sensor_resolution}.
 
-The SICK is a \gls*{2d} \gls*{lidar} with a scanning angle of \SI{270}{\degree}, a resolution of \SI{0.5}{\degree} and a acquisition frequency of \SI{50}{\hertz}. This sensor was placed on the \gls*{ptu} so that the dead angle face downward and it was rotated around the vertical axis (pan) at a speed of \SI{14.32}{\degree\per\second} for half a turn. This procedure allowed the acquisition of 628 \gls*{2d} scans of \SI{540}{\points}, later merged into a single \gls*{3d} point cloud.
+The SICK is a \gls*{2d} \gls*{lidar} with a scanning angle of \SI{270}{\degree}, a resolution of \SI{0.5}{\degree} and an acquisition frequency of \SI{50}{\hertz}. This sensor was placed on the \gls*{ptu} so that the dead angle faced downward. During acquisition, it was rotated around the vertical axis (pan) at a speed of \SI{14.32}{\degree\per\second} for half a turn, while the vehicle was stationary. This procedure allowed the acquisition of 628 \gls*{2d} scans of \SI{540}{\points}, later merged into a single \gls*{3d} point cloud.
 
-The Velodyne, for its part, directly allows \gls*{3d} point cloud acquisition by spinning 32 lasers around the vertical axis. These lasers are evenly distributed between \SI{-30.67}{\degree} and \SI{10.67}{\degree} relative to the horizontal plane. According to the Velodyne datasheet (\cite{VelodyneDatasheet}), the device acquires approximately \SI{700000}{\points\per\second} and publish at \SI{10}{\hertz}, therefore creating point clouds of \SI{70000}{\points}. Note that these point counts are variable because the rotation speed can change slightly and the use of the \gls*{udp} can lead to some loss of points. 
+The Velodyne, for its part, directly allows \gls*{3d} point cloud acquisition by spinning 32 lasers around its vertical axis. These lasers are evenly distributed between \SI{-30.67}{\degree} and \SI{10.67}{\degree} relative to the horizontal plane. According to the Velodyne datasheet (\cite{VelodyneDatasheet}), the device acquires approximately \SI{700000}{\points\per\second} and publishes at \SI{10}{\hertz}, therefore creating point clouds of \SI{70000}{\points}. Note that these point counts are variable as the rotation speed can change slightly and the use of the \gls*{udp} can lead to some loss of points. 
 
 Table~\ref{tab:slam_sensor_resolution} summarizes information about the sensors resolution and \gls*{fov} while Table~\ref{tab:slam_datasets} details the acquisition date and \gls*{lidar} sensor used for each of our datasets.
 
@@ -83,13 +83,13 @@ Table~\ref{tab:slam_sensor_resolution} summarizes information about the sensors 
     \centering
     \begin{tabular}{@{}lrrrrr@{}}
         \toprule
-    \makecell[lc]{\textbf{Sensor}}& \makecell[rc]{\textbf{Horizontal}\\\textbf{resolution}} & \makecell[rc]{\textbf{Vertical}\\\textbf{resolution}} & \makecell[rc]{\textbf{Minimum}\\\textbf{angle}} & \makecell[rc]{\textbf{Maximum}\\\textbf{angle}} & \makecell[rc]{\textbf{Points}\\\textbf{count}} \\
+    \makecell[lc]{\textbf{Sensor}}& \makecell[rc]{\textbf{Horizontal}\\\textbf{resolution}} & \makecell[rc]{\textbf{Vertical}\\\textbf{resolution}} & \makecell[rc]{\textbf{Minimum}\\\textbf{angle}} & \makecell[rc]{\textbf{Maximum}\\\textbf{angle}} & \makecell[rc]{\textbf{Point}\\\textbf{counts}} \\
         \hline
         SICK LMS151      & \SI{0.57}{\degree} & \SI{0.5}{\degree}  & \SI{-45.00}{\degree}  & \SI{90.00}{\degree}  & 339120 \\
         Velodyne HDL-32E & \SI{0.16}{\degree} & \SI{1.33}{\degree} & \SI{-30.68}{\degree}  & \SI{10.67}{\degree}  & 72000  \\
         \bottomrule
     \end{tabular}
-    \caption{Details about the point clouds created with our two \gls*{lidar}s. The minimum and maximum angles are given relative to an horizontal plane in the sensor frame of reference and both sensor report \SI{360}{\degree} around the vertical axis. The points count represent the maximum number of points in the resulting point cloud.}
+    \caption{Details about the point clouds created with our two \gls*{lidar}s. The minimum and maximum angles are given relative to an horizontal plane in the sensor frame of reference and both sensors report \SI{360}{\degree} around the vertical axis. The point counts represent the maximum number of points in the resulting point cloud.}
     \label{tab:slam_sensor_resolution}
 \end{table}
 
@@ -108,7 +108,7 @@ Table~\ref{tab:slam_sensor_resolution} summarizes information about the sensors 
     \label{tab:slam_datasets}
 \end{table}
 
-Examples of point clouds from our datasets are shown in Figure~\ref{fig:slam_pointclouds}. We observe that the unstructured environment is more congested and objects are closer to the sensor than for the structured environment. In fact, the average distance of points from the sensor in the unstructured environment is \SI{7.61}{\meter} compared to \SI{9.23}{\meter} for the structured environment. The percentage of points return using the SICK is \SI{82.6}{\percent} on average in the forest dataset compared to \SI{40.2}{\percent} in the structured dataset. These point clouds also illustrate the higher vertical resolution and larger \gls*{fov} of the SICK compared to the Velodyne. The influence of these factors will be discussed in Section~\ref{sec:chap_slam_results}.
+Examples of point clouds from our datasets are shown in Figure~\ref{fig:slam_pointclouds}. We observe that the unstructured environment is more congested and objects are closer to the sensor than for the structured environment. In fact, the average distance of points from the sensor in the unstructured environment is \SI{7.61}{\meter} compared to \SI{9.23}{\meter} for the structured environment. There is also more space without obstacle in the sensor range for the structured dataset. The percentage of points return using the SICK is \SI{82.6}{\percent} on average in the forest dataset compared to \SI{40.2}{\percent} in the structured dataset. These point clouds also illustrate the higher vertical resolution and larger \gls*{fov} of the SICK compared to the Velodyne. The influence of these factors will be discussed in Section~\ref{sec:chap_slam_results}.
 
 \begin{figure}[H]
     \centering
