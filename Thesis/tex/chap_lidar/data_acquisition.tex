@@ -1,4 +1,4 @@
-\section{Data acquisition}
+\section{Data Acquisition}
 \label{sec:chap_lidar_data_acquisition}
 
 In this section, we report on the relevant characteristics of the four sensors used in our dataset. We then describe the physical configuration of our test setup, then outline the weather condition pertaining to each of the six collected snowfalls. Finally, we describe how the information from the LiDARs was preprocessed before analysis.
@@ -25,7 +25,7 @@ The first element that gives a qualitative overview of the sensor performance is
     \label{tab:lidars}
 \end{table}
 
-\subsection{Setup configuration}
+\subsection{Setup Configuration}
 
 Data acquisition was conducted at Pouliot Hall of Laval University, where sensors were placed close to the inner wall of a window facing N\SI{50}{\degree}E. As shown in Figure~\ref{fig:setup}, a wooden structure held the sensors side by side at approximately \SI{14}{\meter} above the ground. The main scanning plane (i.e. XY plane in the sensor reference frame) formed a \SI{30}{\degree} angle with respect to the building wall, so as to increase the maximum distance as much as possible without having the laser beams hitting  trees or a pedestrian walkway present near the building. In addition, an RGB camera was placed alongside the LiDARs to provide visual information about the scene. In this configuration, a slight opening of the window allowed to keep the instruments inside while scanning outside. To avoid direct interference between sensors, corrugated plastic layers were placed between them. Figure~\ref{fig:view} shows the scene as observed by the RGB camera placed with the sensors.
 
@@ -43,7 +43,7 @@ Data acquisition was conducted at Pouliot Hall of Laval University, where sensor
     \label{fig:view}
 \end{figure}
 
-\subsection{Dataset description}
+\subsection{Dataset Description}
 Data acquisition started February~12 and ended on March~2. A total of 10 episodes were collected for a total of more than 50 hours of data. Recordings were made using the Robot Operating System (ROS)~\cite{ROSWeb}, which provides standardized data types as well as time synchronization. Data was acquired at different times of day and in a wide variety of conditions, covering a wide range of snowflakes size, falling rate and wind speed.  Table~\ref{tab:overview-dataset} provides an overview of our data\footnote{Wind speed, daily precipitation and temperature are reported from Québec City Jean Lesage International Airport at approximately \SI{9}{\km} from Laval University. Data is available here \cite{WeatherCanada}.}. Of these, six are used in the current study, as highlighted in this table. The dataset will be publicly available upon paper acceptance. %The target ground area also changed from different amount and type of snow to complete grass.
 
 \begin{table}[h]
@@ -68,7 +68,7 @@ Data acquisition started February~12 and ended on March~2. A total of 10 episode
     \label{tab:overview-dataset}
 \end{table}
 
-\subsection{Pre-selection of laser data}
+\subsection{Pre-Selection of Laser Data}
 For each sensor, we selected a combination of angles and laser rings (for the Velodyne) or angles (for the others) that had a clear view of the snow-covered ground surface. The actual details for each sensor are given in Table~\ref{tab:selectionScans}. The range of the ground in our scans was between $x = \SI{15}{\meter}$ to $x=\SI{22}{\meter}$, depending on the angle. To simplify the analysis, we considered as a snowflake echo any measurement which had a range reading of $x<\SI{14.5}{\meter}$. As will be shown later in sec.~\ref{sec:chap_lidar_histo}, this approximation is valid as the vast majority of those events happened for $x<\SI{10}{\meter}$. %Thus, any snowflakes echoes between $x>\SI{14.5}{\meter}$ and the snow-covered ground surface were negligible, for all four sensors.
 
 \begin{table}[h]

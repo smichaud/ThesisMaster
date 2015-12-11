@@ -16,12 +16,15 @@
 %\renewcommand\tabularxcolumn[1]{>{\Centering}p{#1}}
 \usepackage{makecell} % Cell auto line break for table \makecell{bla \\ bla}
 
+\usepackage{enumitem}
+
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{subfig}
 \usepackage{caption}
 \usepackage{color}
 \usepackage{siunitx}
+\DeclareSIUnit\points{points}
 %\usepackage{cite} % sort citation numbers automatically
 %\usepackage[numbers]{natbib}
 
@@ -58,6 +61,8 @@
 \include{./tex/pre/abstract}
 %\cleardoublepage
 
+\glsunsetall % Prevent acronyms from expanding for those sections
+
 \tableofcontents
 \cleardoublepage
 
@@ -66,6 +71,8 @@
 
 \listoffigures
 \cleardoublepage
+
+\glsresetall % Reactivate acronyms
 
 %\dedicace{Dédicace si désiré}
 %\cleardoublepage
