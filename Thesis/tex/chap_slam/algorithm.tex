@@ -82,75 +82,94 @@ Once the corresponding descriptors between two scans have been identified, they 
 \subsection{Overview of the Algorithm}
 \label{ssec:chap_slam_algo}
 
-The original version of the place recognition algorithm was presented in~\cite{Steder2010}. It uses features correspondences to find valid transformations between all pairs of scans. For each of these transformations, a score is computed. Based on the score, places are labelled as previously visited or not. Although this technique yield high recognition rates, it requires a lot of processing time. An enhanced version of the algorithm, that we used for our experiments, was presented in~\cite{Steder2011b}. To improve processing time, they select only pairs of scans with highest \gls*{bow} similarity for the scoring step. They also use the NARF features, which benefit from invariance to rotations. Algorithm~\ref{alg:chap_slam_overview} present a high level pseudocode of the overall scan matching process and Algorithm~\ref{} details the correspondences scoring steps. Note that for the experiments, we used a \textit{C++} implementation developed by Bastian Steder.
+The original version of the place recognition algorithm was presented in~\cite{Steder2010}. It uses features correspondences to find valid transformations between all pairs of scans. For each of these transformations, a score is computed. Based on the score, places are labelled as previously visited or not. Although this technique yield high recognition rates, it requires a lot of processing time. An enhanced version of the algorithm, that we used for our experiments, was presented in~\cite{Steder2011b}. To improve processing time, they select only pairs of scans with highest \gls*{bow} similarity for the scoring step. They also use the NARF features, which benefit from an invariance to rotations parameter. Algorithm~\ref{alg:chap_slam_overview} present a high level pseudocode of the overall scan matching process and Algorithm~\ref{} details the correspondences scoring steps. Note that for the experiments, we used a \textit{C++} implementation developed by Bastian Steder.
+\todo{includes a self- similarity analysis, (used to prevent false positives in area where very few distinctive structure like corridor)}
+\todo{Given a database of 3D scans and a scan as input query, our algorithm returns a set of scans which are potential matches with the input. Additionally, it calculates for every returned scan a transformation and a score reflecting how certain the system is that the scans actually match}
 
-\newcommand*\DNA{\textsc{dna}}
-\newcommand*\Let[2]{\State #1 $\gets$ #2}
-\algrenewcommand\algorithmicrequire{\textbf{Precondition:}}
-\algrenewcommand\algorithmicensure{\textbf{Postcondition:}}
 \begin{algorithm}
     \begin{algorithmic}[1]
-        \Require{$x$ and $y$ are packed \DNA strings of equal length $n$}
+        \INPUT
+        \Statex $scanDatabase$ : the complete database of previous scans (range images)
+        \Statex $newScan$ : the new scan to be processed
+        \OUTPUT
+        \Statex $potentialMatches$ : set of (scanDatabase potential match for the newScan, best relative transformation, transformation score)
         \Statex
-        \Function{findPotentialMatches}{$x, y$}
-        \Let{$z$}{$x \oplus y$} \Comment{$\oplus$: bitwise exclusive-or}
-        \Let{$\delta$}{$0$}
-        \For{$i \gets 1 \textrm{ to } n$}
-        \If{$z_i \neq 0$}
-        \Let{$\delta$}{$\delta + 1$}
+
+        \Function{findPotentialMatches}{$scanDatabase$, $newScan$}
+        \State $allDescriptors \gets \textsc{calculateAllDescriptors}(scanDatabase)$
+        \State $dictionary \gets \textsc{createDictionaryForBagOfWord}(allDescriptors)$
+
+        \State
+        \State $initSimilarities \gets \emptyset$ \Comment{Set of (scan reference, initial similarity score)}
+        \ForAll{$scan \in scanDatabase$}
+        \State $initSimilarities.append(\textsc{getInitialBagOfWordSimilarity}(scan, newScan))$
+        \EndFor
+        \State $sortedSimilarities \gets \textsc{sortByScore}(initSimilarities)$
+
+        \State
+        \State $potentialMatches \gets \emptyset$
+
+        \State $i = 1$
+        \While{$time \leq timeout$ \textbf{and} $i \leq |scanDatabase|$}
+        \State $possibleTransformations \gets \textsc{getPossibleTransformations}(sortedSimilarities_i)$
+        \State
+        \State $bestTransfoScore = -\infty$
+        \State $bestTransfo = null$
+        \ForAll{$transfo \in possibleTransformations$}
+        \State $transfoScore \gets \textsc{computeTransformationScore}(transfo)$
+        \State
+        \If{$transfoScore \geq acceptanceThreshold$}
+        \If{$transfoScore \geq bestTransfoScore$}
+        \State $bestTransfoScore \gets transfoScore$
+        \State $bestTransfo \gets transfo$
+        \EndIf
         \EndIf
         \EndFor
-        \State \Return{$\delta$}
+
+        \State
+        \If{$bestTransfo \neq null$}
+        \State $scan \gets \textsc{getScan}(sortedSimilarities_i)$
+        \State $potentialMatches.append(scan, bestTransfo, transfoScore)$
+        \EndIf
+
+        \State
+        \State $i \gets i+1$
+        \EndWhile
+
+        \State
+        \State \Return{$potentialMatches$}
         \EndFunction
     \end{algorithmic}
+
     \caption{High Level Place Recognition Process}
     \label{alg:chap_slam_overview}
 \end{algorithm}
 
-%\IncMargin{1em}
-%\begin{algorithm}[H]
-%\KwIn{MyInput}
-%\KwOut{An ordered list of potential matches with the score}
-%\SetKwFunction{KwFn}{Fn}{}{}
-%\KwFn{test}{The code}
-%\textbf{findPotentialMatches}(scansDatabase, scan)
-%\While{$time \le maxTime$}{
-%Compare next scan
-%\eIf{good score}{
-%go to next section\;
-%current section becomes this one\;
-%}{
-%go back to the beginning of current section\;
-%}
-%}
-%\Return{OrderedListOfPotentialMatches}
-%\caption{High Level Place Recognition Process}
-%\label{alg:chap_slam_overview}
-%\end{algorithm}
-%\DecMargin{1em}
-
-
+\todo{Little paragraph for details. The similarity is based on manathan or (euclidean) dist. The bow done by k-means.  Says that features from bow and correspondences are differents and create a Table~\ref{tab:chap_slam_narf_parameters} with the parameters}
 \begin{itemize}
     \item By design, NARF features encode the 3D pose, thus allowing a single correspondence to retrieve the relative pose between the scans.
-    \item Our system uses the estimated transformation to evaluate a candidate and in this way to more robustly reject false positives for place recognition
-    \item Our approach transforms a given 3D range scan into a range image and uses a combination of a bag-of-words approach and a point-feature-based estimation of relative poses that are then individually scored
-    \item Our algorithm described in this paper uses a novel feature type, an improved sensor model, includes a self- similarity analysis, and employs a bag-of-words approach as a preprocessing step to achieve a higher performance.
-    \item In our former work on place recognition [16] we used point feature correspondences to find candidate transfor- mations between scans and calculated scores for those transformations.
-    \item Rephrase this as intro : Given a database of 3D scans and a scan as input query, our algorithm returns a set of scans which are potential matches with the input. Additionally, it calculates for every returned scan a transformation and a score reflecting how certain the system is that the scans actually match
-    \item Parameters: Descriptor size = 36, Max feature count = bow(2000) match(200), support size = bow(1/10 avg range) match(1/5 avg range)
-    \item Basically what you want is to recopy III. A
-    \item Note: using local descriptor allows to find the transformation between the two scans == localization
-    \item Should I say that we used the rotation invariance param but it sucked
-    \item BOW: they use the 3D scans, 2000 narf per scan, use k-means, choose closest word in euclidean, also euclidean for histogram.
-    \item Each NARF encodes a full 3D transformation. Therefore, the knowledge about a single feature correspondence be- tween two scans enables us to retrieve all six degrees of freedom of the relative transformation between them (i.e., by calculating the difference between the two poses)
+\end{itemize}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{@{}lll@{}}
+        \toprule
+        \textbf{Parameter}  & \textbf{Value for \gls*{bow}} & \textbf{Value for correspondences} \\
+        \hline
+        Max. feature counts & 2000                          & 200                                \\
+        Descriptor size     & 36                            &                                    \\
+        Support size        & 1/10 avg. range               & 1/5 avg. range                     \\
+        \bottomrule
+    \end{tabular}
+    \caption{\todo{Describe what parameters means, }}
+    \label{tab:chap_slam_narf_parameters}
+\end{table}
+
+\begin{itemize}
     \item To obtain the candidate transformations for each scan pair, we order the feature pairs according to increasing descriptor distance (see Section III-B) and evaluate the transformations in this order. In other words, we calculate a score for each of these transformations (see Section III-E) (they stop after 2000)
     \item The result of the feature matching is a list of relative poses Tk = Tk1,...,Tkn for the candidate pair ?. Our goal now is to evaluate those candidate transformations and calculate a score (likelihood) for each ? reflecting the confidence of the transformation given a model of our sensor
     \item Let P be a set of validation points from the query scan z*. This set P could contain all points from z* but we will only use a representative subset of z* as described at the end of this section.
     \item Section E describe the scoring method\dots
     \item They compute a score for each point, then use these to compute the total score\dots. I cannot describe that, refer section III E
-    \item Briefly talk about the self similarity (used to prevent false positives in area where very few distinctive structure like corridor)
-    \item
-    \item
-    \item
 \end{itemize}
 

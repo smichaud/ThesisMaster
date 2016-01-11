@@ -8,6 +8,7 @@
 
 \usepackage{mathpazo}         % texte et mathématiques en Palatino
 \usepackage{mathptmx}         % texte et mathématiques en Times
+\usepackage{mathtools}
 
 \usepackage{booktabs}
 \usepackage[para,flushleft]{threeparttable}
@@ -18,8 +19,12 @@
 
 \usepackage{enumitem}
 
-%\usepackage[linesnumbered,vlined,ruled]{algorithm2e}
+\usepackage{tikz}
 \usepackage{algpseudocode,algorithm,algorithmicx}
+\algnewcommand\algorithmicinput{\textbf{Input:}}
+\algnewcommand\INPUT{\item[\algorithmicinput]}
+\algnewcommand\algorithmicoutput{\textbf{Output:}}
+\algnewcommand\OUTPUT{\item[\algorithmicoutput]}
 
 \usepackage{float}
 \usepackage{graphicx}
