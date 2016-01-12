@@ -45,7 +45,7 @@ The concepts of keypoints and descriptors originate from the computer vision lit
 \subsubsection{NARF Features and Range Image}
 \label{ssub:NARF Features and Range Image}
 
-For our place recognition analysis we choose to use the NARF keypoints and descriptors. The computation of those features requires a pre-processing step, which consist in converting the point cloud into a range image. We will see in Section~\ref{ssec:chap_slam_algo} that the place recognition algorithm rely on this \gls*{3d} representation to determine a matching score between scans.
+For our place recognition analysis we choose to use the NARF keypoints and descriptors. The computation of those features requires a preprocessing step, which consist in converting the point cloud into a range image. We will see in Section~\ref{ssec:chap_slam_algo} that the place recognition algorithm rely on this \gls*{3d} representation to determine a matching score between scans.
 
 Overall, a range image is a spherical projection of the points from the center of the sensor, but some constraints must be respected for its creation. Firstly, there must be no missing point in the scan. Since this is not respected for our data, all missing points are considered as far range (i.e. the maximum range of the sensor). In addition, the resolution has to be adjusted so that each pixel of the resulting range image covers the same angle in both directions. Finally, this conversion requires the acquisition to originate from a single view point and to have a single range value per pixel. It is therefore not possible to use point clouds acquired with multi-echoes \gls*{lidar}s or produced by merging multiple scans. This constraint is already respected in our datasets. Examples of range images can be seen in Figure~\ref{fig:chap_slam_range}.
 
@@ -82,9 +82,20 @@ Once the corresponding descriptors between two scans have been identified, they 
 \subsection{Overview of the Algorithm}
 \label{ssec:chap_slam_algo}
 
-The original version of the place recognition algorithm was presented in~\cite{Steder2010}. It uses features correspondences to find valid transformations between all pairs of scans. For each of these transformations, a score is computed. Based on the score, places are labelled as previously visited or not. Although this technique yield high recognition rates, it requires a lot of processing time. An enhanced version of the algorithm, that we used for our experiments, was presented in~\cite{Steder2011b}. To improve processing time, they select only pairs of scans with highest \gls*{bow} similarity for the scoring step. They also use the NARF features, which benefit from an invariance to rotations parameter. Algorithm~\ref{alg:chap_slam_overview} present a high level pseudocode of the overall scan matching process and Algorithm~\ref{} details the correspondences scoring steps. Note that for the experiments, we used a \textit{C++} implementation developed by Bastian Steder.
-\todo{includes a self- similarity analysis, (used to prevent false positives in area where very few distinctive structure like corridor)}
-\todo{Given a database of 3D scans and a scan as input query, our algorithm returns a set of scans which are potential matches with the input. Additionally, it calculates for every returned scan a transformation and a score reflecting how certain the system is that the scans actually match}
+The original version of the place recognition algorithm was presented in~\cite{Steder2010}. It uses features correspondences to find valid transformations between all pairs of scans. Using a series of rules, a score is assigned to each transformation. This score reflects the system belief of this transformation to be an actual match. Although this technique yield high recognition rates, it requires a lot of processing time. An enhanced version of the algorithm, that we used for our experiments, was presented in~\cite{Steder2011b}. To improve processing time, they select only pairs of scans with the highest \gls*{bow} similarity for the scoring step. Also, because the first version of the algorithm yield poor result in area with less distinctive structure, they added a self-similarity analysis. Using the score of the best non-identity transformation of a scan with respect to itself, they adjust the score with respect to the other scans, thereby reducing the number of false positive. Finally, they use the NARF features, which benefit from a rotation invariance parameter. Algorithm~\ref{alg:chap_slam_overview} present a high level pseudocode of the general scan matching process. Note that for the experiments, we used a \textit{C++} implementation developed by Bastian Steder.
+
+\todo{Working on that paragraph}
+In Algorithm~\ref{alg:chap_slam_overview}, \gls*{bow} descriptors are computed at line~\ref{alg:bow_descriptors} and features are computed later at line~\ref{alg:test}. These two steps are both based on NARF features, but they use different parameters. Authors explain that: \enquote{For the BoW approach a high number of features describing small parts of the environment is most useful\dots However, when matching a new query [scan] $z*$ against D [the database], a smaller number of more distinctive features is needed}. Table~\ref{tab:chap_slam_narf_parameters} shows the feature parameters used for those two steps.
+
+In Algorithm~\ref{alg:chap_slam_overview} the \textsc{createDictionaryForBagOfWord} function create 200 words (i.e clusters) using k-means. Using the output dictionary,
+
+\todo{The similarity is based on (narf=manathan) or (bow=euclidean) dist.}
+\todo{each descriptor encore 3d transform, ordered by descriptor distance to find best transformations}
+\todo{Say that the scoring method is described in Section 3 E, but is to long to detail here}
+
+\begin{itemize}
+    \item To obtain the candidate transformations for each scan pair, we order the feature pairs according to increasing descriptor distance (see Section III-B) and evaluate the transformations in this order. In other words, we calculate a score for each of these transformations (see Section III-E) (they stop after 2000)
+\end{itemize}
 
 \begin{algorithm}
     \begin{algorithmic}[1]
@@ -96,31 +107,33 @@ The original version of the place recognition algorithm was presented in~\cite{S
         \Statex
 
         \Function{findPotentialMatches}{$scanDatabase$, $newScan$}
-        \State $allDescriptors \gets \textsc{calculateAllDescriptors}(scanDatabase)$
-        \State $dictionary \gets \textsc{createDictionaryForBagOfWord}(allDescriptors)$
-
-        \State
-        \State $initSimilarities \gets \emptyset$ \Comment{Set of (scan reference, initial similarity score)}
+        \State $allBowDescriptors \gets \textsc{calculateAllDescriptorsForBagOfWords}(scanDatabase)$ \label{alg:bow_descriptors}
+        \State $dictionary \gets \textsc{createDictionaryForBagOfWords}(allBowDescriptors)$
+        \State $newScanBow \gets \textsc{computeBagOfWords}(newScan, dictionary)$ \Comment{Keep scan reference}
+        \State \State $initSimilarities \gets \emptyset$ \Comment{Set of (scan reference, initial similarity score)}
         \ForAll{$scan \in scanDatabase$}
-        \State $initSimilarities.append(\textsc{getInitialBagOfWordSimilarity}(scan, newScan))$
+        \State $scanBow \gets \textsc{computeBagOfWords}(scan, dictionary)$
+        \State $initSimilarities.append(\textsc{getInitSimilarity}(scanBow, newScanBow))$ \label{alg:init_similarities}
         \EndFor
         \State $sortedSimilarities \gets \textsc{sortByScore}(initSimilarities)$
 
         \State
-        \State $potentialMatches \gets \emptyset$
-
-        \State $i = 1$
+        \State $potentialMatches \gets \emptyset$, $i \gets 1$
+        \State $newScanFeatures \gets \textsc{getScanFeatures}(newScan)$
         \While{$time \leq timeout$ \textbf{and} $i \leq |scanDatabase|$}
-        \State $possibleTransformations \gets \textsc{getPossibleTransformations}(sortedSimilarities_i)$
+        \State $scan \gets \textsc{getScan}(sortedSimilarities_i)$
+        \State $scanFeatures \gets \textsc{getScanFeatures}(scan)$ \Comment{Each feature encodes the 3D pose} \todo{max 2000}
+        \State $sortedMatches \gets \textsc{getSortedFeatureMatches}(scanFeatures, newScanFeatures)$ \label{alg:ordered_matches}
+
         \State
-        \State $bestTransfoScore = -\infty$
-        \State $bestTransfo = null$
-        \ForAll{$transfo \in possibleTransformations$}
-        \State $transfoScore \gets \textsc{computeTransformationScore}(transfo)$
+        \State $bestTransfoScore = -\infty$, $bestTransfo \gets null$
+        \ForAll{$match \in sortedMatches$} \Comment{Following ascending order}
+        \State $transfo,score \gets \textsc{computeMatchTransfoAndScore}(match)$
+
         \State
-        \If{$transfoScore \geq acceptanceThreshold$}
-        \If{$transfoScore \geq bestTransfoScore$}
-        \State $bestTransfoScore \gets transfoScore$
+        \If{$score \geq scoreAcceptanceThreshold$}
+        \If{$score \geq bestTransfoScore$}
+        \State $bestTransfoScore \gets score$
         \State $bestTransfo \gets transfo$
         \EndIf
         \EndIf
@@ -128,8 +141,7 @@ The original version of the place recognition algorithm was presented in~\cite{S
 
         \State
         \If{$bestTransfo \neq null$}
-        \State $scan \gets \textsc{getScan}(sortedSimilarities_i)$
-        \State $potentialMatches.append(scan, bestTransfo, transfoScore)$
+        \State $potentialMatches.append(scan, bestTransfo, bestTransfoScore)$
         \EndIf
 
         \State
@@ -145,11 +157,6 @@ The original version of the place recognition algorithm was presented in~\cite{S
     \label{alg:chap_slam_overview}
 \end{algorithm}
 
-\todo{Little paragraph for details. The similarity is based on manathan or (euclidean) dist. The bow done by k-means.  Says that features from bow and correspondences are differents and create a Table~\ref{tab:chap_slam_narf_parameters} with the parameters}
-\begin{itemize}
-    \item By design, NARF features encode the 3D pose, thus allowing a single correspondence to retrieve the relative pose between the scans.
-\end{itemize}
-
 \begin{table}[H]
     \centering
     \begin{tabular}{@{}lll@{}}
@@ -157,19 +164,11 @@ The original version of the place recognition algorithm was presented in~\cite{S
         \textbf{Parameter}  & \textbf{Value for \gls*{bow}} & \textbf{Value for correspondences} \\
         \hline
         Max. feature counts & 2000                          & 200                                \\
-        Descriptor size     & 36                            &                                    \\
+        Descriptor size     & 36                            & 36                                 \\
         Support size        & 1/10 avg. range               & 1/5 avg. range                     \\
         \bottomrule
     \end{tabular}
-    \caption{\todo{Describe what parameters means, }}
+    \caption{\todo{}}
     \label{tab:chap_slam_narf_parameters}
 \end{table}
-
-\begin{itemize}
-    \item To obtain the candidate transformations for each scan pair, we order the feature pairs according to increasing descriptor distance (see Section III-B) and evaluate the transformations in this order. In other words, we calculate a score for each of these transformations (see Section III-E) (they stop after 2000)
-    \item The result of the feature matching is a list of relative poses Tk = Tk1,...,Tkn for the candidate pair ?. Our goal now is to evaluate those candidate transformations and calculate a score (likelihood) for each ? reflecting the confidence of the transformation given a model of our sensor
-    \item Let P be a set of validation points from the query scan z*. This set P could contain all points from z* but we will only use a representative subset of z* as described at the end of this section.
-    \item Section E describe the scoring method\dots
-    \item They compute a score for each point, then use these to compute the total score\dots. I cannot describe that, refer section III E
-\end{itemize}
 
