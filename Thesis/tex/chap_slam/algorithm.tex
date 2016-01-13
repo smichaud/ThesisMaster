@@ -84,10 +84,7 @@ Once the corresponding descriptors between two scans have been identified, they 
 
 The original version of the place recognition algorithm was presented in~\cite{Steder2010}. It uses features correspondences to find valid transformations between all pairs of scans. Using a series of rules, a score is assigned to each transformation. This score reflects the system belief of this transformation to be an actual match. Although this technique yield high recognition rates, it requires a lot of processing time. An enhanced version of the algorithm, that we used for our experiments, was presented in~\cite{Steder2011b}. To improve processing time, they select only pairs of scans with the highest \gls*{bow} similarity for the scoring step. Also, because the first version of the algorithm yield poor result in area with less distinctive structure, they added a self-similarity analysis. Using the score of the best non-identity transformation of a scan with respect to itself, they adjust the score with respect to the other scans, thereby reducing the number of false positive. Finally, they use the NARF features, which benefit from a rotation invariance parameter. Algorithm~\ref{alg:chap_slam_overview} present a high level pseudocode of the general scan matching process. Note that for the experiments, we used a \textit{C++} implementation developed by Bastian Steder.
 
-\todo{Working on that paragraph}
-In Algorithm~\ref{alg:chap_slam_overview}, \gls*{bow} descriptors are computed at line~\ref{alg:bow_descriptors} and features are computed later at line~\ref{alg:test}. These two steps are both based on NARF features, but they use different parameters. Authors explain that: \enquote{For the BoW approach a high number of features describing small parts of the environment is most useful\dots However, when matching a new query [scan] $z*$ against D [the database], a smaller number of more distinctive features is needed}. Table~\ref{tab:chap_slam_narf_parameters} shows the feature parameters used for those two steps.
-
-In Algorithm~\ref{alg:chap_slam_overview} the \textsc{createDictionaryForBagOfWord} function create 200 words (i.e clusters) using k-means. Using the output dictionary,
+In Algorithm~\ref{alg:chap_slam_overview}, \gls*{bow} feature descriptors are computed at line~\ref{alg:bow_descriptors} and other features are computed later at lines~\ref{algo:features_1} and~\ref{algo:features_2}. These are both based on NARF features, but they use different parameters. Authors explain that: \enquote{For the BoW approach a high number of features describing small parts of the environment is most useful\dots However, when matching a new query [scan] $z*$ against D [the database], a smaller number of more distinctive features is needed}. Table~\ref{tab:chap_slam_narf_parameters} shows the feature parameters used for those two cases. \gls*{bow} descriptors are used by the \textsc{createDictionaryForBagOfWord} function, which create 200 words (i.e clusters) using k-means. Using the output dictionary,
 
 \todo{The similarity is based on (narf=manathan) or (bow=euclidean) dist.}
 \todo{each descriptor encore 3d transform, ordered by descriptor distance to find best transformations}
@@ -119,25 +116,22 @@ In Algorithm~\ref{alg:chap_slam_overview} the \textsc{createDictionaryForBagOfWo
 
         \State
         \State $potentialMatches \gets \emptyset$, $i \gets 1$
-        \State $newScanFeatures \gets \textsc{getScanFeatures}(newScan)$
+        \State $newScanFeatures \gets \textsc{getScanFeatures}(newScan)$  \Comment{Each feature encodes the 3D pose} \label{algo:features_1}
         \While{$time \leq timeout$ \textbf{and} $i \leq |scanDatabase|$}
         \State $scan \gets \textsc{getScan}(sortedSimilarities_i)$
-        \State $scanFeatures \gets \textsc{getScanFeatures}(scan)$ \Comment{Each feature encodes the 3D pose} \todo{max 2000}
+        \State $scanFeatures \gets \textsc{getScanFeatures}(scan)$ \Comment{Each feature encodes the 3D pose} \label{algo:features_2}
         \State $sortedMatches \gets \textsc{getSortedFeatureMatches}(scanFeatures, newScanFeatures)$ \label{alg:ordered_matches}
 
         \State
-        \State $bestTransfoScore = -\infty$, $bestTransfo \gets null$
-        \ForAll{$match \in sortedMatches$} \Comment{Following ascending order}
-        \State $transfo,score \gets \textsc{computeMatchTransfoAndScore}(match)$
-
-        \State
-        \If{$score \geq scoreAcceptanceThreshold$}
-        \If{$score \geq bestTransfoScore$}
+        \State $j \gets 1$, $bestTransfoScore = -\infty$, $bestTransfo \gets null$
+        \While{$j \leq |sortedMatches|$ \textbf{and} $j \leq 2000$} 
+        \State $transfo,score \gets \textsc{computeMatchTransfoAndScore}(sortedMatches_j)$
+        \If{$score \geq scoreAcceptanceThreshold$ \textbf{and} $score \geq bestTransfoScore$}
         \State $bestTransfoScore \gets score$
         \State $bestTransfo \gets transfo$
         \EndIf
-        \EndIf
-        \EndFor
+        \State $j \gets j + 1$
+        \EndWhile
 
         \State
         \If{$bestTransfo \neq null$}
