@@ -45,9 +45,9 @@ The concepts of keypoints and descriptors originate from the computer vision lit
 \subsubsection{NARF Features and Range Image}
 \label{ssub:NARF Features and Range Image}
 
-For our place recognition analysis we choose to use the NARF keypoints and descriptors. The computation of those features requires a preprocessing step, which consist in converting the point cloud into a range image. We will see in Section~\ref{ssec:chap_slam_algo} that the place recognition algorithm rely on this \gls*{3d} representation to determine a matching score between scans.
+For our place recognition analysis, we choose to use the NARF keypoints and descriptors. The computation of those features requires a preprocessing step, which consist in converting the point cloud into a range image. We will see in Section~\ref{ssec:chap_slam_algo} that the place recognition algorithm rely on this \gls*{3d} representation to determine a matching score between scans.
 
-Overall, a range image is a spherical projection of the points from the center of the sensor, but some constraints must be respected for its creation. Firstly, there must be no missing point in the scan. Since this is not respected for our data, all missing points are considered as far range (i.e. the maximum range of the sensor). In addition, the resolution has to be adjusted so that each pixel of the resulting range image covers the same angle in both directions. Finally, this conversion requires the acquisition to originate from a single view point and to have a single range value per pixel. It is therefore not possible to use point clouds acquired with multi-echoes \gls*{lidar}s or produced by merging multiple scans. This constraint is already respected in our datasets. Examples of range images can be seen in Figure~\ref{fig:chap_slam_range}.
+Overall, range images are spherical projection of the points from the center of the sensor, but some constraints must be satisfied for its creation. Firstly, there must be no missing points in the scan. Since this is not satisfied for our data, all missing points are considered as far range (i.e. the maximum range of the sensor). In addition, the resolution has to be adjusted so that each pixel of the resulting range image covers the same angular resolution vertically and horizontally. Finally, this conversion requires the acquisition to originate from a single view point and to have a single range value per pixel. It is therefore not possible to use point clouds acquired with multi-echoes \gls*{lidar}s or produced by merging multiple scans. Fortunately, the latter constraint is met in our datasets. Examples of range images can be seen in Figure~\ref{fig:chap_slam_range}.
 
 The converted scans has a dense and uniform representation that can be advantageously processed like greyscale images. Using these range images, NARF features are able to differentiate edges that are part of the boundary of objects as opposed to edges that are produced by occlusions, which is not possible using point clouds directly. This is useful in highly occluded environments such as forest, where edges caused by occlusions can generate meaningless features. This in turn leads to a poor representation of the environment, which can reduce the place recognition performance.
 
@@ -90,7 +90,25 @@ The first produced descriptors are used by the \textsc{createDictionaryForBagOfW
 
 The features created using the second set of parameters are used to find potential transformations between each database scan and the input scan. Since each NARF feature encodes its 3D pose, a single features match allows to determine the transformation between the two scans. Therefore, there is up to 2000 transformations to be tested for each scan from the database. To determine the corresponding features, all pairs of features (one from the processed database scan and one from the input scan) are then ordered by ascending order according to their Manhattan distance in the space of descriptors. Again, descriptors with a small distance between them are more similar and therefore more likely to be valid matches.
 
-Although the transformation scoring algorithm is an important part of this place recognition framework, our focus is more on the impact of the environments on the result. Therefore, we will only a general idea of its functioning, which is sufficient for our analysis.
+Although the transformation scoring algorithm is not detailed in Algorithm~\ref{alg:chap_slam_overview}, it is an important part of the place recognition framework that we will briefly describe here.
+\begin{itemize}
+    \item given a model of our sensor
+    \item from the sensor’s origin along a line to the measured point
+    \item Validation point from the query scan
+    \item we can calculate the pixel position p in the range image of zk in which the point p would fall into as well as the range value r the point should have.
+    \item we will now calculate a score and a weight reflecting how good the r prediction is explained by the observation
+\end{itemize}
+They then give a score following a predefined procedure for every possible cases:
+\begin{itemize}
+    \item The observation is within a confidence interval, therefore representing blabla.
+    \item The observed range is larger than the predicted one
+    \item The observed range is smaller than the predicted range
+    \item The point is unobserved in the database range image
+    \item The point is a far range reading in the range image from the database
+\end{itemize}
+The final score is a function of all points computed for the match. 
+To avoid a small error in the transformation to cause low score, they also consider neighbors in small pixel radius.
+They dont do it on all points of the scans (it would be too long), but rather use a subsample of points that better cover the 3D space.
 
 \begin{algorithm}
     \begin{algorithmic}[1]
