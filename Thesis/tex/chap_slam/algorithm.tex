@@ -90,25 +90,17 @@ The first produced descriptors are used by the \textsc{createDictionaryForBagOfW
 
 The features created using the second set of parameters are used to find potential transformations between each database scan and the input scan. Since each NARF feature encodes its 3D pose, a single features match allows to determine the transformation between the two scans. Therefore, there is up to 2000 transformations to be tested for each scan from the database. To determine the corresponding features, all pairs of features (one from the processed database scan and one from the input scan) are then ordered by ascending order according to their Manhattan distance in the space of descriptors. Again, descriptors with a small distance between them are more similar and therefore more likely to be valid matches.
 
-Although the transformation scoring algorithm is not detailed in Algorithm~\ref{alg:chap_slam_overview}, it is an important part of the place recognition framework that we will briefly describe here.
+Although the candidate transformation scoring process is not detailed (line~\ref{alg:transfo_score}), it is an important part of the place recognition framework that we will briefly describe here. As explained in Section~\ref{ssec:chap_slam_basics}, range images are linked to the \gls*{lidar} sensor model. Each pixel represent the range from the origin of the sensor to the target for a specific angular position. Given that the input scan ($z^*$) have already been aligned with the database scan ($z^i$), one can easily determine where the pixel $p^*$ from $z^*$ will fall into $z^i$, as well as the range value it should have. Let $r^*$ be the range of the processed point in $z^*$ and $r^i$ the range of the corresponding point in $z^i$. A score representing how good $r^*$ is explained by $r^i$ can be computed according to different scenarios:
 \begin{itemize}
-    \item given a model of our sensor
-    \item from the sensor’s origin along a line to the measured point
-    \item Validation point from the query scan
-    \item we can calculate the pixel position p in the range image of zk in which the point p would fall into as well as the range value r the point should have.
-    \item we will now calculate a score and a weight reflecting how good the r prediction is explained by the observation
-\end{itemize}
-They then give a score following a predefined procedure for every possible cases:
-\begin{itemize}
-    \item The observation is within a confidence interval, therefore representing blabla.
-    \item The observed range is larger than the predicted one
+    \item The observation is within a confidence interval, therefore representing a good match and improving the score.
+    \item The observed range is larger than the predicted one, therefore 
     \item The observed range is smaller than the predicted range
     \item The point is unobserved in the database range image
     \item The point is a far range reading in the range image from the database
 \end{itemize}
-The final score is a function of all points computed for the match. 
-To avoid a small error in the transformation to cause low score, they also consider neighbors in small pixel radius.
-They dont do it on all points of the scans (it would be too long), but rather use a subsample of points that better cover the 3D space.
+This scoring process is applied to all validation points and the final score for the candidate transformation is a function of those individual point scores. To avoid a small error in the transformation to cause low score, they not only consider the exact matching points, but also neighbors in small pixel radius. Finally, note that the set of validation point is a subsample of points evenly covering the 3D space, since using all points from the input scan would be too expensive to compute.
+
+In the next section (Section~\ref{sec:chap_slam_results}), we will explain how we use this algorithm for our place recognition analysis.
 
 \begin{algorithm}
     \begin{algorithmic}[1]
@@ -141,7 +133,7 @@ They dont do it on all points of the scans (it would be too long), but rather us
         \State
         \State $j \gets 1$, $bestTransfoScore = -\infty$, $bestTransfo \gets null$
         \While{$j \leq |sortedMatches|$ \textbf{and} $j \leq 2000$} 
-        \State $transfo,score \gets \textsc{computeMatchTransfoAndScore}(sortedMatches_j)$
+        \State $transfo,score \gets \textsc{computeMatchTransfoAndScore}(sortedMatches_j)$ \label{alg:transfo_score}
         \If{$score \geq scoreAcceptanceThreshold$ \textbf{and} $score \geq bestTransfoScore$}
         \State $bestTransfoScore \gets score$
         \State $bestTransfo \gets transfo$
@@ -171,14 +163,14 @@ They dont do it on all points of the scans (it would be too long), but rather us
     \centering
     \begin{tabular}{@{}lll@{}}
         \toprule
-        \textbf{Parameter}  & \textbf{Value for \gls*{bow}} & \textbf{Value for correspondences} \\
+        \textbf{Parameters}  & \textbf{Values for \gls*{bow}} & \textbf{Values for the features matching} \\
         \hline
         Max. feature counts & 2000                          & 200                                \\
         Descriptor size     & 36                            & 36                                 \\
         Support size        & 1/10 avg. range               & 1/5 avg. range                     \\
         \bottomrule
     \end{tabular}
-    \caption{\todo{}}
+    \caption{The set of NARF parameters used for the \gls*{bow} preprocessing and the features matching. Note that the support size is a proportion of the average range of all points in the database.}
     \label{tab:chap_slam_narf_parameters}
 \end{table}
 
