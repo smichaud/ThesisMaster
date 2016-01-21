@@ -171,19 +171,19 @@ This scoring process is applied to all validation points and the final score for
         \toprule % Observation = database, Prediction = input scan
         \textbf{Ranges relation}         & \textbf{Explanation}                                                                                                    & \textbf{Effect on the score} \\
         \hline                           
-        $|r^i - r^*| < \Delta r_{max}$   & The difference between $r^i$ and $r^*$ is within the confidence range. This is most likely a valid correspondence       & Reward $\propto 1-\frac{|r^i-r^*|}{\Delta r_{max}}$ \\
+        $|r^i - r^*| < \Delta r_{max}$   & The difference between $r^i$ and $r^*$ is within the confidence range. This is most likely a valid correspondence.      & Reward $\propto 1-\frac{|r^i-r^*|}{\Delta r_{max}}$ \\
         $r^i - r^* > \Delta r_{max}$     & The range of the pixel from the database scan is larger than the corresponding pixel from the input scan. This could be caused by a dynamic or partially transparent obstacle, but this is more likely caused by a wrong transformation. & High penalty \\
         $r^i - r^* < -\Delta r_{max}$    & The range of the pixel from the database scan is smaller than the range of the corresponding pixel from the input scan, leading to two subcases : & \\
-                                         & 1)                                                                                                                      & Low penalty \\
-                                         & 2)                                                                                                                      & High penalty \\
-        $\nexists : r^i \correspond r^*$ & The pixel from the input scan ends up outside of the database scan limit (there is no reference for this point)                  & Low penalty \\
-        $r^i \ge MAX$                    & The range of the pixel from the database scan is larger or equal to the sensor maximum reading range.                   & \\
-                                         & 1)                                                                                                                      & High penalty \\
-                                         & 2)                                                                                                                      & Medium penalty \\
+                                         & 1) A known obstacle in the database scan hides the pixel from the input scan.                                           & Low penalty \\
+                                         & 2) The pixel does not exist in the input scan. This could be caused by an unseen or dynamic obstacle, but it is more likely caused by a wrong transformation.       & High penalty \\
+        $\nexists : r^i \correspond r^*$ & The pixel from the input scan ends up outside of the database scan limit (i.e. there is no reference for this point).   & Low penalty \\
+        $r^i \ge MAX$                    & The range of the pixel from the database scan is larger or equal to the sensor maximum reading range, leading to two subcases : & \\
+                                         & 1) Based on the value of the input scan pixel, the corresponding pixel of the database should be closer to the sensor.  & High penalty \\
+                                         & 2) The pixel of the database scan moved away from the sensor and could possibly be out of range.                        & Medium penalty \\
         \bottomrule
     \end{tabular}
-    \caption{A summary of the different scenarios for scoring corresponding pixels of the range images. The range of the pixel from the input scan is $r^*$ and the range of the corresponding pixel from the database scan is $r^i$. $\Delta r_{max}$ is a positive value representing the maximum difference in range between the pixels to be considered as a valid correspondence and $MAX$ is the maximum range for the given sensor.}
+    \caption{A summary of the different scenarios for scoring corresponding pixels of the range images. The range of the pixel from the input scan is $r^*$ and the range of the corresponding pixel from the database scan is $r^i$. Note that, $\Delta r_{max}$ is a positive value representing the maximum difference in range between the pixels to be considered as a valid correspondence and $MAX$ is the maximum range for the given sensor.}
     \label{tab:chap_slam_scoring_scenarios}
 \end{table}
 
-In the next section (Section~\ref{sec:chap_slam_results}), we will explain how we use this algorithm for our place recognition analysis.
+This concludes the general overview of the place recognition algorithm. In Section~\ref{sec:chap_slam_results}, we will explain how we use it to compare the impact of different environments on the recognition performance.
