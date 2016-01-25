@@ -1,3 +1,47 @@
 \chapter{\chapzerotitle}
 \label{chap:literature_review}
 
+General structure (put all here for now)
+\begin{itemize}
+    \item Features (tackle DNN), 
+    \item Machine learning ?
+    \item Genereal navigation in complex environments
+\end{itemize}
+
+\section{Introduction}
+Literature review helps understand what was done and determine what is unexplored\dots
+We will present general articles related to ugv navigation in outdoor environments, but section X and Y will presents a short literature review more related to the topics of the chapters.
+
+
+\section{Sensors}
+Sensors are the basis of navigation. Sensor characterization, fusion, calibration\dots
+
+~\cite{Bosch2001}:
+Review usual lidar techniques (pulsed, phase-shift and frequency modulated continuous wave), basics then limitations.
+
+
+\section{Features}
+Don't know if I need this section\dots Bring table about features here if I do
+
+
+\section{SLAM Complex Environments}
+Brief overview of slam techniques, section will focus on articles related to place recognition using lidar
+
+~\cite{Hussein2015}:
+Geolocation of ugv in forest (horizontal position) by finding geometric match between a map of observed tree stems using onboard lidar with a map generated from the structure of thee crowns from high resolution aerial orthoimagery of the forest canopy. No need for a priori knowledge of the area surrounding the robot, only input is the geometry of detected tree stems.
+
+State that 2D solutions for slam pretty much meet our needs, they yield precise results in real time\dots
+
+~\cite{Grisetti2007}: Gmapping,
+They use a particle filter to solve SLAM (grid map). Each particle carry an individual map. They take into account the movement but also the most recent observations, which decrease uncertainty. They use selective selective resampling to reduce the problem of particle depletion. They do indoor AND outdoor. 
+
+~\cite{Kohlbrecher2011}: Hector mapping,
+Focus on search and rescue. Learn map of unknown environments, occupancy grid, low computational resources. Lidar + IMU. Fast approximation of map gradients and multi resolution grids. Pretend they don't need explicit loop closure\dots
+
+
+Then they start using 3D, this is more applicable to complex environments (remove some assumptions)
+
+~\cite{Magnusson2009}:
+This is NDT. First in my knowledge to do loop closure based on 3D laser scans. Address the problems of greater amount of data (3D vs 2D) and the 3D rotation invariance. NDT surface representation to create feature histograms based on the surface orientation and smoothness (this compress data). Rotation invariance via alignment of dominant surface orientations.
+
+~\cite{}
