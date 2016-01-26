@@ -1,12 +1,6 @@
 \chapter{\chapzerotitle}
 \label{chap:literature_review}
 
-General structure (put all here for now)
-\begin{itemize}
-    \item Features (tackle DNN), 
-    \item Machine learning ?
-    \item Genereal navigation in complex environments
-\end{itemize}
 
 \section{Introduction}
 Literature review helps understand what was done and determine what is unexplored\dots
@@ -20,12 +14,16 @@ Sensors are the basis of navigation. Sensor characterization, fusion, calibratio
 Review usual lidar techniques (pulsed, phase-shift and frequency modulated continuous wave), basics then limitations.
 
 
-\section{Features}
-Don't know if I need this section\dots Bring table about features here if I do
+\section{Features and Machine Learning}
+Bring table about features here if I do. Might want to include the part about tree features discussed in the next section. Put comparative analysis. Tackle DNN.
+~\cite{Steder2011a} NARF, ~\cite{Rusu2009} FPFH, ~\cite{Yu2009} ISS, ~\cite{Tombari2010} SHOT, ~\cite{Harris1988} Harris, ~\cite{Lowe2004} SIFT, ~\cite{Bay2006} SURF
+
+~\cite{Filipe2014}:
+Comparative evalutation of 3D Keypoint Detectors in RGB-D Obeject dataset. They verify the invariance of the 3D keypoints detectors to rotaions, scales and translation.
 
 
 \section{SLAM Complex Environments}
-Brief overview of slam techniques, section will focus on articles related to place recognition using lidar
+Brief overview of slam techniques, section will focus on articles related to place recognition using lidar. Might want to say that we are mainly concern by the forested environments here. 
 
 ~\cite{Hussein2015}:
 Geolocation of ugv in forest (horizontal position) by finding geometric match between a map of observed tree stems using onboard lidar with a map generated from the structure of thee crowns from high resolution aerial orthoimagery of the forest canopy. No need for a priori knowledge of the area surrounding the robot, only input is the geometry of detected tree stems.
@@ -44,4 +42,49 @@ Then they start using 3D, this is more applicable to complex environments (remov
 ~\cite{Magnusson2009}:
 This is NDT. First in my knowledge to do loop closure based on 3D laser scans. Address the problems of greater amount of data (3D vs 2D) and the 3D rotation invariance. NDT surface representation to create feature histograms based on the surface orientation and smoothness (this compress data). Rotation invariance via alignment of dominant surface orientations.
 
-~\cite{}
+~\cite{Song2012}:(might be good to cite original ICP or review from F. Pomerleau)
+They proposes a localisation solution in forested environments. They use the largest group of approximately parallel tree trunk features to align successive scans along five dimensions (except z). Optimal transformation determined based on the axes of two tree pairs. Then they align ground by minimizing the differences of points shared in the cells. (they basically do ICP, but they pretend to remove problems such as initial transformation and noisy scene.) (This is high level engineered features, could use this for smooth transition in the text)
+
+~\cite{Iagnemma2012}:
+The method used in the previous article to extract tree truck parameters from point cloud. 3 purely geometric steps: First, the raw point clouds are segmented by utilizing the circular shape of trees, and segments are grouped into tree sections based on the principle of spatial proximity. Second, circles and axes are extracted from tree sections which are subject to loss of shape information. Third, by clustering and integrating the tree sections resulted from various space inconsistencies, straight tree trunk landmarks are finally formed for future localization. The experimental results from real forested environments are presented.
+
+~\cite{Mcdaniel2012}:
+Article that segment ground and trees that I used at the beginning of my master. 
+
+~\cite{Lalonde2006}:
+J-F Lalonde article about vegetation classification using eigenvalues/vectors. 
+
+~\cite{Wurm2009}:
+This paper present a technique that use laser remission values to detect grass like vegetation. They use a self-supervised classifcation vibration based. 
+
+~\cite{Besl1992}:
+Original ICP article
+
+~\cite{Colas2013}:
+Article doing path planning in complex environments for search and rescue based on ICP for 3D terrains. 
+
+~\cite{Pomerleau2013}:
+This article present an analysis of ICP variants for real world applications. They also propose an open-source icp library that operate in real time.  
+
+~\cite{Pomerleau2015a}:
+A Review of Point Cloud Registration Algorithms for Mobile Robotics\dots
+
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{@{}llll@{}}
+        \toprule
+        \textbf{Type of data}  & \textbf{Keypoint/descriptor} & \textbf{Name}               & \textbf{Reference} \\
+        \hline
+        Image                  & Keypoint                     & Harris and Stephens corners & \cite{Harris1988}  \\
+        Image                  & Both                         & SIFT                        & \cite{Lowe2004}    \\
+        Image                  & Both                         & SURF                        & \cite{Bay2006}     \\
+        \gls*{3d}              & Descriptor                   & FPFH                        & \cite{Rusu2009}    \\
+        \gls*{3d}              & Both                         & ISS                         & \cite{Yu2009}      \\
+        \gls*{3d}              & Descriptor                   & SHOT                        & \cite{Tombari2010} \\
+        \gls*{3d}              & Both                         & NARF                        & \cite{Steder2011a} \\
+        \bottomrule
+    \end{tabular}
+    \caption{\todo{Might just put image examples in the text, find better layout ? Add info ?} Examples of popular descriptors and keypoints detectors for images and \gls*{3d} data. Some \gls*{2d} keypoints have been adapted for \gls*{3d} such as Harris and Stephens and SIFT.}
+    \label{tab:features_examples}
+\end{table}

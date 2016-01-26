@@ -12,7 +12,7 @@ While there is quite a few articles presenting place recognition algorithms usin
 
 The first step to determine whether or not a place has been visited before by the robot, is to convert the data into a more convenient format for identification. The generally adopted representation is a vector of real numbers, called descriptor. A descriptor can be global, meaning that it tries to capture information about the whole sample, or local, meaning that it does the same but only for a specific subregion of the sample. When using local descriptors, it is first required to determine the keypoints around which the descriptors will be extracted. These keypoints can be at pre-determined and fixed locations (e.g. division in a simple grid) or selected using more refined algorithms. A common practice is to choose keypoints in regions of high gradient (e.g. edges, corners), since these region generally contains more information than smooth surfaces. Note that for simplicity, we might use the term \textbf{features} as a more general term for keypoints and their respective descriptors in the remainder of this document.
 
-The concepts of keypoints and descriptors originate from the computer vision literature, but they have been adapted for \gls*{3d} data. Some popular examples of features for both type of data are shown in Table~\ref{tab:chap_slam_features_examples}. Note that some algorithms propose solutions for both keypoints detection and descriptors (e.g. SIFT, NARF), however it is not mandatory to use them together as any combination is generally valid. While features are different, they were all developed with the same goals in mind:
+The concepts of keypoints and descriptors originate from the computer vision literature, but they have been adapted for \gls*{3d} data. Some popular examples of features for both type of data are shown in Table~\ref{tab:features_examples}. Note that some algorithms propose solutions for both keypoints detection and descriptors (e.g. SIFT, NARF), however it is not mandatory to use them together as any combination is generally valid. While features are different, they were all developed with the same goals in mind:
 \begin{itemize}[label=$\bullet$,noitemsep,topsep=0pt]
     \item Distinctiveness: each feature should be easily differentiable with respect to other.
     \item Repeatability: the feature values should be stable under changes including:
@@ -23,24 +23,6 @@ The concepts of keypoints and descriptors originate from the computer vision lit
         \end{itemize}
 \end{itemize}
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{@{}llll@{}}
-        \toprule
-        \textbf{Type of data}  & \textbf{Keypoint/descriptor} & \textbf{Name}               & \textbf{Reference} \\
-        \hline
-        Image                  & Keypoint                     & Harris and Stephens corners & \cite{Harris1988}  \\
-        Image                  & Both                         & SIFT                        & \cite{Lowe2004}    \\
-        Image                  & Both                         & SURF                        & \cite{Bay2006}     \\
-        \gls*{3d}              & Descriptor                   & FPFH                        & \cite{Rusu2009}    \\
-        \gls*{3d}              & Both                         & ISS                         & \cite{Yu2009}      \\
-        \gls*{3d}              & Descriptor                   & SHOT                        & \cite{Tombari2010} \\
-        \gls*{3d}              & Both                         & NARF                        & \cite{Steder2011a} \\
-        \bottomrule
-    \end{tabular}
-    \caption{\todo{Might just put image examples in the text, find better layout ? Add info ?} Examples of popular descriptors and keypoints detectors for images and \gls*{3d} data. Some \gls*{2d} keypoints have been adapted for \gls*{3d} such as Harris and Stephens and SIFT.}
-    \label{tab:chap_slam_features_examples}
-\end{table}
 
 \subsubsection{NARF Features and Range Image}
 \label{ssub:NARF Features and Range Image}
