@@ -41,8 +41,7 @@ Secondly, all pixel from the range image must have a value. Since \gls*{lidar}s 
 
 Finally, the resolution has to be adjusted so that each pixel of the resulting range image covers the same angular resolution vertically and horizontally. The image being discretized in pixels, the values of these can either be a weighted average of the laser beam ranges, or the value of the smaller range within his area, depending on the user preference. Examples of range images can be seen in Figure~\ref{fig:chap_slam_range}.
 
-The converted scans have a dense and uniform representation that can be advantageously processed like grayscale images. Using these range images, NARF features were designed to be able to differentiate edges that are part of the boundary of objects as opposed to edges that are produced by occlusions. This distinction is not possible using point clouds directly. This will be particularly useful in our context of complex environments such as forest, where edges caused by occlusions can generate meaningless features. These meaningless features turn leads to a poor representation of the environment, which can reduce the place recognition performance. \todo{Add a figure with a point cloud and the corresponding range image and point out the false edges in the point cloud (caused by occlusion)}
-
+The converted scans have a dense and uniform representation that can be advantageously processed like grayscale images. Using these range images, NARF features were designed to be able to differentiate edges that are part of the boundary of objects as opposed to edges that are produced by occlusions. This distinction is not possible using point clouds directly. Figure~\ref{fig:chap_slam_edges} present an example of a partial range image and the corresponding point cloud, where you can see edges caused by an object boundary and edges caused by the occlusion of this object. Differentiating these edges will be particularly useful in our context of complex environments such as forest, where edges caused by occlusions can generate meaningless features. These meaningless features turn leads to a poor representation of the environment, which can reduce the place recognition performance. 
 
 \begin{figure}[H]
     \centering
@@ -50,6 +49,14 @@ The converted scans have a dense and uniform representation that can be advantag
     \subfloat[]{\label{fig:range_forest}}{\includegraphics[width=0.995\linewidth]{img/chap_slam/range_forest01_scale.png}}
     \caption{Examples of range images for the structured dataset \protect\subref{fig:range_building} and the unstructured dataset \protect\subref{fig:range_forest}. Note that the objects look distorted due to the projection on the plane and that the background color (light green) corresponds to the areas without laser return. All other pixels represent ranges between 0 meter (black) and 40 meters (white).}
     \label{fig:chap_slam_range}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \subfloat[]{\label{fig:range_edge}}{\includegraphics[width=0.507\linewidth]{img/chap_slam/range_building21_adjusted.png}}
+    \subfloat[]{\label{fig:pointcloud_edge}}{\includegraphics[width=0.473\linewidth]{img/chap_slam/pointcloud_building21.png}}
+    \caption{Example of a partial range image \protect\subref{fig:range_edge} and the corresponding point cloud \protect\subref{fig:pointcloud_edge}. The red rectangle highlight a region of the environment where, from the robot point of view, a lamp post partially occludes the building wall. In the point cloud, this configuration leads to edges on both the lamp post boundary and the wall itself. In reality, the information contained in this scan does not allow to know what is behind the post and the edges of the wall are most likely only caused by occlusion. In contrary, the range image is built taking into account the position of the sensor, thus allowing to consider only the boundary of the lamp post as edges and ignoring edges on the wall.}
+    \label{fig:chap_slam_edges}
 \end{figure}
 
 \subsubsection{Scans Comparison}
