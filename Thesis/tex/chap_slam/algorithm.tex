@@ -7,7 +7,7 @@ While there are quite a few articles presenting place recognition algorithms usi
 \subsection{Fundamental Concepts}
 \label{ssec:chap_slam_basics}
 
-The following subsection is an introduction to the basic concepts necessary for understanding the place recognition algorithm, which will be presented in Section~\ref{ssec:chap_slam_algo}. Conventional methods for representing and comparing \gls*{3d} acquisitions will be presented. 
+The following subsection is an introduction to the basic concepts necessary for understanding the place recognition algorithm, which will be presented in Section~\ref{ssec:chap_slam_algo}. Conventional methods for representing and comparing \gls*{3d} acquisitions will be presented.
 
 \subsubsection{Feature Keypoints and Descriptors}
 \label{ssub:feature_keypoints_and_descriptors}
@@ -33,15 +33,13 @@ The concepts of keypoints and descriptors first originated from the computer vis
 
 In this subsection, we will present the NARF keypoints and descriptors, as well as the \gls*{3d} data representation on which they rely: the range image. We will see that the place recognition algorithm, presented in Section~\ref{ssec:chap_slam_algo}, relies on this \gls*{3d} representation to determine a matching score between scans.
 
-Range images represent a \gls*{3d} data point by a pixel position (i.e x and y) and a range value. Note that the position of the pixel actually represents a horizontal and vertical angular position. For an omnidirectional \gls*{lidar} scan, the corresponding range image is a spherical projection of the points from the center of the sensor. Range images can be better defined by the constraints they must meet to be valid. 
+Range images represent a \gls*{3d} data point by a pixel position (i.e x and y) and a range value. Note that the position of the pixel actually represents a horizontal and vertical angular position. For an omnidirectional \gls*{lidar} scan, the corresponding range image is a spherical projection of the points from the center of the sensor. Range images can be better defined by the constraints they must meet to be valid.
 
 Firstly, converting a \gls*{3d} scan into a range image requires the acquisition to originate from a single view point and to have a single range value per pixel. It is therefore not possible to use point clouds acquired with multi-echoes \gls*{lidar}s or produced by merging multiple scans. Fortunately, the latter constraint is met in our datasets.
 
-Secondly, all pixel from the range image must have a value. Since \gls*{lidar}s have a minimal and a maximal range, the data points outside this interval are ignored. Similarly, when a laser beam hit a highly absorbing or reflecting surface, the sensor will not get any return. When such missing data points cause pixels of the range image to have no value, the latter are considered as far range (i.e. the maximum range of the sensor). 
+Secondly, all pixel from the range image must have a value. Since \gls*{lidar}s have a minimal and a maximal range, the data points outside this interval are ignored. Similarly, when a laser beam hit a highly absorbing or reflecting surface, the sensor will not get any return. When such missing data points cause pixels of the range image to have no value, the latter are considered as far range (i.e. the maximum range of the sensor).
 
-Finally, the resolution has to be adjusted so that each pixel of the resulting range image covers the same angular resolution vertically and horizontally. The image being discretized in pixels, the values of these can either be a weighted average of the laser beam ranges, or the value of the smaller range within his area, depending on the user preference. Examples of range images can be seen in Figure~\ref{fig:chap_slam_range}.
-
-The converted scans have a dense and uniform representation that can be advantageously processed like grayscale images. Using these range images, NARF features were designed to be able to differentiate edges that are part of the boundary of objects as opposed to edges that are produced by occlusions. This distinction is not possible using point clouds directly. Figure~\ref{fig:chap_slam_edges} present an example of a partial range image and the corresponding point cloud, where you can see edges caused by an object boundary and edges caused by the occlusion of this object. Differentiating these edges will be particularly useful in our context of complex environments such as forest, where edges caused by occlusions can generate meaningless features. These meaningless features turn leads to a poor representation of the environment, which can reduce the place recognition performance. 
+Finally, the resolution has to be adjusted so that each pixel of the resulting range image covers the same angular resolution vertically and horizontally. The image being discretized in pixels, the values of these can either be a weighted average of the laser beam ranges, or the value of the smaller range within his area, depending on the user preference. The converted scans have a dense and uniform representation that can be advantageously processed like grayscale images. Examples of range images can be seen in Figure~\ref{fig:chap_slam_range}.
 
 \begin{figure}[H]
     \centering
@@ -51,6 +49,8 @@ The converted scans have a dense and uniform representation that can be advantag
     \label{fig:chap_slam_range}
 \end{figure}
 
+The article describing the NARF features~\citep{Steder2011a} details how using these range images allow to differentiate edges that are part of the boundary of objects as opposed to edges that are produced by occlusions. Note that this distinction is not possible using point clouds directly. Figure~\ref{fig:chap_slam_edges} present an example of a partial range image and the corresponding point cloud, where you can see edges caused by an object boundary and edges caused by the occlusion of this object. Differentiating these edges will be particularly useful in our context of complex environments such as forest, where edges caused by occlusions can generate meaningless keypoints. The descriptors built based on these meaningless keypoints leads to a poor representation of the environment, which can reduce the place recognition performance.
+
 \begin{figure}[H]
     \centering
     \subfloat[]{\label{fig:range_edge}}{\includegraphics[width=0.507\linewidth]{img/chap_slam/range_building21_adjusted.png}}
@@ -58,6 +58,16 @@ The converted scans have a dense and uniform representation that can be advantag
     \caption{Example of a partial range image \protect\subref{fig:range_edge} and the corresponding point cloud \protect\subref{fig:pointcloud_edge}. The red rectangle highlight a region of the environment where, from the robot point of view, a lamp post partially occludes the building wall. In the point cloud, this configuration leads to edges on both the lamp post boundary and the wall itself. In reality, the information contained in this scan does not allow to know what is behind the post and the edges of the wall are most likely only caused by occlusion. In contrary, the range image is built taking into account the position of the sensor, thus allowing to consider only the boundary of the lamp post as edges and ignoring edges on the wall.}
     \label{fig:chap_slam_edges}
 \end{figure}
+
+The last item to be discussed concerning the NARF features is the descriptor structure. In order to create the descriptor, one must first compute the normal to the surface at the keypoint location. A star pattern is then overlay to a small range image patch, as seen by an observer looking at the keypoint along the normal. Each beam of the star pattern corresponds to a value in the final descriptor, that captures how much the pixels under the beam change. A unique orientation around the normal is finally determined. This is done in a similar way than for the SIFT and  SURF \gls*{2d} descriptors. An interesting characteristic of the NARF descriptors, is that each of them encodes its own local coordinate, allowing for a complete six degrees of freedom pose identification. This is possible by considering the normal to the surface and the unique orientation around the latter. Figure~\ref{fig:narf_descriptor} illustrates how descriptors are computed.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\linewidth]{img/chap_slam/narf.png}
+    \caption{Illustration of a NARF descriptor calculated on a range image patch. Each of the 20 green beams are represented by a single value in the descriptor vector. There are also 2 beams marked with arrows that show how pixels changes under them. In addition, the red arrow (pointing to the top right) show the extracted orientation around the normal of the patch. From~\cite{Steder2011a}.}
+    \label{fig:narf_descriptor}
+\end{figure}
+
 
 \subsubsection{Scans Comparison}
 \label{ssub:scans_comparison}
@@ -72,9 +82,9 @@ A first approach to compare \gls*{3d} scans consists in finding local descriptor
 
 Once the corresponding descriptors between two scans have been identified, they are used to determine if there is a valid rigid \gls*{3d} transformation that align the underlying keypoints. This step also requires a criteria on the number (or ratio) of features correctly aligned, thereby identifying the scans as originating from the same place or not. This is generally achieved using the RANSAC algorithm~\cite{Fischler1981}. This first comparison technique is computationally expensive, but is also very discriminative. Additionally, it provides relative pose between scans, which is not possible using global descriptors or the next method that we will present. The relative pose can, for example, be used to determine odometry or create a map. Figure~\ref{fig:chap_slam_features_correspondences} shows keypoints from two scans of our dataset, as well as examples of correspondences.
 
-A second solution, that speed up comparison when searching for potential matches between scans, is to represent the set of features of each scan by a \gls*{bow}~\citep{salton1983mcgill}. The concept of \gls*{bow} was first used for documents classification. In this context, \gls*{bow} represented a document by a vector of occurrence counts of a vocabulary without taking into account their ordering. In our case, the descriptors are made up of real numbers which allows for an infinity of them and therefore they cannot be used directly as words. The solution to this problem is to use a clustering algorithm such as k-means~\citep{MacQueen1967} to create groups that will represent words, a process known as quantization. An advantage of using k-means is that it is an unsupervised algorithm, meaning that no manual labeling effort is required. Because the \gls*{bow} approach avoids having to compare all potential feature correspondences between the scans, it significantly reduces the processing time. On the other hand, this method removes all information regarding to geometric configuration of keypoints in the scans, which might induce unwanted aliasing. This is a rather general representation with for which the comparison is relatively fast to compute. Note that the vocabulary is generally created in advance using a large collection of local descriptors gathered under similar conditions. 
+A second solution, that speed up comparison when searching for potential matches between scans, is to represent the set of features of each scan by a \gls*{bow}~\citep{salton1983mcgill}. The concept of \gls*{bow} was first used for documents classification. In this context, \gls*{bow} represented a document by a vector of occurrence counts of a vocabulary without taking into account their ordering. In our case, the descriptors are made up of real numbers which allows for an infinity of them and therefore they cannot be used directly as words. The solution to this problem is to use a clustering algorithm such as k-means~\citep{MacQueen1967} to create groups that will represent words, a process known as quantization. An advantage of using k-means is that it is an unsupervised algorithm, meaning that no manual labeling effort is required. Because the \gls*{bow} approach avoids having to compare all potential feature correspondences between the scans, it significantly reduces the processing time. On the other hand, this method removes all information regarding to geometric configuration of keypoints in the scans, which might induce unwanted aliasing. This is a rather general representation with for which the comparison is relatively fast to compute. Note that the vocabulary is generally created in advance using a large collection of local descriptors gathered under similar conditions.
 
-The chosen place recognition method will depends on several factors such as the available hardware resources, the desired processing time and the required reliability of the results. Using features correspondences along with geometric check is more computationally expensive than using the \gls*{bow} approach, but results are also more reliable. However, we will see in Section~\ref{ssec:chap_slam_algo} that it is possible to take advantage of the combined use of these methods. 
+The chosen place recognition method will depends on several factors such as the available hardware resources, the desired processing time and the required reliability of the results. Using features correspondences along with geometric check is more computationally expensive than using the \gls*{bow} approach, but results are also more reliable. However, we will see in Section~\ref{ssec:chap_slam_algo} that it is possible to take advantage of the combined use of these methods.
 
 \begin{figure}[H]
     \centering
@@ -87,7 +97,7 @@ The chosen place recognition method will depends on several factors such as the 
 \subsection{Overview of the Algorithm}
 \label{ssec:chap_slam_algo}
 
-For their experiments, Steder et al. drove a rover equipped with a \gls*{lidar} in a given environment to gather a set of scans. They refer to it as the scans database, which acts as a representation of all known and visited places. This will allow the robot to determine if it has visited the same place as previously, by acquiring a new scan and trying to find a match in this database.  
+For their experiments, Steder et al. drove a rover equipped with a \gls*{lidar} in a given environment to gather a set of scans. They refer to it as the scans database, which acts as a representation of all known and visited places. This will allow the robot to determine if it has visited the same place as previously, by acquiring a new scan and trying to find a match in this database.
 
 In the original version of the algorithm (\cite{Steder2010}), they compared a newly acquired scan against all scans from the database using NARF features correspondences. These features encode a full \gls*{3d} pose, which in theory allow the determination of the transformation that align two scans based on a single features correspondence. This mean that there is as many candidate transformations as there are features correspondences between a newly acquired scan and a scan from the database. Using series of rules, a score is assigned to each transformation. This score reflects the system belief of this transformation to be an actual match. Advantageously, this means that the algorithm not only indicates whether two scans represent the same place, but also what is the relative pose between them.
 
@@ -123,7 +133,7 @@ Although this technique yield high recognition rates, it requires to compute a s
 
         \State
         \State $j \gets 1$, $bestTransfoScore = -\infty$, $bestTransfo \gets null$
-        \While{$j \leq |sortedMatches|$ \textbf{and} $j \leq 2000$} 
+        \While{$j \leq |sortedMatches|$ \textbf{and} $j \leq 2000$}
         \State $transfo,score \gets \textsc{computeMatchTransfoAndScore}(sortedMatches_j)$ \label{alg:transfo_score}
         \If{$score \geq scoreAcceptanceThreshold$ \textbf{and} $score \geq bestTransfoScore$}
         \State $bestTransfoScore \gets score$
@@ -179,7 +189,7 @@ This scoring process is applied to all validation points and the final score for
     \begin{tabular}{@{}p{0.17\textwidth}p{0.54\textwidth}p{0.23\textwidth}@{}}
         \toprule % Observation = database, Prediction = input scan
         \textbf{Ranges relation}         & \textbf{Explanation}                                                                                                    & \textbf{Effect on the score} \\
-        \hline                           
+        \hline
         $|r^i - r^*| < \Delta r_{max}$   & The difference between $r^i$ and $r^*$ is within the confidence range. This is most likely a valid correspondence.      & Reward $\propto 1-\frac{|r^i-r^*|}{\Delta r_{max}}$ \\
         $r^i - r^* > \Delta r_{max}$     & The range of the pixel from the database scan is larger than the corresponding pixel from the input scan. This could be caused by a dynamic or partially transparent obstacle, but this is more likely caused by a wrong transformation. & High penalty \\
         $r^i - r^* < -\Delta r_{max}$    & The range of the pixel from the database scan is smaller than the range of the corresponding pixel from the input scan, leading to two subcases : & \\
