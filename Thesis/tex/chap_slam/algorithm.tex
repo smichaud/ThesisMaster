@@ -94,7 +94,7 @@ The chosen place recognition method will depends on several factors such as the 
 \end{figure}
 
 
-\subsection{Overview of the Algorithm}
+\subsection{Overview of the Algorithm}\todo{Might want to introduce the formalism for database and scans earlier and use it for the whole section}
 \label{ssec:chap_slam_algo}
 
 For their experiments, Steder et al. drove a rover equipped with a \gls*{lidar} in a given environment to gather a set of scans. They refer to it as the scans database, which acts as a representation of all known and visited places. This will allow the robot to determine if it has visited the same place as previously, by acquiring a new scan and trying to find a match in this database. This experimental procedure was repeated in different indoor and structured outdoor environments and with different omnidirectional \gls*{lidar}s.
@@ -116,11 +116,11 @@ Also, because the first version of the algorithm yield poor result in area with 
 
         \Function{findPotentialMatches}{$scanDatabase$, $newScan$}
         \State $allBowDescriptors \gets \textsc{calculateAllDescriptorsForBagOfWords}(scanDatabase)$ \label{alg:bow_beginning}
-        \State $dictionary \gets \textsc{createDictionaryForBagOfWords}(allBowDescriptors)$
+        \State $dictionary \gets \textsc{createDictionaryForBagOfWords}(allBowDescriptors)$ \label{alg:dictionary}
         \State $newScanBow \gets \textsc{computeBagOfWords}(newScan, dictionary)$ \Comment{Keep scan reference} \label{alg:create_bow}
         \State \State $initSimilarities \gets \emptyset$ \Comment{Set of (scan reference, initial similarity score)}
         \ForAll{$scan \in scanDatabase$}
-        \State $scanBow \gets \textsc{computeBagOfWords}(scan, dictionary)$
+        \State $scanBow \gets \textsc{computeBagOfWords}(scan, dictionary)$ \label{alg:create_bow2}
         \State $initSimilarities.append(\textsc{getInitSimilarity}(scanBow, newScanBow))$ \label{alg:init_similarities}
         \EndFor
         \State $sortedSimilarities \gets \textsc{sortByScore}(initSimilarities)$ \label{alg:bow_end}
@@ -162,28 +162,28 @@ Also, because the first version of the algorithm yield poor result in area with 
     \label{alg:chap_slam_overview}
 \end{algorithm}
 
-\todo{Here I am}
-In Algorithm~\ref{alg:chap_slam_overview}, NARF features are computed twice for each scan. The \gls*{bow} preprocessing from line~\ref{alg:bow_beginning} to~\ref{alg:bow_end} uses a set of feature parameters while the correspondences scoring from line~\ref{alg:correspondences_beginning} to line~\ref{alg:correspondences_end} use a different set of parameters. Table~\ref{tab:chap_slam_narf_parameters} shows the feature parameters used for those two cases. Authors explain that: \enquote{For the BoW approach a high number of features describing small parts of the environment is most useful\dots However, when matching a new query [scan] $z*$ against D [the database], a smaller number of more distinctive features is needed}.
+We will now detail Algorithm~\ref{alg:chap_slam_overview}. A first general note is that the NARF features are computed twice for each scan. This is because there is two general steps based on the features: the preordering of the scans from the database using the \gls*{bow} representation and the scoring of candidate transformations based on features correspondences. The section based on \gls*{bow} is presented from line~\ref{alg:bow_beginning} to~\ref{alg:bow_end} and uses a given set of feature parameters, while the second section for scoring candidate transformations is presented from line~\ref{alg:correspondences_beginning} to line~\ref{alg:correspondences_end} and use a different set of parameters. Table~\ref{tab:chap_slam_narf_parameters} shows the feature parameters used for those two cases. Authors explain that: \enquote{For the BoW approach a high number of features describing small parts of the environment is most useful\dots However, when matching a new query [scan] $z*$ against D [the database], a smaller number of more distinctive features is needed}.
 
 \begin{table}[H]
     \centering
     \begin{tabular}{@{}lll@{}}
         \toprule
-        \textbf{Parameters}  & \textbf{Values for \gls*{bow}} & \textbf{Values for the correspondences scoring} \\
+        \textbf{Parameters}  & \textbf{Values for \gls*{bow}} & \textbf{Values for the transformations scoring} \\
         \hline
         Max. feature counts & 2000                          & 200                                \\
         Descriptor size     & 36                            & 36                                 \\
         Support size        & 1/10 avg. range               & 1/5 avg. range                     \\
         \bottomrule
     \end{tabular}
-    \caption{The set of NARF parameters used for the \gls*{bow} preprocessing and the correspondences scoring. The support size radius around the keypoint used in the \gls*{3d} space used to compute the descriptor. Note that it is represented by a proportion of the average range of all points in the database.}
+    \caption{The set of NARF parameters used for the \gls*{bow} preordering step and the candidate transformations scoring step. The support size is the radius around the keypoint, in the \gls*{3d} space, used to compute the descriptor. Note that it is represented by a proportion of the average range of all points in the database.}
     \label{tab:chap_slam_narf_parameters}
 \end{table}
 
-The descriptors produced for the \gls*{bow} are used by the \textsc{createDictionaryForBagOfWord} function, which create 200 words (i.e clusters) using k-means. The output dictionary is used to create a \gls*{bow} representation for each scan. Based on this representation, all scans from the database are stored in ascending order, according to their Euclidean distance from the input scan (line~\ref{alg:init_similarities}). Scans with a small distance between them are more likely to originate from the same place and will be processed first during the next step. This order is important because of the timeout (line~\ref{alg:timeout}) that might prevent last scans to be processed.
+The first processing of the algorithm is the creation of the descriptors for all scans in the database (line~\ref{alg:bow_beginning}), which are then used to create the dictionary (line~\ref{alg:dictionary}). Note that it would be possible to create a dictionary using a different set of scans (i.e. not the scans from the database) and/or update this dictionary according to some criteria, but this is not the case here. Once the descriptors have been produced, they are used to create 200 words (i.e clusters) using k-means. The output dictionary is used to create a \gls*{bow} representation for each scan(line~\ref{alg:create_bow} and~\ref{alg:create_bow2}). Based on this representation, all scans from the database are stored in ascending order, according to the Euclidean distance between their vectors representing word counts and the vector of the input scan (line~\ref{alg:init_similarities}). The intuition is that scans with a small distance between them are more likely to originate from the same place and will therefore be processed first during the next step, as they are the most promising. This greedy approach is important because of the timeout (line~\ref{alg:timeout}) that might prevent last scans to be processed.
 
-The features created using the set of parameters for correspondences scoring are used to find potential transformations between each database scan and the input scan. As indicated earlier, each NARF feature encodes its full 3D pose, therefore a single features match allows to determine the transformation that align the two scans. This mean that there are up to 2000 transformations to be tested for each scan from the database. To determine the corresponding features, all pairs of features (one from the processed database scan and one from the input scan) are then ordered by ascending order according to their Manhattan distance in the space of descriptors. Again, descriptors with a small distance between them are more similar and therefore more likely to be valid matches and are therefore prioritized for the scoring process.
+The features created using the set of parameters for candidate transformation scoring are used to find potential transformations between each database scan and the input scan. As indicated earlier, each NARF feature encodes its full 3D pose, therefore a single features match allows the determination of the transformation that should align the two scans. Since there is 2000 features per scan, there are up to 2000 transformations to be tested for each scan from the database. To determine the corresponding features, all pairs of features (one from the processed database scan and one from the input scan) are then ordered by ascending order according to their Manhattan distance (or L1 distance) in the space of descriptors. Again, descriptors with a small distance between them are more similar and therefore more likely to be valid matches; they are therefore prioritized for the scoring process.
 
+\todo{Here I am}
 Although the candidate transformation scoring process is not detailed (line~\ref{alg:transfo_score}), it is an important part of the place recognition framework that we will briefly describe here. As explained in Section~\ref{ssec:chap_slam_basics}, range images are linked to the \gls*{lidar} sensor model. Each pixel represent the range from the origin of the sensor to the target for a specific angular position. Given that the input scan ($z^*$) have already been aligned with the database scan ($z^i$), one can easily determine where the pixel $p^*$ from $z^*$ will fall into $z^i$, as well as the range value it should have. Let $r^*$ be the range of the processed point in $z^*$ and $r^i$ the range of the corresponding point in $z^i$. A score representing how good $r^*$ is explained by $r^i$ can be computed according to different scenarios presented in Table~\ref{tab:chap_slam_scoring_scenarios}.
 This scoring process is applied to all validation points and the final score for the candidate transformation is a function of those individual point scores. To avoid a small error in the transformation to cause low score, they not only consider the exact matching points, but also neighbors in small pixel radius. Finally, note that the set of validation point is a subsample of points evenly covering the 3D space, since using all points from the input scan would be too expensive to compute.
 
@@ -193,19 +193,19 @@ This scoring process is applied to all validation points and the final score for
         \toprule % Observation = database, Prediction = input scan
         \textbf{Ranges relation}         & \textbf{Explanation}                                                                                                    & \textbf{Effect on the score} \\
         \hline
-        $|r^i - r^*| < \Delta r_{max}$   & The difference between $r^i$ and $r^*$ is within the confidence range. This is most likely a valid correspondence.      & Reward $\propto 1-\frac{|r^i-r^*|}{\Delta r_{max}}$ \\
-        $r^i - r^* > \Delta r_{max}$     & The range of the pixel from the database scan is larger than the corresponding pixel from the input scan. This could be caused by a dynamic or partially transparent obstacle, but this is more likely caused by a wrong transformation. & High penalty \\
+        $|r^i - r^*| < \Delta r_{max}$   & The difference between $r^i$ and $r^*$ is within the confidence range. This is most likely a valid correspondence.      & Increase $\propto 1-\frac{|r^i-r^*|}{\Delta r_{max}}$ \\
+        $r^i - r^* > \Delta r_{max}$     & The range of the pixel from the database scan is larger than the corresponding pixel from the input scan. This could be caused by a dynamic or partially transparent obstacle, but this is more likely caused by a wrong transformation. & Highly decrease \\
         $r^i - r^* < -\Delta r_{max}$    & The range of the pixel from the database scan is smaller than the range of the corresponding pixel from the input scan, leading to two subcases : & \\
-                                         & 1) A known obstacle in the database scan hides the pixel from the input scan.                                           & Low penalty \\
-                                         & 2) The pixel does not exist in the input scan. This could be caused by an unseen or dynamic obstacle, but it is more likely caused by a wrong transformation.       & High penalty \\
-        $\nexists : r^i \correspond r^*$ & The pixel from the input scan ends up outside of the database scan limit (i.e. there is no reference for this point).   & Low penalty \\
+                                         & 1) A known obstacle in the database scan hides the pixel from the input scan.                                           & Slightly decrease \\
+                                         & 2) The pixel does not exist in the input scan. This could be caused by an unseen or dynamic obstacle, but it is more likely caused by a wrong transformation.       & Highly decrease \\
+        $\nexists : r^i \correspond r^*$ & The pixel from the input scan ends up outside of the database scan limit (i.e. there is no reference for this point).   & Slightly decrease \\
         $r^i \ge MAX$                    & The range of the pixel from the database scan is larger or equal to the sensor maximum reading range, leading to two subcases : & \\
-                                         & 1) Based on the value of the input scan pixel, the corresponding pixel of the database should be closer to the sensor.  & High penalty \\
-                                         & 2) The pixel of the database scan moved away from the sensor and could possibly be out of range.                        & Medium penalty \\
+                                         & 1) Based on the value of the input scan pixel, the corresponding pixel of the database should be closer to the sensor.  & Highly decrease \\
+                                         & 2) The pixel of the database scan moved away from the sensor and could possibly be out of range.                        & Modestly decrease \\
         \bottomrule
     \end{tabular}
     \caption{A summary of the different scenarios for scoring corresponding pixels of the range images. The range of the pixel from the input scan is $r^*$ and the range of the corresponding pixel from the database scan is $r^i$. Note that, $\Delta r_{max}$ is a positive value representing the maximum difference in range between the pixels to be considered as a valid correspondence and $MAX$ is the maximum range for the given sensor.}
     \label{tab:chap_slam_scoring_scenarios}
 \end{table}
 
-This concludes the general overview of the place recognition algorithm. In Section~\ref{sec:chap_slam_results}, we will explain how we use it to compare the impact of different environments on the recognition performance.
+This concludes the general overview of the place recognition algorithm~\citep{Steder2011b}. In Section~\ref{sec:chap_slam_results}, we will explain how we used it to compare the impact of different environments on the recognition performance.
