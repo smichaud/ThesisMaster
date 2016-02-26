@@ -53,8 +53,10 @@ The article describing the NARF features~\citep{Steder2011a} details how using t
 
 \begin{figure}[H]
     \centering
-    \subfloat[]{\label{fig:range_edge}}{\includegraphics[width=0.507\linewidth]{img/chap_slam/range_building21_adjusted.png}}
-    \subfloat[]{\label{fig:pointcloud_edge}}{\includegraphics[width=0.473\linewidth]{img/chap_slam/pointcloud_building21.png}}
+    %\subfloat[]{\label{fig:range_edge}}{\includegraphics[width=0.507\linewidth]{img/chap_slam/range_building21_adjusted.png}}
+    %\subfloat[]{\label{fig:pointcloud_edge}}{\includegraphics[width=0.473\linewidth]{img/chap_slam/pointcloud_building21.png}}
+    \subfloat[]{\label{fig:range_edge}}{\includegraphics[width=\linewidth]{img/chap_slam/range_building21_adjusted.png}}\\
+    \subfloat[]{\label{fig:pointcloud_edge}}{\includegraphics[width=\linewidth]{img/chap_slam/pointcloud_building21.png}}
     \caption{Example of a partial range image \protect\subref{fig:range_edge} and the corresponding point cloud \protect\subref{fig:pointcloud_edge}. The red rectangle highlight a region of the environment where, from the robot point of view, a lamp post partially occludes the building wall. In the point cloud, this configuration leads to edges on both the lamp post boundary and the wall itself. In reality, the information contained in this scan does not allow to know what is behind the post and the edges of the wall are most likely only caused by occlusion. In contrary, the range image is built taking into account the position of the sensor, thus allowing to consider only the boundary of the lamp post as edges and ignoring edges on the wall.}
     \label{fig:chap_slam_edges}
 \end{figure}

@@ -1,13 +1,8 @@
 \section{Introduction}
 \label{sec:chap_slam_intro}
 
-Introduce \gls*{slam}
+In order to navigate safely and efficiently in their environment, mobile robots have to be able to solve a multitude of problems. An example of such problem is the ability of a robot to determine whether he is located in a place he visited before or in a new one.  Despite the fact that this question seems relatively elementary, an algorithm that solves the so-called place recognition problem is a powerful tool, that proved to be useful for a wide variety of applications. For instance, multiple robots can cooperate to concurrently build a global map using recognized places as connecting points between the different local maps. The well-known "kidnapped robot" problem, which consist in determining if the robot has been carried to an arbitrary location, can also be solve using a place recognition algorithm. Because such algorithm does not rely on odometry and allow the robot to locate itself relative to all previously visited places, it is possible to detect this kind of unpredictable change of location. Finally, place recognition algorithm are useful to perform \gls*{slam}. The most obvious use is for a topological representation, where the map consists of places and links between them, but it is also essential for loop closure when using a metric representation. 
+
+In the last chapter we analyzed the influence of an environment with snowy condition on the \gls*{lidar} data. Following the same idea, we are now interested by the influence of challenging environments when using \gls*{lidar}, but at a higher level. More precisely, we want to evaluate how unstructured environments influence navigation algorithms performance. To this end, we chose to use the state-of-the-art \gls*{lidar}-based place recognition algorithm~\citep{Steder2011b}. The algorithm proved to be successful in structured indoor and semi-structured outdoor environments and we want to evaluate the results for unstructured forest environment. For the experiments we produced our own datasets in forest, but also in semi-structured conditions for comparison purposes. Section~\ref{sec:chap_slam_data_acquisition} details where and how the datasets were produced, as well as the resulting data. Thereafter, fundamental concepts related to the place recognition algorithm as the algorithm itself will be presented in Section~\ref{sec:chap_slam_algo}. Finally, the results of the comparative analysis will be presented in Section~\ref{sec:chap_slam_results} before we conclude the chapter.
 
 
-From Steder article : 
-
-Place recognition, i.e., the ability to recognize previously seen parts of the environment, is one of the fundamental tasks in mobile robotics. The wide range of applications of place recognition includes localization (determine the initial pose), SLAM (detect loop closures), and change detection in dynamic environments.
-
-place recognition meaning the detection that a robot revisited an already known area
-
-Focus on the fact that we want to evaluate the impact of unstructured environments (vs structured) on place recognition algorithm, so we use state of the art framework. Hypothesis that it will not be as good.
