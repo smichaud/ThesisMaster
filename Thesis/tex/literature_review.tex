@@ -3,11 +3,17 @@
 
 
 \section{Introduction}
-Literature review helps understand what was done and determine what is unexplored\dots
-We will present general articles related to ugv navigation in outdoor environments, but section X and Y will presents a short literature review more related to the topics of the chapters.
+The literature review is an essential step of the research process. In addition to increasing the wealth of knowledge in the field, it helps to ensure the relevance of the targeted contributions relative to existing work. In our case, we are interested in the influence of complex environments on \gls*{lidar}-based robot navigation, which is related to several topics for which we will have a general overview. Chapter~\ref{chap:lidar_snow} deals with the functionning of \gls*{lidar}s and the influence of snowfalls on the raw data. Section~\ref{sec:literature_snow} provides an overview of the literature related to those topics. Chapter~\ref{chap:slam} focuses on the higher-level features extracted from \gls*{lidar} data and used for place recognition. For this chapter, the analysis in complex environment is done in forest. Section~\ref{sec:literature_slam} 
+
+\begin{enumerate}
+    \item Pour bien cerner le sujet, on doit voir etendre la recherche (revue de literature) pour la navigation des robots en general
+    \item Par contre, le chapitre 2 s'interesse particulierement aux donnees bruts des lidars et a l'impact de la neige sur ces derniers, on traitera de ce sujet dans une section
+    \item Le chapitre 3 s'interesse aux features obtenues avec les donnees brut et aux algorithmes a un plus haut niveau et a la foret. 
+\end{enumerate}
 
 
-\section{Sensors}
+\section{\chaplidartitle}
+\label{sec:literature_snow}
 Sensors are the basis of navigation. Sensor characterization, fusion, calibration\dots
 
 ~\cite{Bosch2001}:
@@ -15,6 +21,7 @@ Review usual lidar techniques (pulsed, phase-shift and frequency modulated conti
 
 
 \section{Features and Machine Learning}
+\label{sec:literature_slam}
 While we will not address this topic specifically, the algorithm used for the place recognition analysis highly depends on the chosen features.  
 Bring table about features here if I do. Might want to include the part about tree features discussed in the next section. Put comparative analysis. Tackle DNN.
 ~\cite{Steder2011a} NARF, ~\cite{Rusu2009} FPFH, ~\cite{Yu2009} ISS, ~\cite{Tombari2010} SHOT, ~\cite{Harris1988} Harris, ~\cite{Lowe2004} SIFT, ~\cite{Bay2006} SURF
