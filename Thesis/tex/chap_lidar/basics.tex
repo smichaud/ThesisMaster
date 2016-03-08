@@ -10,7 +10,7 @@
     \subfloat[]{\label{fig:lidar_basics_a}}{\includegraphics[width=0.18\linewidth]{img/chap_lidar/lms151.png}}
     \subfloat[]{\label{fig:lidar_basics_b}}{\includegraphics[width=0.3\linewidth]{img/chap_lidar/lidar_mirror.png}}
     \subfloat[]{\label{fig:lidar_basics_c}}{\includegraphics[width=0.4\linewidth]{img/chap_lidar/sick_beam_adapted.png}}
-    \caption{\protect\subref{fig:lidar_basics_a} The SICK LMS151 \gls*{lidar}. \protect\subref{fig:lidar_basics_b} A view of the scanning path of the sensor. \protect\subref{fig:lidar_basics_c} A side view of the laser beam going out of the \gls*{lidar}.\todo{pimp that shitty caption\dots and the shitty figure configuration also + add ref to the lms151 manual}}
+    \caption[Example of a \gls*{lidar} device and simplified representation of the laser trajectory.]{\protect\subref{fig:lidar_basics_a} The SICK LMS151 \gls*{lidar}. \protect\subref{fig:lidar_basics_b} A view of the scanning path of the sensor. \protect\subref{fig:lidar_basics_c} A side view of the laser beam going out of the \gls*{lidar}.\todo{pimp that shitty caption\dots and the shitty figure configuration also + add ref to the lms151 manual}}
     \label{fig:lidar_basics}
 \end{figure}
 
@@ -22,7 +22,7 @@ Figure~\ref{fig:shadow_points} show how reading errors affect the 3D representat
     \centering
     \subfloat[]{\label{fig:lidar_waveform_a}}{\includegraphics[width=0.8\linewidth]{img/chap_lidar/waveforms.png}}\\\vspace{1em}
     \subfloat[]{\label{fig:lidar_waveform_b}}{\includegraphics[width=0.8\linewidth]{img/chap_lidar/waveforms2.png}}
-    \caption{Representation of \gls*{lidar} beams in different conditions along with the resulting waveforms. \protect\subref{fig:lidar_waveform_a} Differents unimodal and multimodal distribution resulting from different target structures. From \citet{lidar_figure1}. \protect\subref{fig:lidar_waveform_b} The multimodal waveform resulting from a laser beam going through multiple translucent material. From the SICK LMS500-21000 Lite website~\citep{sick_waveform}.}
+    \caption[Representation of \gls*{lidar} beams in different conditions along with the resulting waveforms.]{Representation of \gls*{lidar} beams in different conditions along with the resulting waveforms. \protect\subref{fig:lidar_waveform_a} Differents unimodal and multimodal distribution resulting from different target structures. From \citet{lidar_figure1}. \protect\subref{fig:lidar_waveform_b} The multimodal waveform resulting from a laser beam going through multiple translucent material. From the SICK LMS500-21000 Lite website~\citep{sick_waveform}.}
     \label{fig:lidar_waveform}
 \end{figure}
 
@@ -30,6 +30,6 @@ Figure~\ref{fig:shadow_points} show how reading errors affect the 3D representat
     \centering
     \subfloat[]{\label{fig:shadow_points_a}}{\includegraphics[width=0.9\linewidth]{img/chap_lidar/shadow_image.jpg}}\\\vspace{1em}
     \subfloat[]{\label{fig:shadow_points_b}}{\includegraphics[width=0.9\linewidth]{img/chap_lidar/shadow_pointcloud.png}}
-    \caption{A picture of a scene \protect\subref{fig:shadow_points_a} and a diagonal view of the point cloud \protect\subref{fig:shadow_points_b} resulting from the acquisition by the SICK LMS151 \gls*{lidar} mounted on a \gls*{ptu}. The sensor position is represented by \textbf{A}. Region \textbf{B} shows missing points caused by absorbent material (a black box not visible in the picture). Region \textbf{C} shows noisy points caused by the edge of an object while region \textbf{D} shows a particularly bad \gls*{3d} representation of a fine structure (tree branch).}
+    \caption[Point cloud representation of a \gls*{lidar} acquisition and examples of erroneous data regions.]{A picture of a scene \protect\subref{fig:shadow_points_a} and a diagonal view of the point cloud \protect\subref{fig:shadow_points_b} resulting from the acquisition by the SICK LMS151 \gls*{lidar} mounted on a \gls*{ptu}. The sensor position is represented by \textbf{A}. Region \textbf{B} shows missing points caused by absorbent material (a black box not visible in the picture). Region \textbf{C} shows noisy points caused by the edge of an object while region \textbf{D} shows a particularly bad \gls*{3d} representation of a fine structure (tree branch).}
     \label{fig:shadow_points}
 \end{figure}

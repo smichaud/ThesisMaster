@@ -12,7 +12,7 @@ The Husky A200 is a medium size (\SI{990 x 670 x 390}{\milli\meter}) \gls*{ugv} 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.98\linewidth]{img/chap_slam/husky_labelled.png}
-    \caption{The robotic platform (Husky A200) and the devices used for data acquisition. The SICK \gls*{lidar} is not mounted, but is shown on the bottom right corner of the figure. Note that the \gls*{ptu} is hidden by a cover and the on-board computer is mostly occluded by the Velodyne \gls*{lidar}.}
+    \caption[The robotic platform (Husky A200) and the devices used for data acquisition.]{The robotic platform (Husky A200) and the devices used for data acquisition. The SICK \gls*{lidar} is not mounted, but is shown on the bottom right corner of the figure. Note that the \gls*{ptu} is hidden by a cover and the on-board computer is mostly occluded by the Velodyne \gls*{lidar}.}
     \label{fig:chap_slam_husky}
 \end{figure}
 
@@ -32,7 +32,7 @@ The Husky A200 is a medium size (\SI{990 x 670 x 390}{\milli\meter}) \gls*{ugv} 
         \gls*{gps}      & NovAtel                     & SMART6          & Not used                              \\
         \bottomrule
     \end{tabular}
-    \caption{List of devices available on the Husky A200 and their use in our experiments. Note that both \gls*{lidar}s were never mounted at the same time.}
+    \caption[List of devices available on the Husky A200 and their use in our experiments.]{List of devices available on the Husky A200 and their use in our experiments. Note that both \gls*{lidar}s were never mounted at the same time.}
     \label{tab:husky_devices}
 \end{table}
 
@@ -57,7 +57,7 @@ The second site, chosen for its unstructured nature, is located in a wooded area
     \subfloat[]{\label{fig:path_overview}}{\includegraphics[width=0.995\linewidth]{img/chap_slam/paths.jpg}}\\ \vspace{3mm}
     \subfloat[]{\label{fig:path_building}}{\includegraphics[width=0.485\linewidth]{img/chap_slam/path_building_arrow.png}} \hspace{2mm}
     \subfloat[]{\label{fig:path_forest}}{\includegraphics[width=0.485\linewidth]{img/chap_slam/path_forest_arrow.png}}
-    \caption{\protect\subref{fig:path_overview} Partial aerial view of the Laval University campus including the two approximate paths followed by the robot for data acquisition. \protect\subref{fig:path_building} Zoomed view of the path followed (counterclockwise from tag 1) in a structured environment. The length of this path is approximately \SI{160}{\meter}. \protect\subref{fig:path_forest} Zoomed view of the path followed (clockwise from tag 2) to create the forest dataset. The length of this path is approximately \SI{275}{\meter}. Images source: Google Earth, (2015)}
+    \caption[Partial aerial view of the Laval University campus including the two approximate paths followed by the robot for data acquisition.]{\protect\subref{fig:path_overview} Partial aerial view of the Laval University campus including the two approximate paths followed by the robot for data acquisition. \protect\subref{fig:path_building} Zoomed view of the path followed (counterclockwise from tag 1) in a structured environment. The length of this path is approximately \SI{160}{\meter}. \protect\subref{fig:path_forest} Zoomed view of the path followed (clockwise from tag 2) to create the forest dataset. The length of this path is approximately \SI{275}{\meter}. Images source: Google Earth, (2015)}
     \label{fig:chap_slam_path}
 \end{figure}
 
@@ -67,7 +67,7 @@ The second site, chosen for its unstructured nature, is located in a wooded area
     \subfloat[]{\label{fig:slam_view_building2}}{\includegraphics[width=0.47\linewidth]{img/chap_slam/building_view2.jpg}}
     \subfloat[]{\label{fig:slam_view_forest1}}{\includegraphics[width=0.47\linewidth]{img/chap_slam/forest_view1.jpg}} \hspace{2mm}
     \subfloat[]{\label{fig:slam_view_forest2}}{\includegraphics[width=0.47\linewidth]{img/chap_slam/forest_view2.jpg}}
-    \caption{Images from the \gls*{ugv} camera during the acquisition of the structured dataset \protect\subref{fig:slam_view_building1} \protect\subref{fig:slam_view_building2} and the unstructured dataset \protect\subref{fig:slam_view_forest1} \protect\subref{fig:slam_view_forest2}.}
+    \caption[Images from the \gls*{ugv} camera during the acquisition of the two datasets.]{Images from the \gls*{ugv} camera during the acquisition of the structured dataset \protect\subref{fig:slam_view_building1} \protect\subref{fig:slam_view_building2} and the unstructured dataset \protect\subref{fig:slam_view_forest1} \protect\subref{fig:slam_view_forest2}.}
     \label{fig:slam_views}
 \end{figure}
 
@@ -89,7 +89,7 @@ Table~\ref{tab:slam_sensor_resolution} summarizes information about the sensors 
         Velodyne HDL-32E & \SI{0.16}{\degree} & \SI{1.33}{\degree} & \SI{-30.68}{\degree}  & \SI{10.67}{\degree}  & 72000  \\
         \bottomrule
     \end{tabular}
-    \caption{Details about the point clouds created with our two \gls*{lidar}s. The minimum and maximum angles are given relative to an horizontal plane in the sensor frame of reference and both sensors report \SI{360}{\degree} around the vertical axis. The point counts represent the maximum number of points in the resulting point cloud.}
+    \caption[Details about the point clouds created with our two \gls*{lidar}s.]{Details about the point clouds created with our two \gls*{lidar}s. The minimum and maximum angles are given relative to an horizontal plane in the sensor frame of reference and both sensors report \SI{360}{\degree} around the vertical axis. The point counts represent the maximum number of points in the resulting point cloud.}
     \label{tab:slam_sensor_resolution}
 \end{table}
 
@@ -104,7 +104,7 @@ Table~\ref{tab:slam_sensor_resolution} summarizes information about the sensors 
         Unstructured   & Velodyne HDL-32E  & May 28\textsuperscript{th}, 2015  \\
         \bottomrule
     \end{tabular}
-    \caption{Datasets acquired for place recognition analysis.}
+    \caption[Datasets acquired for place recognition analysis.]{Datasets acquired for place recognition analysis.}
     \label{tab:slam_datasets}
 \end{table}
 
@@ -118,7 +118,7 @@ Examples of point clouds from our datasets are shown in Figure~\ref{fig:slam_poi
     \subfloat[]{\label{fig:slam_pointcloud_forest2}}{\includegraphics[width=0.47\linewidth]{img/chap_slam/pointcloud_forest2.png}}
     \subfloat[]{\label{fig:slam_pointcloud_velodyne1}}{\includegraphics[width=0.47\linewidth]{img/chap_slam/pointcloud_velodyne1.png}} \hspace{2mm}
     \subfloat[]{\label{fig:slam_pointcloud_velodyne2}}{\includegraphics[width=0.47\linewidth]{img/chap_slam/pointcloud_velodyne2.png}}
-    \caption{Examples of point clouds from our datasets viewed from different perspectives. \protect\subref{fig:slam_pointcloud_building1} and \protect\subref{fig:slam_pointcloud_building2} show acquisition from the SICK in the structured environment. \protect\subref{fig:slam_pointcloud_forest1} and \protect\subref{fig:slam_pointcloud_forest2} also show point clouds from the SICK, but in the unstructured environment. Finally, \protect\subref{fig:slam_pointcloud_velodyne1} and \protect\subref{fig:slam_pointcloud_velodyne2} show the result of acquisition from the Velodyne in the unstructured environment. Robot position is represented by a red sphere with a \SI{1}{\meter} radius in each picture.}
+    \caption[Examples of point clouds from our datasets viewed from different perspectives.]{Examples of point clouds from our datasets viewed from different perspectives. \protect\subref{fig:slam_pointcloud_building1} and \protect\subref{fig:slam_pointcloud_building2} show acquisition from the SICK in the structured environment. \protect\subref{fig:slam_pointcloud_forest1} and \protect\subref{fig:slam_pointcloud_forest2} also show point clouds from the SICK, but in the unstructured environment. Finally, \protect\subref{fig:slam_pointcloud_velodyne1} and \protect\subref{fig:slam_pointcloud_velodyne2} show the result of acquisition from the Velodyne in the unstructured environment. Robot position is represented by a red sphere with a \SI{1}{\meter} radius in each picture.}
     \label{fig:slam_pointclouds}
 \end{figure}
 

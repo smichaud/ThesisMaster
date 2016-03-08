@@ -45,7 +45,7 @@ Finally, the resolution has to be adjusted so that each pixel of the resulting r
     \centering
     \subfloat[]{\label{fig:range_building}}{\includegraphics[width=0.995\linewidth]{img/chap_slam/range_building01_scale.png}}\\
     \subfloat[]{\label{fig:range_forest}}{\includegraphics[width=0.995\linewidth]{img/chap_slam/range_forest01_scale.png}}
-    \caption{Examples of range images for the structured dataset \protect\subref{fig:range_building} and the unstructured dataset \protect\subref{fig:range_forest}. Note that the objects look distorted due to the projection on the plane and that the background color (light green) corresponds to the areas without laser return. All other pixels represent ranges between 0 meter (black) and 40 meters (white).}
+    \caption[Examples of range images from the two datasets.]{Examples of range images for the structured dataset \protect\subref{fig:range_building} and the unstructured dataset \protect\subref{fig:range_forest}. Note that the objects look distorted due to the projection on the plane and that the background color (light green) corresponds to the areas without laser return. All other pixels represent ranges between 0 meter (black) and 40 meters (white).}
     \label{fig:chap_slam_range}
 \end{figure}
 
@@ -57,7 +57,7 @@ The article describing the NARF features~\citep{Steder2011a} details how using t
     %\subfloat[]{\label{fig:pointcloud_edge}}{\includegraphics[width=0.473\linewidth]{img/chap_slam/pointcloud_building21.png}}
     \subfloat[]{\label{fig:range_edge}}{\includegraphics[width=\linewidth]{img/chap_slam/range_building21_adjusted.png}}\\
     \subfloat[]{\label{fig:pointcloud_edge}}{\includegraphics[width=\linewidth]{img/chap_slam/pointcloud_building21.png}}
-    \caption{Example of a partial range image \protect\subref{fig:range_edge} and the corresponding point cloud \protect\subref{fig:pointcloud_edge}. The red rectangle highlight a region of the environment where, from the robot point of view, a lamp post partially occludes the building wall. In the point cloud, this configuration leads to edges on both the lamp post boundary and the wall itself. In reality, the information contained in this scan does not allow to know what is behind the post and the edges of the wall are most likely only caused by occlusion. In contrary, the range image is built taking into account the position of the sensor, thus allowing to consider only the boundary of the lamp post as edges and ignoring edges on the wall.}
+    \caption[Example of a partial range image and the corresponding point cloud with an example of edge caused by an object border.]{Example of a partial range image \protect\subref{fig:range_edge} and the corresponding point cloud \protect\subref{fig:pointcloud_edge}. The red rectangle highlight a region of the environment where, from the robot point of view, a lamp post partially occludes the building wall. In the point cloud, this configuration leads to edges on both the lamp post boundary and the wall itself. In reality, the information contained in this scan does not allow to know what is behind the post and the edges of the wall are most likely only caused by occlusion. In contrary, the range image is built taking into account the position of the sensor, thus allowing to consider only the boundary of the lamp post as edges and ignoring edges on the wall.}
     \label{fig:chap_slam_edges}
 \end{figure}
 
@@ -66,7 +66,7 @@ The last item to be discussed concerning the NARF features is the descriptor str
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.4\linewidth]{img/chap_slam/narf.png}
-    \caption{Illustration of a NARF descriptor calculated on a range image patch. Each of the 20 green beams are represented by a single value in the descriptor vector. There are also 2 beams marked with arrows that show how pixels changes under them. In addition, the red arrow (pointing to the top right) show the extracted orientation around the normal of the patch. From~\cite{Steder2011a}.}
+    \caption[Illustration of a NARF descriptor calculated on a range image patch.]{Illustration of a NARF descriptor calculated on a range image patch. Each of the 20 green beams are represented by a single value in the descriptor vector. There are also 2 beams marked with arrows that show how pixels changes under them. In addition, the red arrow (pointing to the top right) show the extracted orientation around the normal of the patch. From~\cite{Steder2011a}.}
     \label{fig:narf_descriptor}
 \end{figure}
 
@@ -91,7 +91,7 @@ The chosen place recognition method will depends on several factors such as the 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.995\linewidth]{img/chap_slam/features_line.png}\\
-    \caption{Examples of NARF keypoints (red squares) found for two different scans of the structured dataset. Black lines illustrate examples of valid correspondences found across scans. These NARF keypoints show stability under changes, such as viewpoint, noise and resolution.}
+    \caption[Examples of NARF keypoints found for two different scans with examples of correspondences.]{Examples of NARF keypoints (red squares) found for two different scans of the structured dataset. Black lines illustrate examples of valid correspondences found across scans. These NARF keypoints show stability under changes, such as viewpoint, noise and resolution.}
     \label{fig:chap_slam_features_correspondences}
 \end{figure}
 
@@ -177,7 +177,7 @@ We will now detail Algorithm~\ref{alg:chap_slam_overview}. A first general note 
         Support size        & 1/10 avg. range               & 1/5 avg. range                     \\
         \bottomrule
     \end{tabular}
-    \caption{The set of NARF parameters used for the \gls*{bow} preordering step and the candidate transformations scoring step. The support size is the radius around the keypoint, in the \gls*{3d} space, used to compute the descriptor. Note that, the support size is represented by a proportion of the average range of all points in the database.}
+    \caption[The set of NARF parameters used for the \gls*{bow} preordering step and the candidate transformations scoring step.]{The set of NARF parameters used for the \gls*{bow} preordering step and the candidate transformations scoring step. The support size is the radius around the keypoint, in the \gls*{3d} space, used to compute the descriptor. Note that, the support size is represented by a proportion of the average range of all points in the database.}
     \label{tab:chap_slam_narf_parameters}
 \end{table}
 
@@ -208,7 +208,7 @@ Finally, note that the set of validation point is a subsample of points, since u
                                          & 2) The pixel of the database scan moved away from the sensor and could possibly be out of range.                        & Modestly decrease \\
         \bottomrule
     \end{tabular}
-    \caption{A summary of the different scenarios for scoring corresponding pixels of the range images. The range of the pixel from the input scan is $r^*$ and the range of the corresponding pixel from the database scan is $r^i$. Note that, $\Delta r_{max}$ is a positive value representing the maximum difference in range between the pixels to be considered as a valid correspondence and $MAX$ is the maximum range for the given sensor.}
+    \caption[A summary of the different scenarios for scoring corresponding pixels of the range images.]{A summary of the different scenarios for scoring corresponding pixels of the range images. The range of the pixel from the input scan is $r^*$ and the range of the corresponding pixel from the database scan is $r^i$. Note that, $\Delta r_{max}$ is a positive value representing the maximum difference in range between the pixels to be considered as a valid correspondence and $MAX$ is the maximum range for the given sensor.}
     \label{tab:chap_slam_scoring_scenarios}
 \end{table}
 
