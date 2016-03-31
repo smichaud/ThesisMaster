@@ -3,7 +3,7 @@
 
 \gls*{lidar} is a technology based on laser time of flight to measure distances. \citet{lidar_basics} present the physical details as well as the pros and cons of three time of flight commonly used in \gls*{lidar}s, namely the pulsed, phase-shift and frequency modulated continuous wave. In the context of our research, we focus more on higher level concepts that could cause sensor readings to be erroneous for modeling environments or objects. 
 
-\gls*{lidar}s generally build \gls*{2d} data points using an internal rotating mirror (see Figure~\ref{fig:lidar_basics_b}). It is possible to create a \gls*{3d} point cloud by moving the sensor with an external tool (e.g. a \gls*{ptu} or the robot itself) and merging scans, but some sensors such as the Velodyne HDL-32E directly provide this information. Figure~\ref{fig:shadow_points_b} depicts a point cloud created using the \gls*{2d} SICK LMS151 mounted on \gls*{ptu}. While some
+\gls*{lidar}s generally build \gls*{2d} data points using an internal rotating mirror (see Figure~\ref{fig:lidar_basics_b}). It is possible to create a \gls*{3d} point cloud by moving the sensor with an external tool (e.g. a \gls*{ptu} or the robot itself) and merging scans, but some sensors such as the Velodyne HDL-32E directly provide this information. Given that the points are acquired sequentially, dynamic objects may be distorted in the final representation. Figure~\ref{fig:shadow_points_b} depicts a point cloud created using the \gls*{2d} SICK LMS151 mounted on \gls*{ptu}.
 
 \begin{figure}[h]
     \centering

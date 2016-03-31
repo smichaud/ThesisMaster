@@ -1,7 +1,21 @@
 \section{Results}
 \label{sec:chap_slam_results}
 
-For our experiments, we used a \textit{C++} implementation developed by Bastian Steder of the algorithm presented in Section~\ref{sec:chap_slam_algo}. This version of the algorithm provides a score (between 0 and 1) for each pair of scan in the database. It is the responsibility of the user to choose the threshold at which the scans will be considered as coming from the same place or not. The definition of a place can also be variable and we choose to use a threshold on the distance between the centers of scans. 
+\begin{itemize}
+    \item In the following section, we will present result for the place recognition algorithm on our 3 datasets.
+    \item Nous avons besoins de deux informations pour evaluer les performances de l'algorithme: the output score, whether or not the sample originate from the same place
+    \item Element 1: Le Code utiliser pour determiner le score entre chaque pair de scan est une implementation c++ de l'algo presente a la section X, qui nous a ete fourni par B.S. Le score se trouve en 0 et 1 (0 mauvais et 1 super bon)
+    \item La matrice n'est pas parfaitement symetrique parce que f(a,b) != f(b,a), mais difference negligeable, nous utiliserons uniquement la partie inferieure gauche excluant la diagonale.
+    \item Element 2: Etant donne que la notion de PLACE est relativement vague, une distance limite entre les exemples est generalement utilise pour trancher same of diff place. Plus proches plus suceptible de provenir de la meme place
+    \item Explication du calcul d'odom et de la creation de matrice de distance (qui est symetrique)
+    \item ICP is done relative to the first loop for the second loop, manually checked/adjusted for convergence
+    \item Expliquer qu'il est important de n'avoir aucun FP car cause des fausses loop closures
+    \item Introduire les thresholds uniquement pour le graphique de recall... Ces deux mesures sont continues et doivent etre binairiser afin de poser une decision finale, TP,FN,TN,FP
+    \item 
+\end{itemize}
+For our experiments, we used a \textit{C++} implementation of the algorithm presented in Section~\ref{sec:chap_slam_algo}. Thanks to Bastian Steder who provided us the source code. The resulting software allowed us to obtain a score (between 0 and 1) for each pair of scan in the database. 
+
+It is the responsibility of the user to choose the threshold at which the scans will be considered as coming from the same place or not. The definition of a place can also be variable and we choose to use a threshold on the distance between the centers of scans. 
 
 For each path we did the acquisition twice. The first run to get the first examples and the second run should be recognized places.
 \todo{explain the odometry and icp for ground truth here.}
