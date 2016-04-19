@@ -57,7 +57,7 @@ The second site, chosen for its unstructured nature, is located in a wooded area
     \subfloat[]{\label{fig:path_overview}}{\includegraphics[width=0.995\linewidth]{img/chap_slam/paths.jpg}}\\ \vspace{3mm}
     \subfloat[]{\label{fig:path_building}}{\includegraphics[width=0.485\linewidth]{img/chap_slam/path_building_arrow.png}} \hspace{2mm}
     \subfloat[]{\label{fig:path_forest}}{\includegraphics[width=0.485\linewidth]{img/chap_slam/path_forest_arrow.png}}
-    \caption[Partial aerial view of the Laval University campus including the two approximate paths followed by the robot for data acquisition.]{\protect\subref{fig:path_overview} Partial aerial view of the Laval University campus including the two approximate paths followed by the robot for data acquisition. \protect\subref{fig:path_building} Zoomed view of the path followed (counterclockwise from tag 1) in a structured environment. The length of this path is approximately \SI{160}{\meter}. \protect\subref{fig:path_forest} Zoomed view of the path followed (clockwise from tag 2) to create the forest dataset. The length of this path is approximately \SI{275}{\meter}. Images source: Google Earth, (2015)}
+    \caption[Partial aerial view of the Laval University campus including the two approximate paths followed by the robot for data acquisition.]{\protect\subref{fig:path_overview} Partial aerial view of the Laval University campus including the two approximate paths followed by the robot for data acquisition. \protect\subref{fig:path_building} Zoomed view of the path followed (counterclockwise from tag 1) in a structured environment. The length of this path is approximately \SI{160}{\meter}. \protect\subref{fig:path_forest} Zoomed view of the path followed (clockwise from tag 2) to create the unstructured datasets. The length of this path is approximately \SI{275}{\meter}. Images source: Google Earth, (2015)}
     \label{fig:chap_slam_path}
 \end{figure}
 
@@ -103,14 +103,14 @@ Table~\ref{tab:slam_sensor_resolution} summarizes information about the sensors 
         \hline
         Structured     & SICK LMS151       & July 16\textsuperscript{th}, 2015 & 81  & 83  \\
         Unstructured   & SICK LMS151       & July 14\textsuperscript{th}, 2015 & 94  & 92  \\
-        Unstructured   & Velodyne HDL-32E  & May 28\textsuperscript{th}, 2015  & 277 & 276\\
+        Unstructured   & Velodyne HDL-32E  & May 28\textsuperscript{th}, 2015  & 104 & 104\\
         \bottomrule
     \end{tabular}
     \caption[Datasets acquired for place recognition analysis.]{Datasets acquired for place recognition analysis.}
     \label{tab:slam_datasets}
 \end{table}
 
-Examples of point clouds from our datasets are shown in Figure~\ref{fig:slam_pointclouds}. We observe that the unstructured environment is more congested and objects are closer to the sensor than for the structured environment. In fact, the average distance of points from the sensor in the unstructured environment is \SI{7.61}{\meter} compared to \SI{9.23}{\meter} for the structured environment. There is also more space without obstacle in the sensor range for the structured dataset. The percentage of points return using the SICK is \SI{82.6}{\percent} on average in the forest dataset compared to \SI{40.2}{\percent} in the structured dataset. These point clouds also illustrate the higher vertical resolution and larger \gls*{fov} of the SICK compared to the Velodyne. The influence of these factors will be discussed in Section~\ref{sec:chap_slam_results}.
+Examples of point clouds from our datasets are shown in Figure~\ref{fig:slam_pointclouds}. We observe that the unstructured environment is more congested and objects are closer to the sensor than for the structured environment. In fact, the average distance of points from the sensor in the unstructured environment is \SI{7.61}{\meter} compared to \SI{9.23}{\meter} for the structured environment. There is also more space without obstacle in the sensor range for the structured dataset. The percentage of points return using the SICK is \SI{82.6}{\percent} on average in the unstructured dataset compared to \SI{40.2}{\percent} in the structured dataset. These point clouds also illustrate the higher vertical resolution and larger \gls*{fov} of the SICK compared to the Velodyne. The influence of these factors will be discussed in Section~\ref{sec:chap_slam_results}.
 
 \begin{figure}[H]
     \centering
