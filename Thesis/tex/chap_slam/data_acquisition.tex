@@ -75,17 +75,17 @@ Besides the influence of the type of environment, we are also interested in the 
 
 The SICK is a \gls*{2d} \gls*{lidar} with a scanning angle of \SI{270}{\degree}, a resolution of \SI{0.5}{\degree} and an acquisition frequency of \SI{50}{\hertz}. This sensor was placed on the \gls*{ptu} so that the dead angle faced downward. During acquisition, it was rotated around the vertical axis (pan) at a speed of \SI{14.32}{\degree\per\second} for half a turn, while the vehicle was stationary. This procedure allowed the acquisition of 628 \gls*{2d} scans of \SI{540}{\points}, later merged into a single \gls*{3d} point cloud.
 
-The Velodyne, for its part, directly allows \gls*{3d} point cloud acquisition by spinning 32 lasers around its vertical axis. These lasers are evenly distributed between \SI{-30.67}{\degree} and \SI{10.67}{\degree} relative to the horizontal plane. According to the Velodyne datasheet \citep{VelodyneDatasheet}, the device acquires approximately \SI{700000}{\points\per\second} and publishes at \SI{10}{\hertz}, therefore creating point clouds of \SI{70000}{\points}. Note that these point counts are variable as the rotation speed can change slightly and the use of the \gls*{udp} can lead to some loss of points. 
+The Velodyne, for its part, directly allows \gls*{3d} point cloud acquisition by spinning 32 lasers around its vertical axis. These lasers are evenly distributed between \SI{-30.67}{\degree} and \SI{10.67}{\degree} relative to the horizontal plane. According to the Velodyne datasheet \citep{VelodyneDatasheet}, the device acquires approximately \SI{700000}{\points\per\second} and publishes at \SI{10}{\hertz}, therefore creating point clouds of \SI{70000}{\points}. Note that these point counts are variable as the rotation speed can change slightly and the use of the \gls*{udp} can lead to some loss of points.
 
 To create the dataset using the SICK, the robot was controlled to follow the established path and it was stopped at regular interval to acquire scans. Regarding the acquisition using the Velodyne, the robot was driven at a constant speed (\SI{0.3}{\meter\per\second}) and perform data acquisition simultaneously. The quantity of scans thus produced being too high, the data set has been sub-sampled thereafter.
 
-Table~\ref{tab:slam_sensor_resolution} summarizes information about the sensors resolution and \gls*{fov} while Table~\ref{tab:slam_datasets} provide general information about each of our datasets.
+Table~\ref{tab:slam_sensor_resolution} summarizes information about the sensors resolution and \gls*{fov}, while Table~\ref{tab:slam_datasets} provides a name for later references and additional information about each of our datasets.
 
 \begin{table}[H]
     \centering
     \begin{tabular}{@{}lrrrrr@{}}
         \toprule
-    \makecell[lc]{\textbf{Sensor}}& \makecell[cc]{\textbf{Horizontal}\\\textbf{resolution}} & \makecell[cc]{\textbf{Vertical}\\\textbf{resolution}} & \makecell[cc]{\textbf{Minimum}\\\textbf{angle}} & \makecell[cc]{\textbf{Maximum}\\\textbf{angle}} & \makecell[cc]{\textbf{Point}\\\textbf{counts}} \\
+        \makecell[lc]{\textbf{Sensor}}& \makecell[cc]{\textbf{Horizontal}\\\textbf{resolution}} & \makecell[cc]{\textbf{Vertical}\\\textbf{resolution}} & \makecell[cc]{\textbf{Minimum}\\\textbf{angle}} & \makecell[cc]{\textbf{Maximum}\\\textbf{angle}} & \makecell[cc]{\textbf{Point}\\\textbf{counts}} \\
         \hline
         SICK LMS151      & \SI{0.57}{\degree} & \SI{0.5}{\degree}  & \SI{-45.00}{\degree}  & \SI{90.00}{\degree}  & 339120 \\
         Velodyne HDL-32E & \SI{0.16}{\degree} & \SI{1.33}{\degree} & \SI{-30.68}{\degree}  & \SI{10.67}{\degree}  & 72000  \\
@@ -97,16 +97,16 @@ Table~\ref{tab:slam_sensor_resolution} summarizes information about the sensors 
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{@{}lllrr@{}}
+    \begin{tabular}{@{}llllrr@{}}
         \toprule
-        \textbf{Site}  & \textbf{Sensor}   & \textbf{Date} & \makecell[cc]{\textbf{Number of scans}\\\textbf{for loop 1}} & \makecell[cc]{\textbf{Number of scans}\\\textbf{for loop 2}} \\
+        \textbf{Dataset name}   & \textbf{Site}  & \textbf{Sensor}   & \textbf{Date} & $\mathbf{N_{L1}}$ & $\mathbf{N_{L2}}$ \\
         \hline
-        Structured     & SICK LMS151       & July 16\textsuperscript{th}, 2015 & 81  & 83  \\
-        Unstructured   & SICK LMS151       & July 14\textsuperscript{th}, 2015 & 94  & 92  \\
-        Unstructured   & Velodyne HDL-32E  & May 28\textsuperscript{th}, 2015  & 104 & 104\\
+        Structured-SICK         & Structured     & SICK LMS151       & July 16\textsuperscript{th}, 2015 & 81  & 83  \\
+        Unstructured-SICK       & Unstructured   & SICK LMS151       & July 14\textsuperscript{th}, 2015 & 94  & 92  \\
+        Unstructured-Velodyne   & Unstructured   & Velodyne HDL-32E  & May 28\textsuperscript{th}, 2015  & 104 & 104\\
         \bottomrule
     \end{tabular}
-    \caption[Datasets acquired for place recognition analysis.]{Datasets acquired for place recognition analysis.}
+    \caption[Datasets acquired for place recognition analysis.]{Datasets acquired for place recognition analysis. We define a name for each dataset in order to facilitate reference thereto in the remainder of this document. $N_{L1}$ and $N_{L2}$ represent the number of scans acquired during the first and second loop respectively.}
     \label{tab:slam_datasets}
 \end{table}
 

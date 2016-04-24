@@ -45,10 +45,10 @@ While it is interesting to observe the relationship between these values over th
     \centering
     \begin{tabular}{@{}l|ll@{}}
         \toprule
-                                  & \textbf{$D < T_{distance}$} & \textbf{$D >= T_{distance}$} \\
+                                  & $\mathbf{D < T_{distance}}$ & $\mathbf{D >= T_{distance}}$ \\
         \hline
-        \textbf{$S > T_{score}$}  & True Positive (TP)          & False Positive (FP) \\
-        \textbf{$S <= T_{score}$} & False Negative (FN)         & True Negative (TN) \\
+        $\mathbf{S > T_{score}}$  & True Positive (TP)          & False Positive (FP) \\
+        $\mathbf{S <= T_{score}}$ & False Negative (FN)         & True Negative (TN) \\
         \bottomrule
     \end{tabular}
     \caption[Summary of scans pairs labeling for results analysis.]{A summary of scans pairs labeling for results analysis. $D$ represents the distance between the two scans and $S$ represents the place recognition algorithm output score. $T_{distance}$ and $T_{score}$ represent the place recognition range and the score threshold, respectively.}
@@ -82,7 +82,7 @@ We are interested in comparing the SICK and the Velodyne, because it helps us un
 
 A first interesting observation, in the third row of Figure~\ref{fig:chap_slam_results}, is that all the scores obtained with the Velodyne are below $0.5$. This means that the algorithm have very low confidence that any pair of scans originate from the same place, even when those scans are very close from each other. In comparison, the data obtained with SICK produce scores above 0.7 for scans that are really close. Consequently, data points are concentrated in the lower part of the graph and the place recognitions results will be more sensitive to the choice of score threshold. We can also confirm these observations with the graphics of the fourth row of Figure~\ref{fig:chap_slam_results}. It is seen that for all of Velodyne data, the recall is 0 when the score threshold is set to $0.75$ or $0.5$. There is also a greater gap between the two others curves (i.e for a score thresholds of $0.25$ and $0.1$) over the corresponding curves for SICK.
 
-On the other hand, there seems to be no major differences between those distribution regarding the place recognition range for which the score stop decreasing significantly (around \SIrange{10}{20}{\meter}). It does not seem to be any significant difference in the amount or distribution of outliers, which is important to avoid \gls*{fp}.
+On the other hand, there seems to be no major differences between those distribution regarding the place recognition range for which the score stop decreasing significantly (around \SIrange{10}{20}{\meter}). It does not seem to be any significant difference in the amount or distribution of outliers, which is important to avoid \gls*{fp}. \todo{Might want to cite M. Latulippe who says leaves produce unstable features}
 
 It can be concluded that there is indeed a difference between the results obtained for these two sensors. However, this difference may be insufficient to counteract other practical factors. For instance, one could choose to use the Velodyne despite its slightly worse performance and thus avoid having to immobilize the robot for each acquisition.
 
