@@ -3,39 +3,24 @@
 
 
 \section{Introduction}
-The literature review is an essential step of the research process. In addition to increasing the wealth of knowledge in the field, it helps to ensure the relevance of the targeted contributions relative to existing work. In our case, we are interested in the influence of complex environments on \gls*{lidar}-based robot navigation, which is related to several topics for which we will have a general overview. Chapter~\ref{chap:lidar_snow} deals with the functionning of \gls*{lidar}s and the influence of snowfalls on the raw data. Section~\ref{sec:literature_snow} provides an overview of the literature related to those topics. Chapter~\ref{chap:slam} focuses on the higher-level features extracted from \gls*{lidar} data and used for place recognition. For this chapter, the analysis in complex environment is done in forest. Section~\ref{sec:literature_slam} 
-
-\begin{enumerate}
-    \item Par contre, le chapitre 2 s'interesse particulierement aux donnees bruts des lidars et a l'impact de la neige sur ces derniers, on traitera de ce sujet dans une section
-    \item Le chapitre 3 s'interesse aux features obtenues avec les donnees brut et aux algorithmes a un plus haut niveau et a la foret. 
-\end{enumerate}
+The literature review is an essential step of the research process. In addition to increasing the wealth of knowledge in the field, it helps to ensure the relevance of the targeted contributions relative to existing work. In our case, we are interested in the influence of complex environments on \gls*{lidar}-based robot navigation, which is a high-level problem involving several subtopics. We will start our literature review with a general overview of the work on navigation in complex environments and the use of \gls*{lidar} (Section~\ref{sec:literature_general}). Subsequently, in Section~\ref{sec:literature_snow}, we will discuss research related to \gls*{lidar} functioning and the influence of snowfall on data, which is the topic of Chapter~\ref{chap:lidar_snow}. Finally, to contextualize Chapter~\ref{chap:slam}, Section~\ref{sec:literature_slam} will present papers related to feature-based place recognition and navigation in forest environments. 
 
 
-\section{\chaplidartitle}
-\label{sec:literature_snow}
-Sensors are the basis of navigation. Sensor characterization, fusion, calibration\dots
+\section{Overview: Navigation in Complex Environments and \gls*{lidar} Uses}
+\label{sec:literature_general}
 
-~\cite{Bosch2001}:
-Review usual lidar techniques (pulsed, phase-shift and frequency modulated continuous wave), basics then limitations.
+Start with a navigation definition... Which include stuff like ... Obstacle avoidance/traversability for path planning, localisation and mapping... 
+Give some insight for what might be a "complex" environment (there is a gradation from completely controlled, to indoor, to outdoor, to forest etc.)
 
-
-\section{Features and Machine Learning}
-\label{sec:literature_slam}
-While we will not address this topic specifically, the algorithm used for the place recognition analysis highly depends on the chosen features.  
-Bring table about features here if I do. Might want to include the part about tree features discussed in the next section. Put comparative analysis. Tackle DNN.
-~\cite{Steder2011a} NARF, ~\cite{Rusu2009} FPFH, ~\cite{Yu2009} ISS, ~\cite{Tombari2010} SHOT, ~\cite{Harris1988} Harris, ~\cite{Lowe2004} SIFT, ~\cite{Bay2006} SURF
-
-~\cite{Filipe2014}:
-Comparative evalutation of 3D Keypoint Detectors in RGB-D Obeject dataset. They verify the invariance of the 3D keypoints detectors to rotaions, scales and translation.
-
-
-\section{SLAM Complex Environments}
-Brief overview of slam techniques, section will focus on articles related to place recognition using lidar. Might want to say that we are mainly concern by the forested environments here. 
+\subsubsection{Path Planning}
+Geolocation, obstacles avoidance / traversability (including ground classification) = path planning
 
 ~\cite{Hussein2015}:
 Geolocation of ugv in forest (horizontal position) by finding geometric match between a map of observed tree stems using onboard lidar with a map generated from the structure of thee crowns from high resolution aerial orthoimagery of the forest canopy. No need for a priori knowledge of the area surrounding the robot, only input is the geometry of detected tree stems.
 
-State that 2D solutions for slam pretty much meet our needs, they yield precise results in real time\dots
+\subsubsection{Localisation and Mapping + SLAM}
+Start with 2d solutions. (Gmapping), but can't deal with 3D conditions or uneven bearing surface. Hector propose a 2d + imu that slighly handle uneven floor.
+State that 2D solutions for slam pretty much meet our needs, they are able to yield precise results in real time\dots
 
 ~\cite{Grisetti2007}: Gmapping,
 They use a particle filter to solve SLAM (grid map). Each particle carry an individual map. They take into account the movement but also the most recent observations, which decrease uncertainty. They use selective selective resampling to reduce the problem of particle depletion. They do indoor AND outdoor. 
@@ -44,7 +29,50 @@ They use a particle filter to solve SLAM (grid map). Each particle carry an indi
 Focus on search and rescue. Learn map of unknown environments, occupancy grid, low computational resources. Lidar + IMU. Fast approximation of map gradients and multi resolution grids. Pretend they don't need explicit loop closure\dots
 
 
-Then they start using 3D, this is more applicable to complex environments (remove some assumptions)
+Then they start using 3D, this is more applicable to complex environments (remove some assumptions such as even ground).
+Quickly explain ICP, can be used for small steps localisation, but converge in minimum and can't be used directly for localisation (for any given input scan)
+
+~\cite{Besl1992}:
+Original ICP article
+
+~\cite{Pomerleau2015a}:
+A Review of Point Cloud Registration Algorithms for Mobile Robotics\dots
+
+~\cite{Colas2013}:
+Article doing path planning in complex environments for search and rescue based on ICP for 3D terrains. 
+
+~\cite{Pomerleau2013}:
+This article present an analysis of ICP variants for real world applications. They also propose an open-source icp library that operate in real time.  
+
+
+\section{\gls*{lidar} Functionning and Snowy Conditions}
+\label{sec:literature_snow}
+
+Sensors are the basis of perception required for navigation. 
+\begin{itemize}
+    \item Lower level lidar article (Sensor characterization, fusion, calibration\dots) 
+    \item Literature from our article
+\end{itemize}
+
+~\cite{Bosch2001}:
+Review usual lidar techniques (pulsed, phase-shift and frequency modulated continuous wave), basics then limitations.
+
+
+\section{Feature-Based Place Recognition and Forest Environments}
+\label{sec:literature_slam}
+Place 
+\begin{itemize}
+    \item Talk about features first (the idea originate from 2D images, list the most popular)
+    \item Talk about features-based place recognition in general (camera-based, NDT...)
+    \item Talk about tree trunk as features in forest
+\end{itemize}
+
+While we will not address this topic specifically, the algorithm used for the place recognition analysis highly depends on the chosen features.  
+Bring table about features here if I do. Might want to include the part about tree features discussed in the next section. Put comparative analysis. Tackle DNN.
+~\cite{Steder2011a} NARF, ~\cite{Rusu2009} FPFH, ~\cite{Yu2009} ISS, ~\cite{Tombari2010} SHOT, ~\cite{Harris1988} Harris, ~\cite{Lowe2004} SIFT, ~\cite{Bay2006} SURF
+
+~\cite{Filipe2014}:
+Comparative evalutation of 3D Keypoint Detectors in RGB-D Obeject dataset. They verify the invariance of the 3D keypoints detectors to rotaions, scales and translation.
 
 ~\cite{Magnusson2009}:
 This is NDT. First in my knowledge to do loop closure based on 3D laser scans. Address the problems of greater amount of data (3D vs 2D) and the 3D rotation invariance. NDT surface representation to create feature histograms based on the surface orientation and smoothness (this compress data). Rotation invariance via alignment of dominant surface orientations.
@@ -56,26 +84,13 @@ They proposes a localisation solution in forested environments. They use the lar
 The method used in the previous article to extract tree truck parameters from point cloud. 3 purely geometric steps: First, the raw point clouds are segmented by utilizing the circular shape of trees, and segments are grouped into tree sections based on the principle of spatial proximity. Second, circles and axes are extracted from tree sections which are subject to loss of shape information. Third, by clustering and integrating the tree sections resulted from various space inconsistencies, straight tree trunk landmarks are finally formed for future localization. The experimental results from real forested environments are presented.
 
 ~\cite{Mcdaniel2012}:
-Article that segment ground and trees that I used at the beginning of my master. 
+Article that segment ground and trees that I used at the beginning of my master. (include in the path planning section)
 
 ~\cite{Lalonde2006}:
-J-F Lalonde article about vegetation classification using eigenvalues/vectors. 
+J-F Lalonde article about vegetation classification using eigenvalues/vectors. (include in the path planning section)
 
 ~\cite{Wurm2009}:
-This paper present a technique that use laser remission values to detect grass like vegetation. They use a self-supervised classifcation vibration based. 
-
-~\cite{Besl1992}:
-Original ICP article
-
-~\cite{Colas2013}:
-Article doing path planning in complex environments for search and rescue based on ICP for 3D terrains. 
-
-~\cite{Pomerleau2013}:
-This article present an analysis of ICP variants for real world applications. They also propose an open-source icp library that operate in real time.  
-
-~\cite{Pomerleau2015a}:
-A Review of Point Cloud Registration Algorithms for Mobile Robotics\dots
-
+This paper present a technique that use laser remission values to detect grass like vegetation. They use a self-supervised classification vibration based. (include in the path planning section)
 
 \begin{table}[H]
     \centering
