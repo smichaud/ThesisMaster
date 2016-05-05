@@ -3,11 +3,27 @@
 
 
 \section{Introduction}
-The literature review is an essential step of the research process. In addition to increasing the wealth of knowledge in the field, it helps to ensure the relevance of the targeted contributions relative to existing work. In our case, we are interested in the influence of complex environments on \gls*{lidar}-based robot navigation, which is a high-level problem involving several subtopics. We will start our literature review with a general overview of the work on navigation in complex environments and the use of \gls*{lidar} (Section~\ref{sec:literature_general}). Subsequently, in Section~\ref{sec:literature_snow}, we will discuss research related to \gls*{lidar} functioning and the influence of snowfall on data, which is the topic of Chapter~\ref{chap:lidar_snow}. Finally, to contextualize Chapter~\ref{chap:slam}, Section~\ref{sec:literature_slam} will present papers related to feature-based place recognition and navigation in forest environments. 
+%The literature review is an essential step of the research process. In addition to increasing the wealth of knowledge in the field, it helps to ensure the relevance of the targeted contributions relative to existing work. 
+In this thesis, we are interested in the influence of complex situations, either complex unstructured environments or challenging weather conditions, on \gls*{lidar}-based robot navigation. This is a high-level problem involving several subtopics. Therefore, we will start our literature review with a general overview of the work on \gls*{lidar} functioning (Section~\ref{sec:literature_lidar_functionning}) and navigation in complex environments (Section~\ref{sec:literature_complex_environments}).  Subsequently, in Section~\ref{sec:literature_snow}, we will discuss research related to navigation in snowfall conditions, which is the linked to Chapter~\ref{chap:lidar_snow}. Finally, to contextualize Chapter~\ref{chap:slam}, Section~\ref{sec:literature_slam} will present papers related to feature-based place recognition and navigation in forest environments. 
 
 
-\section{Overview: Navigation in Complex Environments and \gls*{lidar} Uses}
-\label{sec:literature_general}
+\section{Overview: \gls*{lidar} functioning}
+\label{sec:literature_lidar_functionning}
+
+\gls*{lidar}s use laser to get distance, generally acquire (a collection of) multiple data point to create 2d/3d structure representation.
+A general understanding of the physic behind the lidar helps understand what could possibly go wrong and how to prevent it.
+More details and figures (brief overview for what interest us) in Chapter~\ref{chap:lidar_snow}, specifically Section~\ref{sec:chap_lidar_basics}.
+Also, because there is multiple lidar available, choose depends on requirements (2d/3d, range, weight).
+
+
+~\cite{Bosch2001}:
+Review usual lidar techniques (pulsed, phase-shift and frequency modulated continuous wave), basics then limitations.
+~\cite{Pomerleau2015a}:
+Figure with different 3d sensors with weight and max range. small for on-board indoor, big large range for airborne
+
+
+\section{Overview: Navigation in Complex Environments}
+\label{sec:literature_complex_environments}
 
 Start with a navigation definition... Which include stuff like ... Obstacle avoidance/traversability for path planning, localisation and mapping... 
 Give some insight for what might be a "complex" environment (there is a gradation from completely controlled, to indoor, to outdoor, to forest etc.)
@@ -44,18 +60,23 @@ Article doing path planning in complex environments for search and rescue based 
 ~\cite{Pomerleau2013}:
 This article present an analysis of ICP variants for real world applications. They also propose an open-source icp library that operate in real time.  
 
+The Marulan Data Sets~\citep{Peynot2010}: state that, even if not snow, similar because of particles and could be used for assessing algorithm or do similar statistical studies for comparison. 
 
-\section{\gls*{lidar} Functionning and Snowy Conditions}
+
+\section{Snowfall Conditions}
 \label{sec:literature_snow}
 
-Sensors are the basis of perception required for navigation. 
-\begin{itemize}
-    \item Lower level lidar article (Sensor characterization, fusion, calibration\dots) 
-    \item Literature from our article
-\end{itemize}
+Snowfall conditions are challenging because snowflakes cause occlusion and, because of their small size and dynamic nature, they tend to produce noise in sensors acquisitions. While it is often possible to avoid navigating in these conditions, some robots will inevitably face this situation in order to perform the tasks for which they were designed. For instance, ~\citet{Moorehead_1999_2122} aim at develop a robot to search and classify meteorites in Antartica. In the experiments, the \gls*{ugv} drives autonomously for \SI{10.3}{\kilo\meter} in different weather and terrain conditions. The navigation is based on stereo camera images and single line \gls*{lidar} scans. In this article, the authors explain that the snow-covered surfaces do not provide a lot of visual cues, which makes stereo cameras unreliable. For this reason, the robot take advantage of the \gls*{lidar}, mainly for obstacle avoidance, but often as single sensor. In return, the authors stated that part of the experiments \enquote{was performed during heavy snow which made the laser useless}, and therefore used alternative solutions. 
 
-~\cite{Bosch2001}:
-Review usual lidar techniques (pulsed, phase-shift and frequency modulated continuous wave), basics then limitations.
+Another example of robots that require to handle all-weather conditions are those deployed on the battlefield. \citet{yamauchi2010fusing} uses ultra-wideband radar, stereo camera and \gls*{lidar} data for navigation. According to the authors, \enquote{[\gls*{lidar}] and stereo vision provide greater accuracy and resolution in clear weather but has difficulty with precipitation and obscurants}. The ultra-wideband radar has the ability to see through small particles such as snow, rain and fog and is therefore complementary to others sensors used. The final system achieve good results by using traditional sensor fusion, as well as a selective use of the sensors which are activated or deactivated depending on the conditions. 
+
+\citet{sumi-arso-13}, for their part, aimed to evaluate sensors for personal care robots in natural lighting and falling snow conditions. For that matter, they built two simulators that reproduce those conditions and used three type of sensor: an active stereo sensor (Microsoft Kinect), a \gls*{lidar} (Mesa SR4000) and a passive stereo sensor (PGR Bumblebee2). This approach is interesting because it allows to control various parameters that may affect the sensor readings. By cons, information related to our research, that is to say, the impact of snow flakes on \gls*{lidar} measurements, was quite limited. In addition, the physical properties of simulated snowflakes can be different from that of real snowflakes, leading to inaccurate results for real applications.
+
+Article by ~\citet{barnum2010analysis} is probably the most similar to the work that we will present in Chapter~\ref{chap:lidar_snow}, but applied to video rather than \gls*{lidar}s data. They explain that rain and snow are dynamic process, which cause spatial and temporal fluctuations in videos. Although the spatio-temporal changes appear to be chaotic, they predict the overall effect of these conditions on the video, in frequency space. This modeling of the effect of weather conditions on videos improve noise filtering for features extraction when compared to previous pixel-based or patch-based methods.
+
+Finally, \citet{servomaa2002snowfall} have installed a set a of sensors for snowfall observation. The system is composed of a radar and a \gls*{lidar} that record the atmospheric profile up to \SI{6000}{\meter} and another radar along with two balances to record snowfall at ground level. Although the installation are fixed and the \gls*{lidar} is used only to evaluate transition in cloud conditions, they propose techniques for to estimate snowfall characteristics. These techniques may advantageously be used to adapt the behavior of the robot depending on weather conditions.  
+
+%~\cite{lever2013autonomous}: ice sheet Antartica and Greenland Earth's climate history, life in extreme environments and the evolution of the cosmos, remote = expensive, ground-penetrating radar to detect crevasse of void. WOFFFF....
 
 
 \section{Feature-Based Place Recognition and Forest Environments}
