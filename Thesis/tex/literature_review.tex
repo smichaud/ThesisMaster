@@ -7,7 +7,7 @@
 In this thesis, we are interested in the influence of complex situations, either complex unstructured environments or challenging weather conditions, on \gls*{lidar}-based robot navigation. This is a high-level problem involving several subtopics. Therefore, we will start our literature review with a general overview of the work on \gls*{lidar} functioning (Section~\ref{sec:literature_lidar_functionning}) and navigation in complex environments (Section~\ref{sec:literature_complex_environments}).  Subsequently, in Section~\ref{sec:literature_snow}, we will discuss research related to navigation in snowfall conditions, which is the linked to Chapter~\ref{chap:lidar_snow}. Finally, to contextualize Chapter~\ref{chap:slam}, Section~\ref{sec:literature_slam} will present papers related to feature-based place recognition and navigation in forest environments. 
 
 
-\section{Overview: \gls*{lidar} functioning}
+\section{Context 1}
 \label{sec:literature_lidar_functionning}
 
 \gls*{lidar}s use laser to get distance, generally acquire (a collection of) multiple data point to create 2d/3d structure representation.
@@ -22,7 +22,7 @@ Review usual lidar techniques (pulsed, phase-shift and frequency modulated conti
 Figure with different 3d sensors with weight and max range. small for on-board indoor, big large range for airborne
 
 
-\section{Overview: Navigation in Complex Environments}
+\section{Context 2}
 \label{sec:literature_complex_environments}
 
 Start with a navigation definition... Which include stuff like ... Obstacle avoidance/traversability for path planning, localisation and mapping... 
@@ -33,6 +33,9 @@ Geolocation, obstacles avoidance / traversability (including ground classificati
 
 ~\cite{Hussein2015}:
 Geolocation of ugv in forest (horizontal position) by finding geometric match between a map of observed tree stems using onboard lidar with a map generated from the structure of thee crowns from high resolution aerial orthoimagery of the forest canopy. No need for a priori knowledge of the area surrounding the robot, only input is the geometry of detected tree stems.
+
+~\cite{Wurm2009}:
+This paper present a technique that use laser remission values to detect grass like vegetation. They use a self-supervised classification vibration based. (include in the path planning section)
 
 \subsubsection{Localisation and Mapping + SLAM}
 Start with 2d solutions. (Gmapping), but can't deal with 3D conditions or uneven bearing surface. Hector propose a 2d + imu that slighly handle uneven floor.
@@ -81,37 +84,10 @@ Finally, \citet{servomaa2002snowfall} have installed a set a of sensors for snow
 
 \section{Feature-Based Place Recognition and Forest Environments}
 \label{sec:literature_slam}
-Place 
-\begin{itemize}
-    \item Talk about features first (the idea originate from 2D images, list the most popular)
-    \item Talk about features-based place recognition in general (camera-based, NDT...)
-    \item Talk about tree trunk as features in forest
-\end{itemize}
 
-While we will not address this topic specifically, the algorithm used for the place recognition analysis highly depends on the chosen features.  
-Bring table about features here if I do. Might want to include the part about tree features discussed in the next section. Put comparative analysis. Tackle DNN.
-~\cite{Steder2011a} NARF, ~\cite{Rusu2009} FPFH, ~\cite{Yu2009} ISS, ~\cite{Tombari2010} SHOT, ~\cite{Harris1988} Harris, ~\cite{Lowe2004} SIFT, ~\cite{Bay2006} SURF
+As we will see in more details in Chapter~\ref{chap:slam}, place recognition is a useful tool for mobile robot navigation. A robot can determine whether he is in previously visited place or not by comparing its current sensor acquisition with those acquired earlier. Raw sensor data is usually converted into a representation that better capture the key information before it is used for comparison. This process is known as features extraction and consist in identifying points of interest from the sensor data (e.g. image), called feature keypoints, and create a descriptor for each keypoint. A descriptor is a vector containing values which should represent the area surrounding the keypoint robustly, even under small disturbance such as different lighting conditions or change of viewpoint. The popularity of using features representation can be attributed to the field of computer vision, especially with the introduction of SIFT~\cite{Lowe2004} and SURF~\cite{Bay2006}. This concept has since been applied to 3D data. Table~\ref{tab:features_examples} present some popular \gls*{2d} and \gls*{3d} features. 
 
-~\cite{Filipe2014}:
-Comparative evalutation of 3D Keypoint Detectors in RGB-D Obeject dataset. They verify the invariance of the 3D keypoints detectors to rotaions, scales and translation.
-
-~\cite{Magnusson2009}:
-This is NDT. First in my knowledge to do loop closure based on 3D laser scans. Address the problems of greater amount of data (3D vs 2D) and the 3D rotation invariance. NDT surface representation to create feature histograms based on the surface orientation and smoothness (this compress data). Rotation invariance via alignment of dominant surface orientations.
-
-~\cite{Song2012}:(might be good to cite original ICP or review from F. Pomerleau)
-They proposes a localisation solution in forested environments. They use the largest group of approximately parallel tree trunk features to align successive scans along five dimensions (except z). Optimal transformation determined based on the axes of two tree pairs. Then they align ground by minimizing the differences of points shared in the cells. (they basically do ICP, but they pretend to remove problems such as initial transformation and noisy scene.) (This is high level engineered features, could use this for smooth transition in the text)
-
-~\cite{Iagnemma2012}:
-The method used in the previous article to extract tree truck parameters from point cloud. 3 purely geometric steps: First, the raw point clouds are segmented by utilizing the circular shape of trees, and segments are grouped into tree sections based on the principle of spatial proximity. Second, circles and axes are extracted from tree sections which are subject to loss of shape information. Third, by clustering and integrating the tree sections resulted from various space inconsistencies, straight tree trunk landmarks are finally formed for future localization. The experimental results from real forested environments are presented.
-
-~\cite{Mcdaniel2012}:
-Article that segment ground and trees that I used at the beginning of my master. (include in the path planning section)
-
-~\cite{Lalonde2006}:
-J-F Lalonde article about vegetation classification using eigenvalues/vectors. (include in the path planning section)
-
-~\cite{Wurm2009}:
-This paper present a technique that use laser remission values to detect grass like vegetation. They use a self-supervised classification vibration based. (include in the path planning section)
+Although the choice of features can influence the performance of place recognition, we will not address this issue directly in this thesis. Instead, we analyse the impact of the environments on the overall place recognition performance. For those interested in this topic, there are articles that present comparative evaluation of different features. \citet{Filipe2014} present an evaluation of \gls*{3d} keypoint detectors, more precisely for RGB-D objects. In this paper, they focus on the invariance of keypoints detectors to rotations, scales and translation. Similarly, \citet{Boyer2011} propose a benchmark that allows to evaluate how different algorithms for retrieving keypoints and descriptors react to different transformations.
 
 \begin{table}[H]
     \centering
@@ -131,3 +107,20 @@ This paper present a technique that use laser remission values to detect grass l
     \caption[Examples of popular descriptors and keypoints detectors for images and \gls*{3d} data.]{Examples of popular descriptors and keypoints detectors for images and \gls*{3d} data. Some \gls*{2d} keypoints have been adapted for \gls*{3d} such as Harris and Stephens and SIFT.}
     \label{tab:features_examples}
 \end{table}
+
+The use of such characteristics is used for many years to solve the problem of place recognition, but first makes its appearance with approaches using cameras~\citep{Torralba2003}, \cite{Ulrich2000}. The most noteworthy example is probably the work of~\citet{Cummins2008}, commonly referred as FAB-MAP. They use a probabilitic framework to recognize previously seen places and identify new places. The algorithm is able to recognize the redundant visual information that does not significantly help to distinguish places, which is use to reduce the probability of such examples to be labeled as originating from the same place. They reach recall of \SI{48}{\percent} at \SI{100}{\percent} precision for a dataset of \SI{1.9}{\kilo\meter}. The authors also proposed an enhanced version of the algorithm~\cite{Cummins2011} in which they focus on scalability primarily using the concept of inverted index. They are able to reach \SI{48}{\percent} recall at \SI{100}{\percent} precision on a \SI{70}{\kilo\meter} dataset.
+
+By cons, existing place recognition algorithms based only on \gls*{3d} \gls*{lidar} data are quite limited. In our knowledge, \citet{Magnusson2009} are the first to address this problem. They use normal distribution transform (NDT) to create feature histograms based on surface orientation and smoothness to represent each scan. They also align scans with respect to dominant surface orientation to achieve rotation invariance. Finally they use expectation maximization to automatically determine the treshold that separate corresponding from non-corresponding scans. They achieve recall rates between \SI{22.9}{\percent} and \SI{69.6}{\percent} with false-positive rates below \SI{1.17}{\percent} for three different datasets. More recently, ~\citet{Mack2015} proposed a similar approach for solving the place recognition problem based on \gls*{3d} lidar data. The authors indicated that they use simpler histograms and a different distance metric to achieve similar results than~\citet{Magnusson2009}. The main contributions of the algorithm are that is it simpler to implement and less computationally demanding.
+
+The two previously mentioned algorithms use global descriptors (i.e. a single descriptor for each scan), which is often faster to process but less robust to local disturbances than local features (i.e. a set of feature keypoints and associate descriptors for each scan). For our experiements in Chapter~\ref{chap:slam}, we will use the algorithm presented by~\cite{Steder2011b}, which is an extension of their previous work~\cite{Steder2010}. The algorithm, that will be presented in more details in Section~\ref{sec:chap_slam_algo}, use a mixture of \gls*{bow} and features matching to recognize places.
+
+%Note that global descriptors are also used in computer vision, for instance the GIST global descriptor proposed by~\citet{oliva2001modeling}, but are more oriented toward general categorization or fast processing.
+
+In our knowledge, none of the previously discussed algorithms have been tested in forest environments or have been developed for specific conditions. When the environment in which the robot will operate is known in advance, algorithms can be developed using this prior knowledge to potentially improve performance. For instance, one could intuitively assume that in forest, tree trunks are more reliable features than foliage. ~\citet{Latulippe2013} proposed to use machine learning to filter local point cloud features in natural environments for scans alignment purpose. In their paper, they indeed concluded that features produced in foliage region are not reliable. Other examples of prior knowledge used for \gls*{lidar}-based navigation in forest include ~\citep{Lalonde2006}, which present a technique for segmenting data in three classes and~\cite{Mcdaniel2012}, which present a technique for segmenting ground and trees. These segmented regions of data can be use to identify navigable area or be used as features for multiple tasks.
+
+~\cite{Song2012}:
+They proposes a localisation solution in forested environments. They use the largest group of approximately parallel tree trunk features to align successive scans along five dimensions (except z). Optimal transformation determined based on the axes of two tree pairs. Then they align ground by minimizing the differences of points shared in the cells. (they basically do ICP, but they pretend to remove problems such as initial transformation and noisy scene.) (This is high level engineered features, could use this for smooth transition in the text)
+
+~\cite{Iagnemma2012}:
+The method used in the previous article to extract tree truck parameters from point cloud. 3 purely geometric steps: First, the raw point clouds are segmented by utilizing the circular shape of trees, and segments are grouped into tree sections based on the principle of spatial proximity. Second, circles and axes are extracted from tree sections which are subject to loss of shape information. Third, by clustering and integrating the tree sections resulted from various space inconsistencies, straight tree trunk landmarks are finally formed for future localization. The experimental results from real forested environments are presented.
+
