@@ -45,7 +45,7 @@ Finally, the resolution has to be adjusted so that each pixel of the resulting r
     \centering
     \subfloat[]{\label{fig:range_building}}{\includegraphics[width=0.995\linewidth]{img/chap_slam/range_building01_scale.png}}\\
     \subfloat[]{\label{fig:range_forest}}{\includegraphics[width=0.995\linewidth]{img/chap_slam/range_forest01_scale.png}}
-    \caption[Examples of range images from the two datasets.]{Examples of range images for the Structured-SICK dataset \protect\subref{fig:range_building} and the Unstructured-SICK dataset \protect\subref{fig:range_forest}. Note that objects appear distorted due to the projection on the plane. The background color (light green) corresponds to areas without laser return. All other pixels represent ranges between \SI{0}{\meter} (black) and \SI{40}{\meter} (white).}
+    \caption[Examples of range images from the two datasets.]{Examples of range images for the \texttt{Structured-SICK} dataset \protect\subref{fig:range_building} and the \texttt{Unstructured-SICK} dataset \protect\subref{fig:range_forest}. Note that objects appear distorted due to the projection on the plane. The background color (light green) corresponds to areas without laser return. All other pixels represent ranges between \SI{0}{\meter} (black) and \SI{40}{\meter} (white).}
     \label{fig:chap_slam_range}
 \end{figure}
 
@@ -99,6 +99,7 @@ The chosen place recognition method will depends on several factors such as the 
 \subsection{Overview of the Algorithm}
 \label{ssec:chap_slam_algo}
 
+%\todo{Recheck for formalism for database and new scans and database scans}
 In the following section, we will describe the algorithm used for our experiments, but we will first describe the general idea of the technique and the two articles describing it~\citep{Steder2010}~\cite{Steder2011b}. For the place recognition algorithm to be used, one must first acquire a set of 3D scans at approximately regular interval with a robot equipped with an omnidirectional \gls*{lidar}. This initial set of scans for a given environment, dubbed scans database ($D$), act as a representation of all known and visited places. Subsequent scans are used to determine if a match can be found in this database, and thus establish metrics such as precision and recall. Note that this experimental procedure was repeated in different indoor and structured outdoor environments and with different \gls*{lidar}s for both original articles.
 
 In the first version of the algorithm \citep{Steder2010}, they compared a newly acquired scan ($z^*$) against all scans from the database ($z^1,...,z^{|D|}$), only using NARF features correspondences. As mentioned previously, these features encode a full \gls*{3d} pose, which in theory allow the determination of the transformation that align two scans based on a single features correspondence. This meant that there was as many candidate transformations as there was features correspondences between a newly acquired scan ($z^*$) and a single scan ($z^i$) from the database. Using a series of rules, a score was assigned to each of these transformations. This score reflected the system belief that this transformation was an actual match. The transformation having obtained the highest score is used to align $z^*$ with $z^i$.
