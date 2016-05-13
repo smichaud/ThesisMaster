@@ -11,7 +11,7 @@ Computing and reporting the temporal statistics for every scan would put too muc
 
 To smooth out these fluctuations, statistics are extracted from a number of consecutive scans contained in a time window of around 1~minute (detailed values in Table~\ref{tab:selectionScans}). Figure~\ref{fig:TimingSnow} shows this smoothed fraction of snowflake echoes compared to all returned laser measurements as a function of time, for the six snowiest days of our dataset. To allow for better visualization, only the LMS200 and the Hokuyo's first echo are plotted at their actual scale (1x): Others have been scaled up (from 30x to 200x), with their corresponding scaling factors reported in the legend. As will be shown below, some sensors were much more sensitive than others.
 
-\begin{figure}[h]
+\begin{figure}
     \centering
     \includegraphics[trim={0.2cm 0 0 0},clip,width=0.7\linewidth]{./img/chap_lidar/LMS200_4Scans_Feb19.pdf}
     \includegraphics[trim={0.2cm 0 0 0},clip,width=0.7\linewidth]{./img/chap_lidar/Hokuyo_4Scans_Feb19.pdf}
@@ -25,7 +25,7 @@ To smooth out these fluctuations, statistics are extracted from a number of cons
 Our first conclusion based on Figure~\ref{fig:TimingSnow} is that the most sensitive device was the older LMS200, first introduced in the mid-2000s. For the most intense snowstorms (Figure~\ref{fig:TimingSnow}. b) 02-19, d) 03-17, e) 03-21 and f) 03-30), it peaked at around 15\% of measurements triggered by the falling snowflakes, for averaging windows of \SI{106}{\second}. As an older-generation device, it probably uses less sophisticated algorithms and sensing, and was not directly targeted for harsh outdoor environments. Indeed, its technical description~\citep{LMS200Manual} indicates that ``Raindrops and snow-flakes are cut out using pixel-oriented evaluation'', but this seems only applicable to obstacle detection (field computation), not the actual measurements. No further details are given. On the other hand, the more recent SICK LMS151 exhibits much less sensitivity to snowflakes: The reduction factor for the fraction of snowflakes echoes is in the order of 200-300, granting this device a much higher immunity in snowstorms. Indeed, the highest peak was around 0.1 \% of echoes in snowflakes during the 02-19 dataset. In some sense, this is not surprising considering that the documentation from the manufacturer mentions that this model is targeted for ``all weather conditions''~\citep{LMS151Manual}.
 
 
-\begin{figure}[h]
+\begin{figure}
     \centering
     \includegraphics[width=0.45\linewidth]{./img/chap_lidar/timings_cropped_a.png}
     \includegraphics[width=0.45\linewidth]{./img/chap_lidar/timings_cropped_b.png}
@@ -41,7 +41,7 @@ Our first conclusion based on Figure~\ref{fig:TimingSnow} is that the most sensi
 \subsubsection{Hokuyo UTM-30LX-EW}
 For this sensor, we resorted to a slightly different approach for comparison, as the device has been designed to return multiple echoes. We thus extracted statistics for the two most relevant cases: for first and last echoes. Statistics for the first echo tells us how sensitive the device is, if one wishes to detect the presence or absence of falling snow. This information could be used, in turn, to adapt the driving strategy of an autonomous vehicle or inform vision algorithms of the presence of particles in the air. On the other hand, using the last echo increases the probability that we will detect obstacles, such as another vehicle or the snow-covered ground. This information would be used for localization and navigation purposes. In the case of the first echo, we observed that the device behaved similarly to the LMS200. Indeed, the Hokuyo first echo (blue line) closely tracks the LMS200 curves (red dashed line) almost everywhere in Figure~\ref{fig:TimingSnow}, with a few exceptions.  In the case where we look at the last echo, the sensor behaves like the LMS151, not surprisingly as this sensor does a 2-echoes analysis and filtering. The last echo of the Hokuyo tends to reject the falling snow, but not as well as the LMS151, as it peaked at around 0.5~\% in some episodes. Nevertheless, this difference might not be sufficient to impact algorithms relying on laser data. Note that Table~\ref{tab:avgRates} shows similar correlations between these three sensors, for the averages taken over the complete 02-19 dataset.
 
-\begin{table}[h]
+\begin{table}
     \centering
     \begin{tabular}{@{}rrrrr@{}}
         \toprule
@@ -74,7 +74,7 @@ When modeling a range sensor, one has to have an idea of the probability distrib
 
 The general shape of these histograms is close to a log-normal distribution, with the exception of the LMS200 for a number of dates (02-12 through 03-17), which seems to follow a sum of two log-normal distributions. We attribute this log-normal shape to the interaction between two different phenomena, illustrated in a cartoon-type model in Figure~\ref{fig:CartoonModel}. At short ranges $x<\SI{3}{\meter}$, the building acts as a shield and decreases the probability of having a snowflake in the path of the laser. We recognize that this phenomenon would be most likely absent on an autonomous vehicle, thereby increasing the probability of having echoes in snowflakes at close range. However, we believe that this difference is not problematic, as close obstacles would be easily detected from \emph{i)} the overwhelming number of  LiDAR echoes on this obstacle \emph{ii)} other sensing modalities such as vision or radar. Furthermore, if the LiDAR is to be mounted on a rooftop, one can safely  ignore echoes in the first \SI{2}{\meter}, either in software or directly through the sensor itself (via its configuration). The other phenomenon, illustrated as the red dashed line in Figure~\ref{fig:CartoonModel}, is the probability of optical detection of a snowflake by the sensor as a function of the range $x$. We argue that this shape is due to the rapidly decreasing light intensity of the echoes in snowflakes, as a function of $x$. Combining these two phenomenon yields a log-normal shaped curve (black line in Figure~\ref{fig:CartoonModel}). Overall, this seems to indicate that a simple probabilistic model $P_S(E_\text{snowflake}|x,W)$ can be derived for these sensors.
 
-\begin{figure}[h]
+\begin{figure}
     \centering
     \includegraphics[trim={0.6cm 0 0 0},clip,width=0.7\linewidth]{./img/chap_lidar/ShieldingModel.pdf}
     \caption[Cartoon representation of the interaction between the probability of detecting a snowflake and the diminution of snowflakes due to the shielding effect of the building.]{Cartoon representation of the interaction between the probability of detecting a snowflake (in red) and the diminution of snowflakes due to the shielding effect of the building (in blue). The black line is the product of the two, and bear a close resemblance to the actual histograms extracted from our dataset.}
@@ -87,11 +87,11 @@ As can be seen from the histograms in Figure~\ref{fig:Histograms}, most sensors 
 
 For all sensors, we can also conclude that beyond the range $x>\SI{10}{\meter}$, snowflakes are no longer detected, i.e. they become invisible. A small notable exception would be for the Velodyne, for which snowflakes were detected all the way to $x=\SI{14}{\meter}$, albeit at a significantly reduced rate. Again, we do not think that this would significantly impair their use in conditions similar to our test setup.
 
-%Note that for the LMS151, the amount of data was not sufficient to draw much conclusion on this distribution except for the fact that there was virtually no events passed 4.
-
-\begin{figure}[h]
+\begin{figure}
     \centering
     \includegraphics[trim={1.1cm 0 0 0},clip,width=0.80\linewidth]{./img/chap_lidar/Histogram.pdf}
     \caption[Histograms of echoes in falling snow during important snowfall days, as a function of distance reported by the sensor.]{Histograms of echoes in falling snow during important snowfall days, as a function of distance $x$ reported by the sensor. Each histogram has been normalized by its area, for ease of comparison. The numbers in brackets are the fraction of data points in the complete dataset that correspond to snowflake echoes. Note that for the 03-21 dataset, the LMS151 was not working properly: thus no data is included for that day.}
     \label{fig:Histograms}
 \end{figure}
+
+\FloatBarrier

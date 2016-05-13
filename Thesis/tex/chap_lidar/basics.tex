@@ -3,9 +3,9 @@
 
 \gls*{lidar} is a technology based on laser time of flight to measure distances. \citet{Bosch2001} present the physical details as well as the pros and cons of three time of flight techniques commonly used in \gls*{lidar}s, namely the pulsed, phase-shift and frequency modulated continuous wave. Although the \gls*{lidar}s we will use for our research are all based on time of flight, the underlying technique is not specified by the manufacturers. In the context of our research, we focus more on higher level concepts that could cause sensor readings to be erroneous for modeling environments or objects.
 
-\gls*{lidar}s generally build \gls*{2d} data points using an internal rotating mirror (see Figure~\ref{fig:lidar_basics_b}). It is possible to create a \gls*{3d} point cloud by moving the sensor with an external tool (e.g. a \gls*{ptu} or the robot itself) and merging scans, but some sensors such as the Velodyne HDL-32E directly provide this information. Given that the points are acquired sequentially, dynamic objects may be distorted in the final representation. Figure~\ref{fig:shadow_points_b} depicts a point cloud created using the \gls*{2d} SICK LMS151 mounted on a \gls*{ptu}.
+\gls*{lidar}s generally build \gls*{2d} data points using an internal rotating mirror (see Figure~\ref{fig:lidar_basics_b}). It is possible to create a \gls*{3d} point cloud by moving the sensor with an external tool (e.g. a \gls*{ptu} or the robot itself) and merging scans. There are some sensors, such as the Velodyne HDL-32E, that directly provide this \gls*{3d} information. Given that the points are acquired sequentially, dynamic objects may be distorted in the final representation. Figure~\ref{fig:shadow_points_b} depicts a point cloud created using the \gls*{2d} SICK LMS151 mounted on a \gls*{ptu}.
 
-\begin{figure}[h]
+\begin{figure}
     \centering
     \subfloat[]{\label{fig:lidar_basics_a}}{\includegraphics[width=0.16\linewidth]{img/chap_lidar/lms151.png}}
     \subfloat[]{\label{fig:lidar_basics_b}}{\includegraphics[width=0.28\linewidth]{img/chap_lidar/lidar_mirror.png}}
@@ -20,7 +20,7 @@ In order to visualize more easily the data obtained with a lidar, they are typic
 
 In this document, we focus our attention on the impact of small structures such as the branch presented in Figure~\ref{fig:shadow_points_b} region \textbf{D}. More specifically, the present chapter deals with the impact of falling snow on the raw data of \gls*{lidar}s. In the next section (Section~\ref{sec:chap_lidar_data_acquisition}), we will explain how we gathered data for this analysis.
 
-\begin{figure}[h]
+\begin{figure}
     \centering
     \subfloat[]{\label{fig:lidar_waveform_a}}{\includegraphics[width=0.8\linewidth]{img/chap_lidar/waveforms.png}}\\\vspace{1em}
     \subfloat[]{\label{fig:lidar_waveform_b}}{\includegraphics[width=0.8\linewidth]{img/chap_lidar/waveforms2.png}}
@@ -28,10 +28,12 @@ In this document, we focus our attention on the impact of small structures such 
     \label{fig:lidar_waveform}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}
     \centering
     \subfloat[]{\label{fig:shadow_points_a}}{\includegraphics[width=0.9\linewidth]{img/chap_lidar/shadow_image.jpg}}\\\vspace{1em}
     \subfloat[]{\label{fig:shadow_points_b}}{\includegraphics[width=0.9\linewidth]{img/chap_lidar/shadow_pointcloud.png}}
     \caption[Point cloud representation of a \gls*{lidar} acquisition and examples of erroneous data regions.]{A picture of a scene \protect\subref{fig:shadow_points_a} and a diagonal view of the point cloud \protect\subref{fig:shadow_points_b} resulting from the acquisition by the SICK LMS151 \gls*{lidar} mounted on a \gls*{ptu}. The sensor position is represented by \textbf{A}. Region \textbf{B} shows missing points caused by absorbent material (a black box not visible in the picture). Region \textbf{C} shows noisy points caused by the edge of an object while region \textbf{D} shows a particularly bad \gls*{3d} representation of a fine structure (tree branch).}
     \label{fig:shadow_points}
 \end{figure}
+
+\FloatBarrier

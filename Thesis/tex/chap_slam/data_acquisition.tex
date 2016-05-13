@@ -9,14 +9,14 @@ In the following section, we first describe the robotic platform and sensors use
 
 The Husky A200 is a medium size (\SI{990 x 670 x 390}{\milli\meter}) \gls*{ugv} developed by \cite{ClearpathWeb}. It is a rugged robot designed for all terrain conditions and it uses a differential-drive skid steer, allowing easy control and in-place turns. The maximum speed of the vehicle is \SI{1}{\meter\per\second} and the maximum payload capability is \SI{75}{\kilo\gram}. This robotic platform is well suited for our needs, because it can move in forests and carry the required equipment. Our platform is shown in Figure~\ref{fig:chap_slam_husky} and details about the available devices are presented in Table~\ref{tab:husky_devices}. 
 
-\begin{figure}[H]
+\begin{figure}
     \centering
     \includegraphics[width=0.98\linewidth]{img/chap_slam/husky_labelled.png}
     \caption[Our robotic platform (Husky A200) and the devices used for data acquisition.]{Our robotic platform (Husky A200) and the devices used for data acquisition. The SICK \gls*{lidar} is not mounted, but instead is shown on the bottom right corner of the figure. Note that the \gls*{ptu} is hidden by a cover and the on-board computer is mostly occluded by the Velodyne \gls*{lidar}.}
     \label{fig:chap_slam_husky}
 \end{figure}
 
-\begin{table}[H]
+\begin{table}
     \centering
     \begin{tabular}{@{}llll@{}}
         \toprule
@@ -52,7 +52,7 @@ The first site was chosen for its more structured nature and is located between 
 
 The second site, chosen for its unstructured nature, is located in a wooded area, also on the Laval University campus. The dataset path starts on a pedestrian walkway, but after its second turn (of approximately \SI{330}{\degree}), it continues for around \SI{100}{\meter} in rougher terrain. This forested environment presents multiple small structures and significant of occlusions. Figure~\ref{fig:slam_view_forest1} and Figure~\ref{fig:slam_view_forest2} show pictures from the robot camera at this location. This dataset will allow us to better understand the influence of a less structured environment on the place recognition algorithm. In particular, the absence of large flat surfaces and corners typical of buildings, as well as the closeness of the space, will be challenging for place recognition algorithms.
 
-\begin{figure}[H]
+\begin{figure}
     \centering
     \subfloat[]{\label{fig:path_overview}}{\includegraphics[width=0.995\linewidth]{img/chap_slam/paths.jpg}}\\ \vspace{3mm}
     \subfloat[]{\label{fig:path_building}}{\includegraphics[width=0.485\linewidth]{img/chap_slam/path_building_arrow.png}} \hspace{2mm}
@@ -61,7 +61,7 @@ The second site, chosen for its unstructured nature, is located in a wooded area
     \label{fig:chap_slam_path}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}
     \centering
     \subfloat[]{\label{fig:slam_view_building1}}{\includegraphics[width=0.47\linewidth]{img/chap_slam/building_view1.jpg}} \hspace{2mm}
     \subfloat[]{\label{fig:slam_view_building2}}{\includegraphics[width=0.47\linewidth]{img/chap_slam/building_view2.jpg}}
@@ -79,7 +79,7 @@ The Velodyne, for its part, directly allows \gls*{3d} point cloud acquisition by
 
 Table~\ref{tab:slam_sensor_resolution} summarizes information about the sensors resolution and \gls*{fov}, while Table~\ref{tab:slam_datasets} provides a name for later references and additional information about each of our datasets.
 
-\begin{table}[H]
+\begin{table}
     \centering
     \begin{tabular}{@{}lrrrrr@{}}
         \toprule
@@ -93,7 +93,7 @@ Table~\ref{tab:slam_sensor_resolution} summarizes information about the sensors 
     \label{tab:slam_sensor_resolution}
 \end{table}
 
-\begin{table}[H]
+\begin{table}
     \centering
     \begin{tabular}{@{}llllrr@{}}
         \toprule
@@ -110,7 +110,7 @@ Table~\ref{tab:slam_sensor_resolution} summarizes information about the sensors 
 
 Examples of point clouds from our datasets are shown in Figure~\ref{fig:slam_pointclouds}. We observe that the unstructured environment is more congested and objects are closer to the sensor than for the structured environment. In fact, the average distance of points from the sensor in the unstructured environment is \SI{7.61}{\meter} compared to \SI{9.23}{\meter} for the structured environment. There is also more space without obstacle in the sensor range for the structured dataset. The percentage of points return using the SICK is \SI{82.6}{\percent} on average in the unstructured dataset compared to \SI{40.2}{\percent} in the structured dataset. These point clouds also illustrate the higher vertical resolution and larger \gls*{fov} of the SICK compared to the Velodyne. The influence of these factors will be discussed in Section~\ref{sec:chap_slam_results}.
 
-\begin{figure}[H]
+\begin{figure}
     \centering
     \subfloat[]{\label{fig:slam_pointcloud_building1}}{\includegraphics[width=0.47\linewidth]{img/chap_slam/pointcloud_building1.png}} \hspace{2mm}
     \subfloat[]{\label{fig:slam_pointcloud_building2}}{\includegraphics[width=0.47\linewidth]{img/chap_slam/pointcloud_building2.png}}
@@ -122,3 +122,4 @@ Examples of point clouds from our datasets are shown in Figure~\ref{fig:slam_poi
     \label{fig:slam_pointclouds}
 \end{figure}
 
+\FloatBarrier
