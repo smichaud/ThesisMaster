@@ -1,0 +1,21 @@
+\chapter*{Abstract} \phantomsection\addcontentsline{toc}{chapter}{Abstract} 
+
+\begin{otherlanguage*}{english}
+
+    %  Because the ability to recognize previously-visited places are useful for solving many navigation problems, we choose to perform our experiments using a state-of-the-art place recognition algorithm. We acquire data in structured outdoor environment and in forest using two LiDARs (LMS151, HDL-32E). This allows to evaluate the impact of both the environment and the choice of sensors on the place recognition performance. Our hypothesis is that the closer two scans are acquired from each other, the higher the score (i.e. the belief that the scans originate from the same place) will be, but modulated by the level of complexity of the environments. Our experiments indeed confirm that forests, with their intricate network of branches and foliage, produce more outliers and induce scores to decrease more quickly with distance than for open, structured environment, found between building. Similarly, the scores for the Velodyne decrease slightly faster with distance than for the SICK. Our conclusion is that falling snow conditions and forest environments negatively impact LiDAR-based navigation performance, which should be considered to develop robust navigation algorithms.
+
+
+Le résumé avec un maximum de 150 mots
+\begin{itemize}
+    \item LiDAR is a sensor providing 3D data 
+    \item 
+    \item Approach (statistics, simulations...) : statistics for snowflakes, real robot/env for place recognition performance
+    \item Results (provide numbers) : less than 2 percents and below 10 m, reduce range of recognition
+    \item Conclusions (Implication of the work) : show that algorithms must be adapted to hard conditions 
+\end{itemize}
+
+\emph{Light Detection And Ranging} (LiDAR) is a sensor producing a three-dimensional representation of his surroundings and is therefore a useful tool for autonomous navigation of robots. Although recent research showed improvement in LiDAR-based navigation performance for constrained problems, dealing with complex unstructured environments or difficult weather conditions remains problematic. In this thesis, we present an analysis of the influence of such challenging conditions on LiDAR-based navigation. Our first contribution is to evaluate how four commonly-used LiDARs are affected by snowflakes during snowstorms. Statistical analysis show that the proportion of laser return caused by snowflakes is below \SI{000}{\percent} and that the falling snow has little impact beyond a range of \SI{10}{\meter}. Our second contribution is to evaluate the impact of complex of three-dimensional structures present in forests on the performance of a navigation algorithm.
+
+
+
+\end{otherlanguage*} 

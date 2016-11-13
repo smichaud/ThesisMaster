@@ -2,39 +2,43 @@
 
 \usepackage{xspace}
 \newcommand{\chapzerotitle}{Literature Review\xspace}
-\newcommand{\chaplidartitle}{Snowfall Influence on Lidar Data\xspace}
+\newcommand{\chaplidartitle}{Snowfall Influence on LiDAR Data\xspace}
 \newcommand{\chapslamtitle}{Forest Influence on LiDAR-Based Place Recognition\xspace}
 \newcommand{\correspond}{\mathrel{\widehat{=}}}
 
 
 \usepackage[acronym]{glossaries}
 %\renewcommand*{\glstextformat}[1]{\textcolor{black}{#1}} % if link, select color
+\renewcommand{\glstextformat}[1]{\textit{#1}} % Make gls word italic
 
-\newacronym{ugv}{UGV}{unmanned ground vehicle}
-\newacronym{lidar}{LiDAR}{\emph{Light Detection And Ranging}}
-\newacronym{ptu}{PTU}{pan-tilt unit}
-\newacronym{gps}{GPS}{global positioning system}
-\newacronym{imu}{IMU}{inertial measurements units}
-\newacronym{sonar}{SONAR}{sound navigation and ranging}
-\newacronym{radar}{RADAR}{radio detection and ranging}
-\newacronym{rgb}{RGB}{colour}
-\newacronym{rgbd}{RGB-D}{red, green, blue plus depth}
+\newacronym{ugv}{UGV}{Unmanned Ground Vehicle}
+\newacronym{lidar}{LiDAR}{Light Detection And Ranging}
+\newacronym{ptu}{PTU}{Pan-Tilt Unit}
+\newacronym{gps}{GPS}{Global Positioning System}
+\newacronym{imu}{IMU}{Inertial Measurements Units}
+\newacronym{sonar}{SONAR}{Sound Navigation And Ranging}
+\newacronym{radar}{RADAR}{Radio Detection And Ranging}
+\newacronym{rgb}{RGB}{Red, Green, Blue colour}
+\newacronym{rgbd}{RGB-D}{Red, Green, Blue plus Depth}
+\newacronym{ndt}{NDT}{Normal Distribution Transform}
 
-\newacronym{3d}{3D}{three dimensions}
-\newacronym{2d}{2D}{two dimensions}
-\newacronym{fov}{FOV}{field of view}
+\newacronym{3d}{3D}{Three Dimensional}
+\newacronym{2d}{2D}{Two Dimensional}
+\newacronym{fov}{FOV}{Field Of View}
 
-\newacronym{os}{OS}{operating system}
-\newacronym{ssh}{SSH}{secure shell}
-\newacronym{gui}{GUI}{graphical user interface}
+\newacronym{os}{OS}{Operating System}
+\newacronym{ssh}{SSH}{Secure Shell}
+\newacronym{gui}{GUI}{Graphical User Interface}
 \newacronym{udp}{UDP}{User Datagram Protocol}
 \newacronym{ros}{ROS}{Robot Operating System}
 
-\newacronym{slam}{SLAM}{simultaneous localization and mapping}
-\newacronym{bow}{BoW}{bag of words}
+\newacronym{slam}{SLAM}{Simultaneous Localization And Mapping}
+\newacronym{bow}{BoW}{Bag of Words}
 \newacronym{icp}{ICP}{Iterative Closest Point}
 
-\newacronym{fn}{FN}{false negative}
-\newacronym{fp}{FP}{false positive}
-\newacronym{tn}{TN}{true negative}
-\newacronym{tp}{TP}{true positive}
+\newacronym{fn}{FN}{False Negative}
+\newacronym{fp}{FP}{False Positive}
+\newacronym{tn}{TN}{True Negative}
+\newacronym{tp}{TP}{True Positive}
+
+\makeglossaries

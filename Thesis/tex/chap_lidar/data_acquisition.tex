@@ -1,13 +1,13 @@
 \section{Data Acquisition}
 \label{sec:chap_lidar_data_acquisition}
 
-In this section, we report on the relevant characteristics of the four sensors used in our dataset. We then describe the physical configuration of our test setup, then outline the weather conditions pertaining to each of the six collected snowfalls. Finally, we describe how the information from the LiDARs was preprocessed before analysis.
+In this section, we report on the relevant characteristics of the four sensors used in our dataset. We then describe the physical configuration of our test setup, then outline the weather conditions pertaining to each of the six collected snowfalls. Finally, we describe how the information from the \gls*{lidar}s was preprocessed before analysis.
 
 \subsection{Sensors}
 
-Data acquisition was performed with the following four LiDARs: the SICK LMS200, SICK LMS151, Hokuyo UTM-30LX-EW, and the Velodyne HDL-32E. Relevant sensor information is provided in Table~\ref{tab:lidars}, but the reader is referred to the manufacturers' documentation for additional information\footnote{Available here: Velodyne~\citep{VelodyneManual}, Hokuyo~\citep{UTMDatasheet}, LMS151~\citep{LMS151Datasheet}, LMS200~\citep{LMS200Manual}}.
+Data acquisition was performed with the following four \gls*{lidar}s: the SICK LMS200, SICK LMS151, Hokuyo UTM-30LX-EW, and the Velodyne HDL-32E. Relevant sensor information is provided in Table~\ref{tab:lidars}, but the reader is referred to the manufacturers' documentation for additional information\footnote{Available here: Velodyne~\citep{VelodyneManual}, Hokuyo~\citep{UTMDatasheet}, LMS151~\citep{LMS151Datasheet}, LMS200~\citep{LMS200Manual}}.
 
-The first element that gives a qualitative overview of the sensor performance is the maximum acquisition distance. This value depends on several factors, such as lighting conditions and target remission. This value is provided directly for the HDL-32E and UTM-30LX-EW, but based on a target remission greater than \SI{75}{\percent} for the LMS200 and LMS151. Another element to consider is the shape and area covered by the beam, which influences the probability of hitting a snowflake as well as the proportion of area it covers. A final significant element which changes from one sensor to the other is the number of echoes returned. The Hokuyo sensor can return up to three echoes, which means that it could locate two snowflakes before the beam reaches the ground. Regarding the LMS151, two echoes are evaluated by the hardware, but only one is returned. Finally, note that all LiDARs use class 1 laser with a wavelength of \SI{905}{\nano\meter}.
+The first element that gives a qualitative overview of the sensor performance is the maximum acquisition distance. This value depends on several factors, such as lighting conditions and target remission. This value is provided directly for the HDL-32E and UTM-30LX-EW, but based on a target remission greater than \SI{75}{\percent} for the LMS200 and LMS151. Another element to consider is the shape and area covered by the beam, which influences the probability of hitting a snowflake as well as the proportion of area it covers. A final significant element which changes from one sensor to the other is the number of echoes returned. The Hokuyo sensor can return up to three echoes, which means that it could locate two snowflakes before the beam reaches the ground. Regarding the LMS151, two echoes are evaluated by the hardware, but only one is returned. Finally, note that all \gls*{lidar}s use class 1 laser with a wavelength of \SI{905}{\nano\meter}.
 
 \begin{table}
     \centering
@@ -27,24 +27,24 @@ The first element that gives a qualitative overview of the sensor performance is
 
 \subsection{Setup Configuration}
 
-Data acquisition was conducted at Pouliot Hall of Laval University, where sensors were placed close to the inner wall of a window facing N\SI{50}{\degree}E. As shown in Figure~\ref{fig:setup}, a wooden structure held the sensors side by side at approximately \SI{14}{\meter} above the ground. The main scanning plane (i.e. XY plane in the sensor reference frame) formed a \SI{30}{\degree} angle with respect to the building wall, so as to increase the maximum distance as much as possible without having the laser beams hitting  trees or a pedestrian walkway present near the building. In addition, an RGB camera was placed alongside the LiDARs to provide visual information about the scene. In this configuration, a slight opening of the window allowed to keep the instruments inside while scanning outside. To avoid direct interference between sensors, corrugated plastic layers were placed between them. Figure~\ref{fig:view} shows the scene as observed by the RGB camera placed with the sensors.
+Data acquisition was conducted at Pouliot Hall of Laval University, where sensors were placed close to the inner wall of a window facing N\SI{50}{\degree}E. As shown in Figure~\ref{fig:setup}, a wooden structure held the sensors side by side at approximately \SI{14}{\meter} above the ground. The main scanning plane (i.e. XY plane in the sensor reference frame) formed a \SI{30}{\degree} angle with respect to the building wall, so as to increase the maximum distance as much as possible without having the laser beams hitting  trees or a pedestrian walkway present near the building. In addition, an \gls*{rgb} camera was placed alongside the \gls*{lidar}s to provide visual information about the scene. In this configuration, a slight opening of the window allowed to keep the instruments inside while scanning outside. To avoid direct interference between sensors, corrugated plastic layers were placed between them. Figure~\ref{fig:view} shows the scene as observed by the \gls*{rgb} camera placed with the sensors.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.80\linewidth]{./img/chap_lidar/setup_diag.png}
-    \caption[The experimental setup.]{The experimental setup. The 3D axis represents the orientation of the sensors and the bottom left panel represent the 2D geometry as seen from the right side of the picture.}
+    \caption[The experimental setup.]{The experimental setup. The \gls*{3d} axis represents the orientation of the sensors and the bottom left panel represent the \gls*{2d} geometry as seen from the right side of the picture.}
     \label{fig:setup}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[width=0.80\linewidth]{./img/chap_lidar/camera_view.jpg}
-    \caption[View from the camera.]{View from the RGB camera.}
+    \caption[View from the camera.]{View from the \gls*{rgb} camera.}
     \label{fig:view}
 \end{figure}
 
 \subsection{Dataset Description}
-Data acquisition started February~12 and ended on March~2. A total of 10 episodes were collected for a total of more than 50 hours of data. Recordings were made using the Robot Operating System (ROS)~\citep{ROSWeb}, which provides standardized data types as well as time synchronization. Data was acquired at different times of day and in a wide variety of conditions, covering a wide range of snowflakes size, falling rate and wind speed.  Table~\ref{tab:overview-dataset} provides an overview of our data\footnote{Wind speed, daily precipitation and temperature are reported from Québec City Jean Lesage International Airport at approximately \SI{9}{\km} from Laval University. Data is available here \citep{WeatherCanada}.}. Of these, six are used in the current study, as highlighted in this table.
+Data acquisition started February~12 and ended on March~2. A total of 10 episodes were collected for a total of more than 50 hours of data. Recordings were made using the \gls*{ros}\citep{ROSWeb}, which provides standardized data types as well as time synchronization. Data was acquired at different times of day and in a wide variety of conditions, covering a wide range of snowflakes size, falling rate and wind speed.  Table~\ref{tab:overview-dataset} provides an overview of our data\footnote{Wind speed, daily precipitation and temperature are reported from Québec City Jean Lesage International Airport at approximately \SI{9}{\km} from Laval University. Data is available here \citep{WeatherCanada}.}. Of these, six are used in the current study, as highlighted in this table.
 
 \begin{table}
     \centering
